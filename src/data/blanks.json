@@ -1,0 +1,35 @@
+{
+  "status": "success",
+  "data": [
+    {
+      "id": "1",
+      "sentence": "Fill in the _",
+      "answer": "Fill in the blank",
+      "words": [
+        {"id": "1", "word": "gap"},
+        {"id": "2", "word": "space"},
+        {"id": "3", "word": "blank"}
+      ]
+    },
+    {
+      "id": "2",
+      "sentence": "Du _ schön",
+      "answer": "Du bist schön",
+      "words": [
+        {"id": "1", "word": "bist"},
+        {"id": "2", "word": "space"},
+        {"id": "3", "word": "gap"}
+      ]
+    },
+    {
+      "id": "3",
+      "sentence": "Ich spiele _ Tennis",
+      "answer": "Ich spiele gern Tennis",
+      "words": [
+        {"id": "1", "word": "blank"},
+        {"id": "2", "word": "gern"},
+        {"id": "3", "word": "gap"}
+      ]
+    }
+  ] 
+}

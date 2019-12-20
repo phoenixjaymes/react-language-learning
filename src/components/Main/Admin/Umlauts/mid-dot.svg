@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64">
+  <defs>
+    <symbol id="button" data-name="button" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="30" fill="#a9a9dc"/>
+    </symbol>
+  </defs>
+  <title>mid-dot</title>
+  <g id="umlaut_controls" data-name="umlaut controls">
+    <g id="mid-dot">
+      <use width="60" height="60" transform="translate(2 2)" xlink:href="#button"/>
+      <path d="M29.74,32A2.27,2.27,0,0,1,32,29.61a2.4,2.4,0,0,1,0,4.79A2.22,2.22,0,0,1,29.74,32Z"/>
+    </g>
+  </g>
+</svg>

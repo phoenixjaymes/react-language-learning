@@ -1,10 +1,16 @@
 {
   "name": "language-learning",
   "version": "0.1.0",
+  "homepage": "http://phoenixjaymes/lab/language-learning/",
   "private": true,
   "dependencies": {
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-react": "^7.14.2",
+    "prop-types": "^15.7.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8"
   },
   "scripts": {
@@ -14,7 +20,27 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "airbnb"
+    ],
+    "plugins": [
+      "react",
+      "import"
+    ],
+    "rules": {
+      "linebreak-style": "off",
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
+        }
+      ],
+      "react/require-default-props": 0
+    }
   },
   "browserslist": [
     ">0.2%",

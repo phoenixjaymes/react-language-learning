@@ -1,0 +1,226 @@
+/* 
+    File     : _loading.scss
+    Date     : 18 Jul 2019
+    Author   : Jaymes Young <jaymes@phoenixjaymes.com>
+*/
+
+/***** Home Loader *****/
+.home-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.home-loader__inner {
+  position: relative;
+
+  height: 300px;
+  width: 300px;
+}
+
+.home-loader__msg {
+  position: absolute;
+  bottom: 0;
+  font-weight: 800;
+  text-align: center;
+  width: 100%;
+}
+
+.home-loader__img {
+  position: absolute;
+  left: calc(50% - 50px);
+  top: calc(50% - 50px);
+  z-index: 100;
+  height: 100px;
+  width: 100px;
+}
+
+.home-loader__spin1,
+.home-loader__spin2 {
+  position: absolute;
+}
+
+.home-loader__spin1 {
+  left: calc(50% - 100px);
+  top: calc(50% - 100px);
+
+  height: 200px;
+  width: 200px;
+
+  animation: rotate-center-c-start0 4s linear infinite;
+}
+
+.home-loader__spin2 {
+  left: calc(50% - 80px);
+  top: calc(50% - 80px);
+
+  height: 160px;
+  width: 160px;
+
+  animation: rotate-center-cc-start360 8s linear 1s infinite;
+}
+
+
+.home-loader__spin1::before,
+.home-loader__spin2::before {
+  position: absolute;
+  z-index: 50;
+
+  background: red;
+  border-radius: 50%;
+  content: '';
+}
+
+.home-loader__spin1::before {
+  left: 0;
+  top: 0;
+
+  height: 20px;
+  width: 20px;
+
+  animation: change-color 8s linear infinite;
+}
+
+.home-loader__spin2::before {
+  bottom: 0;
+  right: 0;
+
+  height: 20px;
+  width: 20px;
+
+  animation: change-color 4s linear infinite;
+}
+
+
+/* @media (max-width: 543px) {
+
+}
+
+@media (min-width: 544px) {
+  
+}
+
+@media (min-width: 720px) {
+
+}
+
+@media (min-width: 940px) {
+
+} */
+
+
+
+
+
+
+/* */
+.loader {
+  position: absolute;
+  left: calc(50% - 100px);
+  top: calc(50% - 100px);
+  height: 200px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  width: 200px; }
+
+/* Loader 2 */
+.loader__center1,
+.loader__center1::before,
+.loader__center1::after,
+.loader__center2,
+.loader__center2::before,
+.loader__center2::after {
+  position: absolute;
+  border-radius: 50%; }
+
+.loader__center1 {
+  left: calc(50% - 85px);
+  top: calc(50% - 85px);
+  border: solid greenyellow;
+  border-width: 0 0 0 3px;
+  height: 170px;
+  width: 170px;
+  animation: rotate-center-c-start0 2s linear infinite; }
+
+.loader__center1::before {
+  left: calc(50% - 70px);
+  top: calc(50% - 70px);
+  border: solid lightcyan;
+  border-width: 0 0 0 3px;
+  content: '';
+  height: 140px;
+  width: 140px;
+  animation: rotate-center-c-start0 3s linear infinite; }
+
+.loader__center1::after {
+  left: calc(50% - 55px);
+  top: calc(50% - 55px);
+  border: solid orange;
+  border-width: 0 0 0 3px;
+  content: '';
+  height: 110px;
+  width: 110px;
+  animation: rotate-center-c-start0 3.5s linear infinite; }
+
+.loader__center2 {
+  left: calc(50% - 40px);
+  top: calc(50% - 40px);
+  border: solid greenyellow;
+  border-width: 0 0 0 3px;
+  height: 80px;
+  width: 80px;
+  animation: rotate-center-c-start0 3.5s linear infinite; }
+
+.loader__center2::before {
+  left: calc(50% - 25px);
+  top: calc(50% - 25px);
+  border: solid lightcyan;
+  border-width: 0 0 0 3px;
+  content: '';
+  height: 50px;
+  width: 50px;
+  animation: rotate-center-c-start0 3s linear infinite; }
+
+.loader__center2::after {
+  left: calc(50% - 10px);
+  top: calc(50% - 10px);
+  border: solid orange;
+  border-width: 0 0 0 3px;
+  content: '';
+  height: 20px;
+  width: 20px;
+  animation: rotate-center-c-start0 2s linear infinite; }
+
+@keyframes rotate-center-c-start0 {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
+@keyframes rotate-center-cc-start360 {
+  0% {
+    transform: rotate(360deg); }
+  100% {
+    transform: rotate(0deg); }
+  }
+
+@keyframes change-color {
+  0% {
+    background: red;
+  }
+  20% {
+    background: orange;
+  }
+  40% {
+    background: yello;
+  }
+  60% {
+    background: green;
+  }
+  80% {
+    background: blue;
+  }
+  100% {
+    background: purple;
+  }
+}

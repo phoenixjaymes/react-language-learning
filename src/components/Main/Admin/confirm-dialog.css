@@ -1,0 +1,38 @@
+.confirm-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 500;
+
+  background: rgba(50, 50, 50, .9);
+  height: 100vh;
+  width: 100vw;
+}
+
+.confirm-dialog div {
+  position: absolute;
+  left: calc(50% - 150px);
+  top: calc(50% - 80px);
+
+  background: #3131D2;
+  border: 2px solid #ffc519;
+  border-radius: 5px;
+  height: 100px;
+  padding: 10px;
+  width: 300px;
+}
+
+.confirm-dialog p {
+  color: #fff;
+  text-align: center;
+}
+
+.confirm-dialog p:nth-child(1) {
+  margin-bottom: 10px;
+}
+
+.confirm-dialog button {
+  display: inline-block;
+  margin: 0 5px;
+  width: 80px;
+}

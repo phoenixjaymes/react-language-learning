@@ -1,0 +1,19 @@
+.login-contanier {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+
+  height: 100%;
+}
+
+.login-contanier form {
+  height: 265px;
+}
+
+@media (max-width: 543px) {
+  .login-contanier {
+    margin: 0 auto;
+    max-width: 400px;
+    padding: 0 20px;
+  }
+}

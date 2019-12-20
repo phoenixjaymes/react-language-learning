@@ -1,0 +1,175 @@
+.grammar {
+  background: rgba(240, 240, 240, .4);
+  height: 100%;
+  padding: 0;
+  position: relative;
+}
+
+.grammar p,
+.grammar h2,
+.grammar ul {
+  margin-bottom: 15px;
+}
+
+.grammar ul {
+  list-style-position: inside;
+}
+
+
+.grammar__nav {
+  position: absolute;
+  left: -160px;
+  top: 0;
+
+  background: transparent;
+  height: 100%;
+  padding: 0;
+  width: 200px;
+
+  transition: left .1s ease-out;
+  transition: background-color .1s ease-out;
+}
+
+.grammar__nav.show {
+  background: #3131d2;
+  left: 0;
+}
+
+.grammar__nav-btn {
+  background: #222293;
+  color: #fff;
+  cursor: pointer;
+
+  font-weight: bold;
+  font-size: 1.1rem;
+  height: 40px;
+  margin-bottom: 10px;
+  position: relative;
+  text-align: right;
+}
+
+.grammar__nav-btn span {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  width: 40px;
+}
+
+.grammar__nav a {
+  color: #ffc519;
+  display: block;
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+  padding: 5px 0;
+  text-align: center;
+  text-decoration: none;
+
+  transition: color .1s ease-in;
+}
+
+.grammar__nav a:hover {
+  color: #fff;
+}
+
+.grammar_section {
+  height: 100%;
+}
+
+
+.grammar__container {
+  margin: 0 auto;
+  height: 100%;
+  padding: 10px;
+}
+
+/***** Tables *****/
+.article,
+.pronoun {
+  background: #fff;
+  border: 1px solid blue;
+  border-collapse: collapse;
+  font-size: .9rem;
+  margin: 0 auto 15px;
+}
+
+.article tr:nth-child(1),
+.pronoun tr:nth-child(1) {
+  background: blue;
+}
+
+.article td:nth-child(1),
+.pronoun td:nth-child(1) {
+  font-weight: bold;
+}
+
+.pronoun.possessive td:nth-child(1) {
+  font-weight: normal;
+}
+
+.pronoun.possessive td[rowspan] {
+  font-weight: bold;
+}
+
+.article th,
+.pronoun th {
+  color: #fff;
+  text-align: left;
+  width: 90px;
+}
+
+.article th,
+.article td,
+.pronoun th,
+.pronoun td  {
+  border: 1px dotted #00f;
+  padding: 2px 2px 2px 3px;
+}
+
+.article th:nth-child(1),
+.pronoun th:nth-child(1) {
+  width: 50px;
+}
+
+
+@media (min-width: 544px) {
+  .grammar {
+    padding: 0 20px;
+  }
+
+  .grammar__container {
+    max-width: 576px;
+  }
+}
+
+@media (min-width: 720px) {
+  .grammar__container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 940px) {
+  .grammar {
+    display: grid;
+    grid-template-columns: 200px auto;
+    padding: 0;
+  }
+
+  .grammar__nav {
+    position: static;
+    left: 0;
+
+    background: #3131d2;
+    height: 100%;
+    padding: 0;
+  }
+
+  .grammar__nav-btn span {
+    display: none;
+  }
+}
+
+.grammar__table-wrap {
+  overflow-x: auto;
+}

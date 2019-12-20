@@ -1,0 +1,236 @@
+/* 
+    File     : _card.scss
+    Date     : Sep 29, 2016
+    Author   : Jaymes Young <jaymes@phoenixjaymes.com>
+*/
+.card {
+  height: 350px;
+  margin: 0 auto 20px auto;
+  position: relative;
+  text-align: center;
+  width: 300px; }
+  @media (min-width: 720px) {
+    .card {
+      height: 480px;
+      width: 340px;
+      margin-bottom: 30px; } }
+
+.card__front {
+  padding: 10px;
+  transform: rotateX(0) rotateY(0); }
+  @media (min-width: 720px) {
+    .card__front {
+      padding: 20px; } }
+
+.card__back {
+  padding: 10px;
+  transform: rotateY(-179deg); }
+  @media (min-width: 720px) {
+    .card__back {
+      padding: 20px; } }
+  .card__back--verb {
+    padding: 10px;
+    transform: rotateY(-179deg); }
+    @media (min-width: 720px) {
+      .card__back--verb {
+        padding-top: 20px; } }
+
+.card__figure {
+  max-width: 300px;
+  margin: 0 0 10px 0; }
+
+.card__caption {
+  padding-top: 10px;
+  font-size: 1.25em; }
+
+.card__img {
+  border-radius: 5px;
+  height: 210px;
+  width: 210px; }
+  @media (min-width: 720px) {
+    .card__img {
+      height: 298px;
+      width: 298px; } }
+
+.card__text-wrap {
+  background: #fff7e2;
+  border: 1px solid #000;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto 10px auto;
+  height: 210px;
+  width: 210px; }
+  @media (min-width: 720px) {
+    .card__text-wrap {
+      height: 298px;
+      width: 298px; } }
+
+.card__text {
+  font-size: 1.25em;
+  font-weight: 600; }
+
+.card__example {
+  margin-bottom: 10px;
+  padding-left: 5px; }
+
+.card__heading {
+  margin-bottom: 10px; }
+  @media (min-width: 720px) {
+    .card__heading {
+      margin-bottom: 20px; } }
+
+.card__table {
+  background: #fff7e2;
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-size: 1.1em;
+  margin: 0 auto 10px auto;
+  padding: 5px;
+  text-align: left;
+  width: 270px; }
+  @media (min-width: 720px) {
+    .card__table {
+      margin-bottom: 20px;
+      width: 298px; } }
+  .card__table tr:nth-child(even) {
+    background: #fff; }
+
+.card__table-col-one {
+  padding: 2px 0 2px 3px;
+  width: 35%; }
+
+.card__table-col-two {
+  padding: 2px 0 2px 3px; }
+
+.card__verb-examples {
+  position: absolute;
+  left: calc(50% - 135px);
+  top: 0;
+  background: #ffedb9;
+  display: none;
+  height: 270px;
+  padding: 10px 5px;
+  text-align: left;
+  width: 270px; }
+  @media (min-width: 720px) {
+    .card__verb-examples {
+      left: calc(50% - 149px);
+      height: 300px;
+      padding: 20px 5px;
+      width: 298px; } }
+
+.card__verb-examples.showExamples {
+  display: block; }
+
+.card__button,
+.card__txt-flip,
+.card__txt-examples {
+  position: absolute;
+  bottom: 10px;
+  
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Germania One", "Brush Script MT", cursive;
+  font-size: 1.7em;
+  letter-spacing: 1px;
+  padding: 10px 7px;
+}
+
+.card__button {
+  right: 10px;
+}
+
+.card__txt-flip {
+  right: 10px;
+}
+
+.card__txt-examples {
+  left: 10px;
+}
+
+.card.js-flip-card .card__front {
+  transform: rotateY(179deg); }
+
+.card.js-flip-card .card__back, .card.js-flip-card .card__back--verb {
+  transform: rotateY(0deg); }
+
+.js-change-card .card__text-wrap, .js-change-card .card__text,
+.js-change-card .card__example,
+.js-change-card .card__figure,
+.js-change-card .card__table {
+  animation: show-change-card-in .5s linear forwards; }
+
+@keyframes show-change-card-in {
+  0% {
+    opacity: 1; }
+  25% {
+    opacity: 0; }
+  75% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+/* 
+    File     : _card-buttons.scss
+    Date     : Jan 23, 2017
+    Author   : Jaymes Young <jaymes@phoenixjaymes.com>
+*/
+.activity-buttons {
+  text-align: center;
+  margin-bottom: 20px; }
+
+/* 
+    File     : _cards-form.scss
+    Date     : Sep 29, 2016
+    Author   : Jaymes Young <jaymes@phoenixjaymes.com>
+*/
+.cards-form {
+  margin: 0 auto 1.25em auto;
+  max-width: 300px; }
+  .cards-form__label {
+    display: inline-block;
+    height: 30px;
+    padding: 5px 0;
+    width: 120px; }
+.cards-form__select {
+  display: inline-block;
+  height: 30px;
+  margin-bottom: 10px;
+  width: 170px;
+}
+
+
+
+
+/* 
+    File     : _cards-controls.scss
+    Date     : Sep 29, 2016
+    Author   : Jaymes Young <jaymes@phoenixjaymes.com>
+*/
+.cards-controls {
+  text-align: center;
+  height: 40px;
+  width: 100%;
+}
+
+.cards-controls__btn {
+  background: #3131d2;
+  border: none;
+  color: #ffc519; 
+}
+
+.cards-controls__btn:hover {
+  color: #b4b4e0; 
+  cursor: pointer;
+}
+
+.cards-controls__count {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  width: 140px;
+  vertical-align: top;
+}

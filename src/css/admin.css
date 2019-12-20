@@ -1,0 +1,84 @@
+.admin {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 150px auto;
+}
+
+.admin nav {
+  background: #3131d2;
+  height: 100%
+}
+.admin > section {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.admin nav > h3 {
+  background: #222293;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+  padding: 8px 0 8px 0;
+}
+
+/* File     : _options-menu.scss */
+.options-menu {
+  list-style: none;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.options-menu__item {
+  padding: 5px;
+}
+
+.options-menu__item h3 {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.options-menu__item h3 span {
+  font-size: .8rem;
+}
+
+.options-menu__item a,
+.faux-btn {
+  display: inline;
+  font-weight: 600;
+  padding: 7px 7px 0 7px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.options-menu__item a img,
+.faux-btn img {
+  width: 20px;
+}
+
+.options-menu__item a:link,
+.options-menu__item a:visited {
+  color: #ffc519; }
+  
+.options-menu__item a:hover,
+.faux-btn:hover {
+  background: #a9a9dc;
+  border-radius: 20px;
+  color: #3131d2;
+}
+
+
+
+/* @media (min-width: 544px) {
+
+}
+
+@media (min-width: 720px) {
+
+}
+
+@media (min-width: 940px) {
+
+} */
