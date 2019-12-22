@@ -1,8 +1,7 @@
 .grammar {
-  background: rgba(240, 240, 240, .4);
-  height: 100%;
   padding: 0;
   position: relative;
+  width: 100%;
 }
 
 .grammar p,
@@ -14,7 +13,6 @@
 .grammar ul {
   list-style-position: inside;
 }
-
 
 .grammar__nav {
   position: absolute;
