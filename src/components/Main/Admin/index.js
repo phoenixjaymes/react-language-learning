@@ -66,7 +66,7 @@ const Admin = () => {
           const verbLinks = getLinks(lang, 'verb');
 
           return (
-            <div className="home admin">
+            <div className="admin">
               <nav>
                 <h3>Admin</h3>
                 <ul className="options-menu">
