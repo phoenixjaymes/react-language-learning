@@ -2,6 +2,7 @@
   height: 100%;
   display: grid;
   grid-template-columns: 150px auto;
+  width: 100%;
 }
 
 .admin nav {
