@@ -585,6 +585,10 @@ section {
   padding-top: 20px;
 }
 
+.home {
+  margin: 0 auto;
+}
+
 .home__title {
   margin-bottom: 40px; }
   @media (min-width: 544px) {
