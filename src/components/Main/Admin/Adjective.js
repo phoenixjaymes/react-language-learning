@@ -12,23 +12,26 @@ import ConfirmDialog from './ConfirmDialog';
 // import withUtilities from './withUtilities';
 
 class Adjective extends Component {
-  state = {
-    itemId: '',
-    itemEnglish: '',
-    itemTranslation: '',
-    itemExample: '',
-    itemImage: 'none',
-    itemCategory: '',
-    itemCategory2: '5',
-    response: '',
-    status: '',
-    isDialogShown: false,
-    dialogMessage: 'Are you sure you want to make this change?',
-    umlauts: [
-      'itemTranslation', 'itemExample',
-    ],
-    umlautItem: '',
-    umlautStyles: {},
+  constructor(props) {
+    super(props);
+    this.state = {
+      itemId: '',
+      itemEnglish: '',
+      itemTranslation: '',
+      itemExample: '',
+      itemImage: 'none',
+      itemCategory: '',
+      itemCategory2: '5',
+      response: '',
+      status: '',
+      isDialogShown: false,
+      dialogMessage: 'Are you sure you want to make this change?',
+      umlauts: [
+        'itemTranslation', 'itemExample',
+      ],
+      umlautItem: '',
+      umlautStyles: {},
+    };
   }
 
   clearForm = () => {
@@ -63,7 +66,7 @@ class Adjective extends Component {
     const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
     fetch(`http://phoenixjaymes.com/assets/data/language/get-update-item.php?lang=${lang}&pos=adjective&id=${itemId}`)
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         const { isUpdateDeleteListVisible } = this.state;
         const data = responseData.item;
@@ -164,7 +167,7 @@ class Adjective extends Component {
         method: 'POST',
         body: formData,
       })
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         this.setState({
           response: `${responseData.status}: ${responseData.data.message}`,
@@ -210,7 +213,7 @@ class Adjective extends Component {
     const { umlautItem } = this.props;
     // const obj = {};
     // obj[umlautItem] = umlautToAdd;
-    this.setState(prevState => (
+    this.setState((prevState) => (
       { [umlautItem]: prevState[umlautItem] + umlautToAdd }
     ));
   }
@@ -234,7 +237,7 @@ class Adjective extends Component {
     // Update category options
     let categoryOptions = [];
     if (modifyType === 'update') {
-      categoryOptions = categories[lang].adjective.map(category => (
+      categoryOptions = categories[lang].adjective.map((category) => (
         <option key={category.id} value={category.id}>{category.name}</option>
       ));
     } else {
