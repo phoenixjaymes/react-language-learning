@@ -11,20 +11,23 @@ import Umlauts from './Umlauts';
 import ConfirmDialog from './ConfirmDialog';
 
 class Noun extends Component {
-  state = {
-    itemId: '',
-    itemEnglish: '',
-    itemBase: '',
-    itemTranslation: '',
-    itemExample: '',
-    itemGender: '',
-    itemImage: 'none',
-    itemCategory: '',
-    itemCategory2: '5',
-    response: '',
-    status: '',
-    isDialogShown: false,
-    dialogMessage: 'Are you sure you want to make this change?',
+  constructor(props) {
+    super(props);
+    this.state = {
+      itemId: '',
+      itemEnglish: '',
+      itemBase: '',
+      itemTranslation: '',
+      itemExample: '',
+      itemGender: '',
+      itemImage: 'none',
+      itemCategory: '',
+      itemCategory2: '5',
+      response: '',
+      status: '',
+      isDialogShown: false,
+      dialogMessage: 'Are you sure you want to make this change?',
+    };
   }
 
   clearForm = () => {
