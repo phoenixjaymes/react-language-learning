@@ -8,7 +8,9 @@ import PropTypes from 'prop-types';
 import HomeImage from '../HomeImage';
 import withContext from '../../Context';
 import Articles from './Articles';
-import Pronouns from './Prounouns';
+import Pronouns from './Pronouns';
+import Conjunctions from './Conjunctions';
+import Prepositions from './Prepositions';
 
 import '../../../css/grammar.css';
 
@@ -31,6 +33,8 @@ const Grammar = ({
         <h3 id="js-grammar" className="grammar__nav-btn" ><span>{btnShowContent}</span></h3>
         <Link to={`/${lang}/grammar/articles`}>Articles</Link>
         <Link to={`/${lang}/grammar/pronouns`}>Pronouns</Link>
+        <Link to={`/${lang}/grammar/conjunctions`}>Conjunctions</Link>
+        <Link to={`/${lang}/grammar/prepositions`}>Prepositions</Link>
       </nav>
 
       <section className="grammar_section">
@@ -43,6 +47,8 @@ const Grammar = ({
 
         <Route path="/:lang/grammar/articles" component={Articles} />
         <Route path="/:lang/grammar/pronouns" component={Pronouns} />
+        <Route path="/:lang/grammar/conjunctions" component={Conjunctions} />
+        <Route path="/:lang/grammar/prepositions" component={Prepositions} />
       </section>
     </div>
   );
