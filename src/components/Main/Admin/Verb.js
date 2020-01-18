@@ -12,25 +12,28 @@ import Umlauts from './Umlauts';
 import ConfirmDialog from './ConfirmDialog';
 
 class Verb extends Component {
-  state = {
-    itemId: '',
-    itemEnglish: '',
-    itemInfinitive: '',
-    itemTranslation: '',
-    itemExample: '',
-    itemType: '',
-    itemSeparable: 'no',
-    itemReflexive: 'no',
-    itemIch: '',
-    itemDu: '',
-    itemEr: '',
-    itemWir: '',
-    itemIhr: '',
-    itemSie: '',
-    response: '',
-    status: '',
-    isDialogShown: false,
-    dialogMessage: 'Are you sure you want to make this change?',
+  constructor(props) {
+    super(props);
+    this.state = {
+      itemId: '',
+      itemEnglish: '',
+      itemInfinitive: '',
+      itemTranslation: '',
+      itemExample: '',
+      itemType: '',
+      itemSeparable: 'no',
+      itemReflexive: 'no',
+      itemIch: '',
+      itemDu: '',
+      itemEr: '',
+      itemWir: '',
+      itemIhr: '',
+      itemSie: '',
+      response: '',
+      status: '',
+      isDialogShown: false,
+      dialogMessage: 'Are you sure you want to make this change?',
+    };
   }
 
   clearForm = () => {
@@ -43,7 +46,7 @@ class Verb extends Component {
     const { lang } = this.context;
 
     fetch(`http://phoenixjaymes.com/assets/data/language/get-update-item.php?lang=${lang}&pos=verb&id=${itemId}`)
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         const data = responseData.item;
         const isSeparableChecked = data.separable;
@@ -95,9 +98,9 @@ class Verb extends Component {
     });
   }
 
-  handleSeparable = () => this.setState(prevState => ({ itemSeparable: prevState.itemSeparable === 'yes' ? 'no' : 'yes' }))
+  handleSeparable = () => this.setState((prevState) => ({ itemSeparable: prevState.itemSeparable === 'yes' ? 'no' : 'yes' }))
 
-  handleReflexive = () => this.setState(prevState => ({ itemReflexive: prevState.itemReflexive === 'yes' ? 'no' : 'yes' }))
+  handleReflexive = () => this.setState((prevState) => ({ itemReflexive: prevState.itemReflexive === 'yes' ? 'no' : 'yes' }))
 
   isValid = () => {
     const {
@@ -188,7 +191,7 @@ class Verb extends Component {
         method: 'POST',
         body: formData,
       })
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         this.setState({
           response: `${responseData.status}: ${responseData.data.message}`,
@@ -219,7 +222,7 @@ class Verb extends Component {
     } = this.state;
     const { modifyType, categoryName } = this.props;
 
-    const categoryOptions = categories[lang].verb.map(category => (
+    const categoryOptions = categories[lang].verb.map((category) => (
       <option key={category.id} value={category.id}>{category.name}</option>
     ));
 

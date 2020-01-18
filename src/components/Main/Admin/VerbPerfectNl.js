@@ -12,18 +12,21 @@ import Umlauts from './Umlauts';
 import ConfirmDialog from './ConfirmDialog';
 
 class VerbPerfect extends Component {
-  state = {
-    itemId: '',
-    itemTranslation: '-',
-    itemPerfect: '',
-    itemExample: '',
-    itemType: '',
-    itemAuxiliary: '',
-    itemSeparable: '',
-    response: '',
-    status: '',
-    isDialogShown: false,
-    dialogMessage: 'Are you sure you want to make this change?',
+  constructor(props) {
+    super(props);
+    this.state = {
+      itemId: '',
+      itemTranslation: '-',
+      itemPerfect: '',
+      itemExample: '',
+      itemType: '',
+      itemAuxiliary: '',
+      itemSeparable: '',
+      response: '',
+      status: '',
+      isDialogShown: false,
+      dialogMessage: 'Are you sure you want to make this change?',
+    };
   }
 
   clearForm = () => {
@@ -36,7 +39,7 @@ class VerbPerfect extends Component {
     const { lang } = this.context;
 
     fetch(`http://phoenixjaymes.com/assets/data/language/get-update-item.php?lang=${lang}&pos=perfect&id=${itemId}`)
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         const data = responseData.item;
         this.setState({
@@ -129,7 +132,7 @@ class VerbPerfect extends Component {
         method: 'POST',
         body: formData,
       })
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         this.setState({
           response: `${responseData.status}: ${responseData.data.message}`,
@@ -158,7 +161,7 @@ class VerbPerfect extends Component {
       itemType, itemAuxiliary, response, status,
     } = this.state;
     const { modifyType, categoryName } = this.props;
-    const categoryOptions = categories[lang].verb.map(category => (
+    const categoryOptions = categories[lang].verb.map((category) => (
       <option key={category.id} value={category.id}>{category.name}</option>
     ));
 

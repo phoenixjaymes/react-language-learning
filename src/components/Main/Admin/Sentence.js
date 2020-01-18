@@ -12,19 +12,22 @@ import ConfirmDialog from './ConfirmDialog';
 
 
 class Sentence extends Component {
-  state = {
-    itemId: '',
-    itemSentence: '',
-    itemType: '',
-    itemCategory: '',
-    itemAnswer1: '',
-    itemExtraWords: '',
-    response: '',
-    status: '',
-    labelStatement: 'Statement',
-    labelTranslation: 'Translation',
-    isDialogShown: false,
-    dialogMessage: 'Are you sure you want to make this change?',
+  constructor(props) {
+    super(props);
+    this.state = {
+      itemId: '',
+      itemSentence: '',
+      itemType: '',
+      itemCategory: '',
+      itemAnswer1: '',
+      itemExtraWords: '',
+      response: '',
+      status: '',
+      labelStatement: 'Statement',
+      labelTranslation: 'Translation',
+      isDialogShown: false,
+      dialogMessage: 'Are you sure you want to make this change?',
+    };
   }
 
   clearForm = () => {
@@ -55,7 +58,7 @@ class Sentence extends Component {
     const { lang } = this.context;
 
     fetch(`http://phoenixjaymes.com/assets/data/language/get-update-item.php?lang=${lang}&pos=sentence&id=${itemId}`)
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         const data = responseData.item;
 
@@ -155,7 +158,7 @@ class Sentence extends Component {
         method: 'POST',
         body: formData,
       })
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         this.setState({
           response: `${responseData.status}: ${responseData.data.message}`,

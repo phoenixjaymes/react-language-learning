@@ -11,16 +11,19 @@ import ConfirmDialog from './ConfirmDialog';
 
 
 class VerbImperfectZA extends Component {
-  state = {
-    itemId: '',
-    itemTranslation: '-',
-    itemImperfect: '',
-    itemExample: '',
-    itemType: '',
-    response: '',
-    status: '',
-    isDialogShown: false,
-    dialogMessage: 'Are you sure you want to make this change?',
+  constructor(props) {
+    super(props);
+    this.state = {
+      itemId: '',
+      itemTranslation: '-',
+      itemImperfect: '',
+      itemExample: '',
+      itemType: '',
+      response: '',
+      status: '',
+      isDialogShown: false,
+      dialogMessage: 'Are you sure you want to make this change?',
+    };
   }
 
   clearForm = () => {
@@ -34,7 +37,7 @@ class VerbImperfectZA extends Component {
 
     // change url to get pos from props or match objects
     fetch(`http://phoenixjaymes.com/assets/data/language/get-update-item.php?lang=${lang}&pos=imperfect&id=${itemId}`)
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         const data = responseData.item;
         this.setState({
@@ -114,7 +117,7 @@ class VerbImperfectZA extends Component {
         method: 'POST',
         body: formData,
       })
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         this.setState({
           response: `${responseData.status}: ${responseData.data.message}`,
@@ -144,7 +147,7 @@ class VerbImperfectZA extends Component {
     } = this.state;
     const { modifyType, categoryName } = this.props;
 
-    const categoryOptions = categories[lang].verb.map(category => (
+    const categoryOptions = categories[lang].verb.map((category) => (
       <option key={category.id} value={category.id}>{category.name}</option>
     ));
 

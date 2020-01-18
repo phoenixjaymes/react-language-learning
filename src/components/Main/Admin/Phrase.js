@@ -9,14 +9,17 @@ import Umlauts from './Umlauts';
 import ConfirmDialog from './ConfirmDialog';
 
 class Phrase extends Component {
-  state = {
-    itemId: '',
-    itemEnglish: '',
-    itemTranslation: '',
-    response: '',
-    status: '',
-    isDialogShown: false,
-    dialogMessage: 'Are you sure you want to make this change?',
+  constructor(props) {
+    super(props);
+    this.state = {
+      itemId: '',
+      itemEnglish: '',
+      itemTranslation: '',
+      response: '',
+      status: '',
+      isDialogShown: false,
+      dialogMessage: 'Are you sure you want to make this change?',
+    };
   }
 
   clearForm = () => {
@@ -27,7 +30,7 @@ class Phrase extends Component {
     const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
     fetch(`http://phoenixjaymes.com/assets/data/language/get-update-item.php?lang=${lang}&pos=phrase&id=${itemId}`)
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         const data = responseData.item;
         this.setState({
@@ -111,7 +114,7 @@ class Phrase extends Component {
         method: 'POST',
         body: formData,
       })
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         this.setState({
           response: `${responseData.status}: ${responseData.data.message}`,
