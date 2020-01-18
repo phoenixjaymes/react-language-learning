@@ -131,10 +131,10 @@ class VerbZA extends Component {
     const formData = new FormData();
     formData.append('lang', lang);
     formData.append('pos', 'verb');
-    formData.append('english', itemEnglish);
-    formData.append('infinitive', itemInfinitive);
-    formData.append('translation', itemTranslation);
-    formData.append('example', itemExample);
+    formData.append('english', itemEnglish.trim());
+    formData.append('infinitive', itemInfinitive.trim());
+    formData.append('translation', itemTranslation.trim());
+    formData.append('example', itemExample.trim());
     formData.append('type', itemType);
     formData.append('separable', itemSeparable);
     formData.append('reflexive', itemReflexive);

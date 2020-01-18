@@ -115,9 +115,9 @@ class Blank extends Component {
     formData.append('lang', lang);
     formData.append('pos', 'blank');
     formData.append('category', itemCategory);
-    formData.append('sentence', itemSentence);
-    formData.append('answer', itemAnswer);
-    formData.append('words', itemWords);
+    formData.append('sentence', itemSentence.trim());
+    formData.append('answer', itemAnswer.trim());
+    formData.append('words', itemWords.trim());
 
     if (modifyType === 'add') {
       fetchUrl = 'http://phoenixjaymes.com/assets/data/language/add-item.php';

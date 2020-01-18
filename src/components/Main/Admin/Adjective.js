@@ -148,10 +148,10 @@ class Adjective extends Component {
     const formData = new FormData();
     formData.append('lang', lang);
     formData.append('pos', 'adjective');
-    formData.append('english', itemEnglish);
-    formData.append('translation', itemTranslation);
-    formData.append('example', itemExample);
-    formData.append('img', itemImage);
+    formData.append('english', itemEnglish.trim());
+    formData.append('translation', itemTranslation.trim());
+    formData.append('example', itemExample.trim());
+    formData.append('img', itemImage.trim());
     formData.append('category', itemCategory);
     formData.append('category2', itemCategory2);
 

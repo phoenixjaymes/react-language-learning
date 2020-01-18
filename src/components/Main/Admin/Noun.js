@@ -180,12 +180,12 @@ class Noun extends Component {
     const formData = new FormData();
     formData.append('lang', lang);
     formData.append('pos', 'noun');
-    formData.append('english', itemEnglish);
-    formData.append('base', itemBase);
-    formData.append('translation', itemTranslation);
-    formData.append('example', itemExample);
+    formData.append('english', itemEnglish.trim());
+    formData.append('base', itemBase.trim());
+    formData.append('translation', itemTranslation.trim());
+    formData.append('example', itemExample.trim());
     formData.append('gender', itemGender);
-    formData.append('img', itemImage);
+    formData.append('img', itemImage.trim());
     formData.append('category', itemCategory);
     formData.append('category2', itemCategory2);
 

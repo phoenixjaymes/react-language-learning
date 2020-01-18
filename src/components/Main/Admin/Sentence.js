@@ -140,11 +140,11 @@ class Sentence extends Component {
     const formData = new FormData();
     formData.append('lang', lang);
     formData.append('pos', 'sentence');
-    formData.append('sentence', itemSentence);
+    formData.append('sentence', itemSentence.trim());
     formData.append('type', itemType);
     formData.append('category', itemCategory);
-    formData.append('answer1', itemAnswer1);
-    formData.append('extraWords', itemExtraWords);
+    formData.append('answer1', itemAnswer1.trim());
+    formData.append('extraWords', itemExtraWords.trim());
 
     if (modifyType === 'add') {
       fetchUrl = 'http://phoenixjaymes.com/assets/data/language/add-item.php';

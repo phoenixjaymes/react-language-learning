@@ -122,8 +122,8 @@ class VerbPerfect extends Component {
     formData.append('lang', lang);
     formData.append('id', itemId);
     formData.append('pos', 'perfect');
-    formData.append('perfect', itemPerfect);
-    formData.append('example', itemExample);
+    formData.append('perfect', itemPerfect.trim());
+    formData.append('example', itemExample.trim());
     formData.append('type', itemType);
     formData.append('auxiliary', itemAuxiliary);
 

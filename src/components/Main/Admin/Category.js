@@ -92,7 +92,7 @@ class Category extends Component {
     const formData = new FormData();
     formData.append('pos', 'category');
     formData.append('categoryType', itemType);
-    formData.append('category', itemCategory);
+    formData.append('category', itemCategory.trim());
 
     if (modifyType === 'add') {
       fetchUrl = 'http://phoenixjaymes.com/assets/data/language/add-item.php';

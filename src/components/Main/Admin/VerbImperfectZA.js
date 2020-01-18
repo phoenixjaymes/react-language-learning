@@ -108,8 +108,8 @@ class VerbImperfectZA extends Component {
     formData.append('lang', lang);
     formData.append('id', itemId);
     formData.append('pos', 'imperfect');
-    formData.append('translation', itemImperfect);
-    formData.append('example', itemExample);
+    formData.append('translation', itemImperfect.trim());
+    formData.append('example', itemExample.trim());
     formData.append('type', itemType);
 
     fetch(fetchUrl,

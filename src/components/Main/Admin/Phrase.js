@@ -99,8 +99,8 @@ class Phrase extends Component {
     const formData = new FormData();
     formData.append('lang', lang);
     formData.append('pos', 'phrase');
-    formData.append('english', itemEnglish);
-    formData.append('translation', itemTranslation);
+    formData.append('english', itemEnglish.trim());
+    formData.append('translation', itemTranslation.trim());
 
     if (modifyType === 'add') {
       fetchUrl = 'http://phoenixjaymes.com/assets/data/language/add-item.php';

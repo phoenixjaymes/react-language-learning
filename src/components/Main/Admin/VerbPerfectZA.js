@@ -112,8 +112,8 @@ class VerbPerfectZA extends Component {
     formData.append('lang', lang);
     formData.append('id', itemId);
     formData.append('pos', 'perfect');
-    formData.append('translation', itemPerfect);
-    formData.append('example', itemExample);
+    formData.append('translation', itemPerfect.trim());
+    formData.append('example', itemExample.trim());
     formData.append('type', itemType);
     formData.append('auxiliary', itemAuxiliary);
 

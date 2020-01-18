@@ -165,19 +165,19 @@ class Verb extends Component {
     const formData = new FormData();
     formData.append('lang', lang);
     formData.append('pos', 'verb');
-    formData.append('english', itemEnglish);
-    formData.append('infinitive', itemInfinitive);
-    formData.append('translation', itemTranslation);
-    formData.append('example', itemExample);
+    formData.append('english', itemEnglish.trim());
+    formData.append('infinitive', itemInfinitive.trim());
+    formData.append('translation', itemTranslation.trim());
+    formData.append('example', itemExample.trim());
     formData.append('type', itemType);
     formData.append('separable', itemSeparable);
     formData.append('reflexive', itemReflexive);
-    formData.append('ich', itemIch);
-    formData.append('du', itemDu);
-    formData.append('er_sie_es', itemEr);
-    formData.append('wir', itemWir);
-    formData.append('ihr', itemIhr);
-    formData.append('sie_sie', itemSie);
+    formData.append('ich', itemIch.trim());
+    formData.append('du', itemDu.trim());
+    formData.append('er_sie_es', itemEr.trim());
+    formData.append('wir', itemWir.trim());
+    formData.append('ihr', itemIhr.trim());
+    formData.append('sie_sie', itemSie.trim());
 
     if (modifyType === 'add') {
       fetchUrl = 'http://phoenixjaymes.com/assets/data/language/add-item.php';

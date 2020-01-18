@@ -141,14 +141,14 @@ class VerbImperfect extends Component {
     formData.append('lang', lang);
     formData.append('id', itemId);
     formData.append('pos', 'imperfect');
-    formData.append('example', itemExample);
+    formData.append('example', itemExample.trim());
     formData.append('type', itemType);
-    formData.append('ich', itemIch);
-    formData.append('du', itemDu);
-    formData.append('er_sie_es', itemEr);
-    formData.append('wir', itemWir);
-    formData.append('ihr', itemIhr);
-    formData.append('sie_sie', itemSie);
+    formData.append('ich', itemIch.trim());
+    formData.append('du', itemDu.trim());
+    formData.append('er_sie_es', itemEr.trim());
+    formData.append('wir', itemWir.trim());
+    formData.append('ihr', itemIhr.trim());
+    formData.append('sie_sie', itemSie.trim());
 
     fetch(fetchUrl,
       {

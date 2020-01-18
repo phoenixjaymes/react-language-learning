@@ -168,20 +168,20 @@ class VerbNl extends Component {
     const formData = new FormData();
     formData.append('lang', lang);
     formData.append('pos', 'verb');
-    formData.append('english', itemEnglish);
-    formData.append('infinitive', itemInfinitive);
-    formData.append('translation', itemTranslation);
-    formData.append('example', itemExample);
+    formData.append('english', itemEnglish.trim());
+    formData.append('infinitive', itemInfinitive.trim());
+    formData.append('translation', itemTranslation.trim());
+    formData.append('example', itemExample.trim());
     formData.append('type', itemType);
     formData.append('separable', itemSeparable);
     formData.append('reflexive', itemReflexive);
-    formData.append('ik', itemIk);
-    formData.append('jij', itemJij);
-    formData.append('hij', itemHij);
-    formData.append('u', itemU);
-    formData.append('wij', itemWij);
-    formData.append('jullie', itemJullie);
-    formData.append('zij', itemZij);
+    formData.append('ik', itemIk.trim());
+    formData.append('jij', itemJij.trim());
+    formData.append('hij', itemHij.trim());
+    formData.append('u', itemU.trim());
+    formData.append('wij', itemWij.trim());
+    formData.append('jullie', itemJullie.trim());
+    formData.append('zij', itemZij.trim());
 
     if (modifyType === 'add') {
       fetchUrl = 'http://phoenixjaymes.com/assets/data/language/add-item.php';
