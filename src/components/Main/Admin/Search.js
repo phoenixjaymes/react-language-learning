@@ -7,18 +7,42 @@ import svgSearch from './search.svg';
 import '../../../css/search.css';
 
 class Search extends Component {
-  state = {
-    jsonData: [],
-    modifiedData: [],
-    itemType: '',
-    itemRange: 'a-d',
-    sortColumn: '',
-    sortDirection: '',
+  constructor(props) {
+    super(props);
+    this.state = {
+      jsonData: [],
+      modifiedData: [],
+      itemType: '',
+      itemRange: 'a-d',
+      extraOptions: [],
+    };
   }
 
-  handleType = e => this.setState({ itemType: e.target.value })
+  getExtraOptions = (itemType) => {
+    const value = this.context;
+    const { lang, categories } = value;
+    // const options = categories[lang][itemType].map((item) => (
+    //   <option key={item.id} value={item.id}>{item.name}</option>
+    // ));
 
-  handleRange = e => this.setState({ itemRange: e.target.value })
+    this.setState({ extraOptions: categories[lang][itemType] });
+  }
+
+  handleType = (e) => {
+    if (e.target.value === 'adjective'
+    || e.target.value === 'noun'
+    || e.target.value === 'verb') {
+      this.getExtraOptions(e.target.value);
+      this.setState({ itemType: e.target.value });
+    } else {
+      this.setState({
+        itemType: e.target.value,
+        extraOptions: [],
+      });
+    }
+  }
+
+  handleRange = (e) => this.setState({ itemRange: e.target.value })
 
   handleSearchClick = () => {
     const { itemType, itemRange } = this.state;
@@ -29,7 +53,7 @@ class Search extends Component {
     }
 
     fetch(`http://phoenixjaymes.com/assets/data/language/get-search.php?lang=${lang}&type=${itemType}&range=${itemRange}`)
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then(
         (responseData) => {
           this.setState({
@@ -43,85 +67,9 @@ class Search extends Component {
       });
   }
 
-  sortTable = (e) => {
-    const dataId = e.target.getAttribute('data-id');
-
-    if (dataId === 'id') {
-      this.sortId();
-    } else {
-      this.sortColumns(dataId);
-    }
-  }
-
-  sortId = () => {
-    const { jsonData, sortColumn, sortDirection } = this.state;
-    let sortedData;
-
-    if (sortColumn !== 'id') {
-      this.setState({ sortColumn: 'id', sortDirection: 'asc' });
-      sortedData = jsonData.sort((a, b) => a.id - b.id);
-    } else if (sortColumn === 'id' && sortDirection === 'asc') {
-      this.setState({ sortDirection: 'dsc' });
-      sortedData = jsonData.sort((a, b) => b.id - a.id);
-    } else if (sortColumn === 'id' && sortDirection === 'dsc') {
-      this.setState({ sortDirection: 'asc' });
-      sortedData = jsonData.sort((a, b) => a.id - b.id);
-    }
-
-    this.setState({ modifiedData: sortedData });
-  }
-
-  sortColumns = (dataId) => {
-    const { jsonData, sortColumn, sortDirection } = this.state;
-    let sortedData;
-
-    if (sortColumn !== dataId) {
-      this.setState({ sortColumn: dataId, sortDirection: 'asc' });
-      sortedData = jsonData.sort((a, b) => this.sortAsc(a, b, dataId));
-    } else if (sortColumn === dataId && sortDirection === 'asc') {
-      this.setState({ sortDirection: 'dsc' });
-      sortedData = jsonData.sort((a, b) => this.sortDsc(a, b, dataId));
-    } else if (sortColumn === dataId && sortDirection === 'dsc') {
-      this.setState({ sortDirection: 'asc' });
-      sortedData = jsonData.sort((a, b) => this.sortAsc(a, b, dataId));
-    }
-
-    this.setState({ modifiedData: sortedData });
-  }
-
-  sortAsc = (a, b, dataId) => {
-    const nameA = a[dataId].toUpperCase(); // ignore upper and lowercase
-    const nameB = b[dataId].toUpperCase(); // ignore upper and lowercase
-
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
-
-    // names must be equal
-    return 0;
-  }
-
-  sortDsc = (a, b, dataId) => {
-    const nameA = a[dataId].toUpperCase(); // ignore upper and lowercase
-    const nameB = b[dataId].toUpperCase(); // ignore upper and lowercase
-
-    if (nameA > nameB) {
-      return -1;
-    }
-    if (nameA < nameB) {
-      return 1;
-    }
-
-    // names must be equal
-    return 0;
-  }
-
   render() {
     const {
-      jsonData, modifiedData, itemType, itemRange,
+      jsonData, modifiedData, itemType, itemRange, extraOptions,
     } = this.state;
     let results;
 
@@ -153,7 +101,7 @@ class Search extends Component {
             </select>
           </label>
 
-          <label className="search-form__label">
+          <label className="search-form__label" htmlFor="selRange">
             Range
             <select
               id="selRange"
@@ -168,6 +116,11 @@ class Search extends Component {
               <option value="q-t">Q - T</option>
               <option value="u-z">U - Z</option>
               <option value="umlauts">Umlauts</option>
+              {extraOptions.length > 0 && (
+                extraOptions.map((item) => (
+                  <option key={item.id} value={item.id}>{item.name}</option>
+                ))
+              )}
             </select>
           </label>
           <div className="search-form__btn-search">
