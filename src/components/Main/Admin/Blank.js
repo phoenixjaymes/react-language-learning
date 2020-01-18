@@ -11,16 +11,19 @@ import Umlauts from './Umlauts';
 import ConfirmDialog from './ConfirmDialog';
 
 class Blank extends Component {
-  state = {
-    itemId: '',
-    itemCategory: '',
-    itemSentence: '',
-    itemAnswer: '',
-    itemWords: '',
-    response: '',
-    status: '',
-    isDialogShown: false,
-    dialogMessage: 'Are you sure you want to make this change?',
+  constructor(props) {
+    super(props);
+    this.state = {
+      itemId: '',
+      itemCategory: '',
+      itemSentence: '',
+      itemAnswer: '',
+      itemWords: '',
+      response: '',
+      status: '',
+      isDialogShown: false,
+      dialogMessage: 'Are you sure you want to make this change?',
+    };
   }
 
   clearForm = () => {
@@ -37,7 +40,7 @@ class Blank extends Component {
     const { lang } = this.context;
 
     fetch(`http://phoenixjaymes.com/assets/data/language/get-update-item.php?lang=${lang}&pos=blank&id=${itemId}`)
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         const data = responseData.item;
 
@@ -128,7 +131,7 @@ class Blank extends Component {
         method: 'POST',
         body: formData,
       })
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         this.setState({
           response: `${responseData.status}: ${responseData.data.message}`,
@@ -161,7 +164,7 @@ class Blank extends Component {
 
     const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
 
-    const categoryOptions = categories[lang].blank.map(category => (
+    const categoryOptions = categories[lang].blank.map((category) => (
       <option key={category.id} value={category.id}>{category.name}</option>
     ));
 
