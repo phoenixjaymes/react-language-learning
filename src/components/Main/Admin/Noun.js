@@ -63,7 +63,7 @@ class Noun extends Component {
     const { isUpdateDeleteListVisible } = this.state;
     const itemId = e.target.getAttribute('data-id');
     fetch(`http://phoenixjaymes.com/assets/data/language/get-update-item.php?lang=${lang}&pos=noun&id=${itemId}`)
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         const data = responseData.item;
         this.setState({
@@ -201,7 +201,7 @@ class Noun extends Component {
         method: 'POST',
         body: formData,
       })
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         this.setState({
           response: `${responseData.status}: ${responseData.data.message}`,
@@ -235,7 +235,7 @@ class Noun extends Component {
     // Update category options
     let categoryOptions = [];
     if (modifyType === 'update') {
-      categoryOptions = categories[lang].noun.map(category => (
+      categoryOptions = categories[lang].noun.map((category) => (
         <option key={category.id} value={category.id}>{category.name}</option>
       ));
     } else {
