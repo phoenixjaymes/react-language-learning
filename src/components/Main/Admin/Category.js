@@ -7,14 +7,17 @@ import FormMessage from './FormMessage';
 import ConfirmDialog from './ConfirmDialog';
 
 class Category extends Component {
-  state = {
-    itemId: '',
-    itemType: 'word',
-    itemCategory: '',
-    response: '',
-    status: '',
-    isDialogShown: false,
-    dialogMessage: 'Are you sure you want to make this change?',
+  constructor(props) {
+    super(props);
+    this.state = {
+      itemId: '',
+      itemType: 'word',
+      itemCategory: '',
+      response: '',
+      status: '',
+      isDialogShown: false,
+      dialogMessage: 'Are you sure you want to make this change?',
+    };
   }
 
   clearForm = () => {
@@ -27,7 +30,7 @@ class Category extends Component {
     this.setState({ itemType });
 
     fetch(`http://phoenixjaymes.com/assets/data/language/get-update-item.php?pos=category&id=${itemId}&type=${itemType}`)
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         const data = responseData.item;
         this.setState({
@@ -103,7 +106,7 @@ class Category extends Component {
         method: 'POST',
         body: formData,
       })
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         this.setState({
           response: `${responseData.status}: ${responseData.data.message}`,
