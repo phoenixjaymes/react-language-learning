@@ -57,10 +57,10 @@ class Sentence extends Component {
     const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
 
-    fetch(`http://phoenixjaymes.com/assets/data/language/get-update-item.php?lang=${lang}&pos=sentence&id=${itemId}`)
+    fetch(`http://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=sentence&id=${itemId}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        const data = responseData.item;
+        const data = responseData.data.item;
 
         this.setLabels(data.type);
         this.setState({

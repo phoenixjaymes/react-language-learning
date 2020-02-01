@@ -37,10 +37,10 @@ class VerbZA extends Component {
     const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
 
-    fetch(`http://phoenixjaymes.com/assets/data/language/get-update-item.php?lang=${lang}&pos=verb&id=${itemId}`)
+    fetch(`http://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=verb&id=${itemId}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        const data = responseData.item;
+        const data = responseData.data.item;
         const isSeparableChecked = data.separable;
         const isReflexiveChecked = data.reflexive;
         this.setState({

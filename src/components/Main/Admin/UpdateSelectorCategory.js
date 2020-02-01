@@ -15,11 +15,11 @@ class UpdateSelectorCategory extends Component {
   handleSelectOrButton = (type) => {
     const { handleIconClick } = this.props;
 
-    fetch(`http://phoenixjaymes.com/assets/data/language/get-update-words.php?pos=category&type=${type}`)
+    fetch(`http://phoenixjaymes.com/assets/data/language/updates?qnt=all&pos=category&type=${type}`)
       .then(reponse => reponse.json())
       .then(
         (responseData) => {
-          const wordList = responseData.map(item => (
+          const wordList = responseData.data.map(item => (
             <tr key={item.id}>
               <td className="item-select__table-td-translation">
                 <span className="tool" data-tip={item.category}>{item.category}</span>

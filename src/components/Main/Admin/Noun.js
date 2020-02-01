@@ -62,10 +62,10 @@ class Noun extends Component {
     const { lang } = this.context;
     const { isUpdateDeleteListVisible } = this.state;
     const itemId = e.target.getAttribute('data-id');
-    fetch(`http://phoenixjaymes.com/assets/data/language/get-update-item.php?lang=${lang}&pos=noun&id=${itemId}`)
+    fetch(`http://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=noun&id=${itemId}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        const data = responseData.item;
+        const data = responseData.data.item;
         this.setState({
           itemId: data.id,
           itemEnglish: data.english,

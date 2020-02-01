@@ -29,10 +29,10 @@ class Phrase extends Component {
   handleIconClick = (e) => {
     const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
-    fetch(`http://phoenixjaymes.com/assets/data/language/get-update-item.php?lang=${lang}&pos=phrase&id=${itemId}`)
+    fetch(`http://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=phrase&id=${itemId}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        const data = responseData.item;
+        const data = responseData.data.item;
         this.setState({
           itemId: data.id,
           itemEnglish: data.english,

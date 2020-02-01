@@ -22,10 +22,10 @@ class PhraseCard extends Component {
       .then(reponse => reponse.json())
       .then((responseData) => {
         this.setState({
-          data: responseData,
-          english: responseData[0].english,
-          translation: responseData[0].translation,
-          totalCards: responseData.length,
+          data: responseData.data,
+          english: responseData.data[0].english,
+          translation: responseData.data[0].translation,
+          totalCards: responseData.data.length,
           isLoaded: true,
         });
       })

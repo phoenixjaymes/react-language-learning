@@ -32,25 +32,25 @@ class VerbCard extends Component {
   componentDidMount() {
     const { lang, category, activityId } = this.props;
     fetch(`http://phoenixjaymes.com/assets/data/language/get-cards.php?lang=${lang}&pos=${category}&cat=${activityId}`)
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         this.setState({
-          data: responseData,
-          english: responseData[0].english,
-          translation: responseData[0].translation,
-          ik: responseData[0].ik,
-          jij: responseData[0].jij,
-          hij: responseData[0].hij,
-          u: responseData[0].u,
-          wij: responseData[0].wij,
-          jullie: responseData[0].jullie,
-          zij: responseData[0].zij,
-          image: responseData[0].img,
-          gender: responseData[0].gender,
-          example: responseData[0].example,
-          exPerfect: responseData[0].ex_perfect,
-          exImperfect: responseData[0].ex_imperfect,
-          totalCards: responseData.length,
+          data: responseData.data,
+          english: responseData.data[0].english,
+          translation: responseData.data[0].translation,
+          ik: responseData.data[0].ik,
+          jij: responseData.data[0].jij,
+          hij: responseData.data[0].hij,
+          u: responseData.data[0].u,
+          wij: responseData.data[0].wij,
+          jullie: responseData.data[0].jullie,
+          zij: responseData.data[0].zij,
+          image: responseData.data[0].img,
+          gender: responseData.data[0].gender,
+          example: responseData.data[0].example,
+          exPerfect: responseData.data[0].ex_perfect,
+          exImperfect: responseData.data[0].ex_imperfect,
+          totalCards: responseData.data.length,
           isLoaded: true,
         });
       })

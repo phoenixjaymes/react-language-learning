@@ -36,8 +36,8 @@ class GenericCard extends Component {
     };
 
     fetch(`http://phoenixjaymes.com/assets/data/language/get-cards.php?lang=${lang}&pos=${category}&cat=${activityId}`)
-      .then(reponse => reponse.json())
-      .then(responseData => genericDeck(responseData))
+      .then((reponse) => reponse.json())
+      .then((responseData) => genericDeck(responseData.data))
       .catch((error) => {
         console.log('Error fetching and parsing data', error);
         this.setState({ error: true, isLoaded: true });

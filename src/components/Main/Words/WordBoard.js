@@ -25,8 +25,8 @@ class WordBoard extends Component {
     };
 
     fetch(`http://phoenixjaymes.com/assets/data/language/get-words.php?lang=${lang}&pos=${category}`)
-      .then(reponse => reponse.json())
-      .then(responseData => wordList(responseData))
+      .then((reponse) => reponse.json())
+      .then((responseData) => wordList(responseData.data))
       .catch((error) => {
         this.setState({ isLoaded: true, error: true });
         console.log('Error fetching and parsing data', error);

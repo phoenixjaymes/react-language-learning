@@ -18,11 +18,11 @@ class UpdateSelector extends Component {
     const { lang } = this.context;
     const { type, handleIconClick } = this.props;
 
-    fetch(`http://phoenixjaymes.com/assets/data/language/get-update-words.php?lang=${lang}&pos=${type}&category=${categoryId}`)
+    fetch(`http://phoenixjaymes.com/assets/data/language/updates?qnt=all&lang=${lang}&pos=${type}&category=${categoryId}`)
       .then(reponse => reponse.json())
       .then(
         (responseData) => {
-          const wordList = responseData.map(item => (
+          const wordList = responseData.data.map(item => (
             <tr key={item.id}>
               <td className="item-select__table-td-translation">
                 <span className="tool" data-tip={item.english}>{item.translation}</span>

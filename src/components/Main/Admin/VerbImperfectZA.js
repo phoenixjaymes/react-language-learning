@@ -36,10 +36,10 @@ class VerbImperfectZA extends Component {
     const { lang } = this.context;
 
     // change url to get pos from props or match objects
-    fetch(`http://phoenixjaymes.com/assets/data/language/get-update-item.php?lang=${lang}&pos=imperfect&id=${itemId}`)
+    fetch(`http://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=imperfect&id=${itemId}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        const data = responseData.item;
+        const data = responseData.data.item;
         this.setState({
           itemId: data.id,
           itemTranslation: data.translation,

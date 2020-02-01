@@ -29,10 +29,10 @@ class Category extends Component {
     const itemType = e.target.getAttribute('data-type');
     this.setState({ itemType });
 
-    fetch(`http://phoenixjaymes.com/assets/data/language/get-update-item.php?pos=category&id=${itemId}&type=${itemType}`)
+    fetch(`http://phoenixjaymes.com/assets/data/language/updates?pos=category&id=${itemId}&type=${itemType}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        const data = responseData.item;
+        const data = responseData.data.item;
         this.setState({
           itemId: data.id,
           itemCategory: data.category,

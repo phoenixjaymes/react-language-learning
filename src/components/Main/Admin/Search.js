@@ -57,8 +57,8 @@ class Search extends Component {
       .then(
         (responseData) => {
           this.setState({
-            jsonData: responseData,
-            modifiedData: responseData,
+            jsonData: responseData.data,
+            modifiedData: responseData.data,
           });
         },
       )

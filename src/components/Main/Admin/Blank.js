@@ -39,10 +39,10 @@ class Blank extends Component {
     const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
 
-    fetch(`http://phoenixjaymes.com/assets/data/language/get-update-item.php?lang=${lang}&pos=blank&id=${itemId}`)
+    fetch(`http://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=blank&id=${itemId}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        const data = responseData.item;
+        const data = responseData.data.item;
 
         this.setState({
           itemId: data.id,

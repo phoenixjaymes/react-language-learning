@@ -60,8 +60,8 @@ class SentenceBoard extends Component {
     };
 
     fetch(`http://phoenixjaymes.com/assets/data/language/get-sentences.php?lang=${lang}&cat=${category}&id=${activityId}`)
-      .then(reponse => reponse.json())
-      .then(responseData => sentenceList(responseData))
+      .then((reponse) => reponse.json())
+      .then((responseData) => sentenceList(responseData.data))
       .catch((error) => {
         console.log('Error fetching and parsing data', error);
       });
