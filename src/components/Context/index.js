@@ -9,12 +9,15 @@ const { Consumer } = LearningContext;
 export const LearningConsumer = Consumer;
 
 export class Provider extends Component {
-  state = {
-    lang: 'de',
-    loading: true,
-    error: false,
-    jsonCategories: {},
-    isLoggedIn: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      lang: 'de',
+      loading: true,
+      error: false,
+      jsonCategories: {},
+      isLoggedIn: false,
+    };
   }
 
   componentDidMount() {
@@ -32,7 +35,7 @@ export class Provider extends Component {
       });
     } else {
       fetch('http://phoenixjaymes.com/assets/data/language/get-categories.php')
-        .then(reponse => reponse.json())
+        .then((reponse) => reponse.json())
         .then((responseData) => {
           sessionStorage.setItem('categories', JSON.stringify(responseData.data));
           this.setState({
@@ -55,7 +58,7 @@ export class Provider extends Component {
     this.setState({ loading: true });
 
     fetch('http://phoenixjaymes.com/assets/data/language/get-categories.php')
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         sessionStorage.setItem('categories', JSON.stringify(responseData.data));
         this.setState({
@@ -139,7 +142,7 @@ export default function withContext(WrappedComponent) {
   return function ContextComponent(props) {
     return (
       <Consumer>
-        {context => <WrappedComponent {...props} context={context} />}
+        {(context) => <WrappedComponent {...props} context={context} />}
       </Consumer>
     );
   };
