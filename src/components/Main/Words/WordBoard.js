@@ -43,9 +43,13 @@ class WordBoard extends Component {
           return {
             ...word,
             isClicked: !word.isClicked,
+            isClickCorrect: true,
           };
         }
-        return word;
+        return {
+          ...word,
+          isClickCorrect: true,
+        };
       }),
     });
   }
