@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import WordBoardButton from './WordBoardButton';
+
+import styles from "./wordBoard.module.css";
+
 class WordBoard extends Component {
   state = {
-    clickClass: '',
-    eleFirstClick: undefined,
     isLoaded: false,
     error: false,
 
     words: [],
-    wordOneId: undefined,
-    wordOneIndex: undefined,
-    wordTwoId: undefined,
-    wordTwoIndex: undefined,
+    firstClickedId: undefined,
+    firstClickedMatchId: undefined,
   }
 
   componentDidMount() {
@@ -33,94 +33,90 @@ class WordBoard extends Component {
       });
   }
 
-  wordClick = (index, id, e) => {
-    const {
-      wordOneId, wordOneIndex, wordTwoId, eleFirstClick,
-    } = this.state;
-    if (wordOneId === undefined) {
-      const eleClciked = e.target.parentElement;
-      eleClciked.classList.add('on');
-      this.setState({
-        wordOneId: id,
-        wordOneIndex: index,
-        eleFirstClick: eleClciked,
-      });
-      // return;
-    } else if (wordOneIndex === index && wordTwoId === undefined) {
-      e.target.parentElement.classList.remove('on');
+  toggleClicked = (idToToggle, id, matchId) => {
+    const { words } = this.state;
+    this.setState({
+      firstClickedId: id,
+      firstClickedMatchId: matchId,
+      words: words.map((word) => {
+        if (idToToggle === word.id) {
+          return {
+            ...word,
+            isClicked: !word.isClicked,
+          };
+        }
+        return word;
+      }),
+    });
+  }
 
-      this.setState({
-        wordOneId: undefined,
-        wordOneIndex: undefined,
-      });
-    } else if ((wordOneId !== undefined) && (wordTwoId === undefined)) {
-      this.setState({
-        wordTwoId: id,
-        wordTwoIndex: index,
-      });
+  checkForMatch = (id, matchId) => {
+    const { words, firstClickedMatchId } = this.state;
 
-      this.checkForMatch(id, index, eleFirstClick);
+    if (matchId === firstClickedMatchId) {
+ 
+      this.setState(prevState => ({
+        firstClickedId: undefined,
+        firstClickedMatchId: undefined,
+        words: words.map((word) => {
+          if (matchId === word.matchId) {
+            return {
+              ...word,
+              isClicked: false,
+              isMatched: true,
+              isClickCorrect: true,
+            };
+          }
+          return {
+            ...word,
+            isClickCorrect: true,
+          };
+        }),
+      }));
+    } else {  console.log('wrong click');
+      this.setState(prevState => ({
+        words: words.map((word) => {
+          if (id === word.id) {
+            return {
+              ...word,
+              isClickCorrect: false,
+            };
+          }
+          return {
+            ...word,
+            isClickCorrect: true,
+          };
+        }),
+      }));
     }
   }
 
-  checkForMatch = (wTwoId, wTwoIndex, eleFirstClick) => {
-    const { wordOneId, wordOneIndex, words } = this.state;
-    const { showMessage } = this.props;
+  handleWordClick = (obj) => {
+    const { firstClickedId } = this.state;
+    const { id, matchId } = obj;
 
-    // Word match
-    if ((wordOneId === wTwoId) && (wordOneIndex !== wTwoIndex)) {
-
-      if (words.length === 2) {
-        showMessage(true);
+    if (!obj.isMatched) {
+      if (firstClickedId === undefined) {
+        this.toggleClicked(id, id, matchId);
+      } else if (firstClickedId === id) {
+        this.toggleClicked(id, undefined, undefined);
+      } else if (firstClickedId !== id) {
+        this.checkForMatch(id, matchId);
       }
-
-      eleFirstClick.classList.remove('on');
-
-      if (wordOneIndex > wTwoIndex) {
-        this.setState((prevState) => {
-          const oldArray = prevState.words;
-          oldArray.splice(prevState.wordOneIndex, 1);
-          oldArray.splice(wTwoIndex, 1);
-          return {
-            words: oldArray,
-          };
-        });
-      } else {
-        this.setState((prevState) => {
-          const oldArray = prevState.words;
-          oldArray.splice(wTwoIndex, 1);
-          oldArray.splice(prevState.wordOneIndex, 1);
-          return {
-            words: oldArray,
-          };
-        });
-      }
-
-      this.setState({
-        wordOneId: undefined,
-        wordOneIndex: undefined,
-        wordTwoId: undefined,
-        wordTwoIndex: undefined,
-      });
-    } else {
-      this.setState({
-        wordTwoId: undefined,
-        wordTwoIndex: undefined,
-      });
     }
   }
 
   render() {
     const { words } = this.state;
     const listOfWords = words.map((word, index) => (
-      <li className="words__item" key={index}>
-        <button type="button" onClick={this.wordClick.bind(this, index, word.id)}>{word.word}</button>
+      <li className={styles.wordsItem} key={index}>
+        <WordBoardButton word={word} handleWordClick={this.handleWordClick} />
       </li>
     ));
 
     return (
-      <div className="words">
-        <ul className="words__wrap">
+      <div className={styles.words}>
+        <ul className={styles.wordsWrap}>
           {listOfWords}
         </ul>
       </div>
