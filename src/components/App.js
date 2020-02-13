@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { LearningContext } from './Context';
 
+import './app.css';
+
 import '../css/styles.css';
 
 // Components
