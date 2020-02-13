@@ -9,7 +9,7 @@ import { LearningContext } from '../Context';
 
 import HeaderAdminIcon from './HeaderAdminIcon';
 
-import '../../css/header.css';
+import styles from './header.module.css';
 import imgDe from '../home-img-de.svg';
 import imgNl from '../home-img-nl.svg';
 
@@ -43,46 +43,46 @@ class Header extends Component {
 
     const toPathAdmin = (isLoggedIn) ? `/${lang}/admin` : `/${lang}/login`;
     const img = lang === 'de' ? imgDe : imgNl;
-    const subLangClass = isLangMenuVisible ? 'js-show-menu' : '';
-    const arrowLangClass = isLangMenuVisible ? 'arrowUp' : 'arrowDown';
-    const subActivityClass = isActivityMenuVisible ? 'js-show-menu' : '';
-    const arrowActivityClass = isActivityMenuVisible ? 'arrowUp' : 'arrowDown';
+    const subLangClass = isLangMenuVisible ? styles.jsShowMenu : '';
+    const arrowLangClass = isLangMenuVisible ? styles.arrowUp : styles.arrowDown;
+    const subActivityClass = isActivityMenuVisible ? styles.jsShowMenu : '';
+    const arrowActivityClass = isActivityMenuVisible ? styles.arrowUp : styles.arrowDown;
 
     return (
-      <header className="main-header">
-        <div className="main-header__wrap">
+      <header className={styles.mainHeader}>
+        <div className={`${styles.mainHeaderWrap} contentWrap`}>
           <Link to={`/${lang}`}>
-            <img className="main-header__logo" src={img} alt="language learning logo" />
+            <img className={styles.mainHeaderLogo} src={img} alt="language learning logo" />
           </Link>
-          <p className="main-header__name">Language</p>
+          <p className={styles.mainHeaderName}>Language</p>
 
-          <nav className="main-header__nav">
-            <ul className="main-menu">
-              <li id="js-lang" className="main-menu__item">
+          <nav className={styles.mainHeaderNav}>
+            <ul className={styles.mainMenu}>
+              <li id="js-lang" className={styles.mainMenuItem}>
                 <span className={arrowLangClass}>Language</span>
-                <ul className={`sub-menu ${subLangClass}`}>
-                  <li className="sub-menu__item" onClick={() => this.handleLanguageClick('de')}><span>{deLabel}</span></li>
-                  <li className="sub-menu__item" onClick={() => this.handleLanguageClick('nl')}><span>{nlLabel}</span></li>
-                  <li className="sub-menu__item" onClick={() => this.handleLanguageClick('za')}><span>{zaLabel}</span></li>
+                <ul className={`${styles.subMenu} ${subLangClass}`}>
+                  <li className={styles.subMenuItem} onClick={() => this.handleLanguageClick('de')}><span>{deLabel}</span></li>
+                  <li className={styles.subMenuItem} onClick={() => this.handleLanguageClick('nl')}><span>{nlLabel}</span></li>
+                  <li className={styles.subMenuItem} onClick={() => this.handleLanguageClick('za')}><span>{zaLabel}</span></li>
                 </ul>
               </li>
 
-              <li id="js-activity" className="main-menu__item">
+              <li id="js-activity" className={styles.mainMenuItem}>
                 <span className={arrowActivityClass}>Activities</span>
-                <ul className={`sub-menu ${subActivityClass}`}>
-                  <li className="sub-menu__item"><NavLink to={`/${lang}/cards`}>{cardsLabel}</NavLink></li>
-                  <li className="sub-menu__item"><NavLink to={`/${lang}/words`}>{wordsLabel}</NavLink></li>
-                  <li className="sub-menu__item"><NavLink to={`/${lang}/sentences`}>{sentencesLabel}</NavLink></li>
-                  <li className="sub-menu__item"><NavLink to={`/${lang}/blanks`}>{blanksLabel}</NavLink></li>
+                <ul className={`${styles.subMenu} ${subActivityClass}`}>
+                  <li className={styles.subMenuItem}><NavLink to={`/${lang}/cards`}>{cardsLabel}</NavLink></li>
+                  <li className={styles.subMenuItem}><NavLink to={`/${lang}/words`}>{wordsLabel}</NavLink></li>
+                  <li className={styles.subMenuItem}><NavLink to={`/${lang}/sentences`}>{sentencesLabel}</NavLink></li>
+                  <li className={styles.subMenuItem}><NavLink to={`/${lang}/blanks`}>{blanksLabel}</NavLink></li>
                 </ul>
               </li>
 
-              <li className="main-menu__item"><NavLink to={`/${lang}/grammar`}>Grammar</NavLink></li>
+              <li className={styles.mainMenuItem}><NavLink to={`/${lang}/grammar`}>Grammar</NavLink></li>
             </ul>
           </nav>
 
-          <div className="main-header__settings">
-            <NavLink to={toPathAdmin} className="main-header__settings-icon" ng-click="adminClick();showSubMenu = false">
+          <div className={styles.mainHeaderSettings}>
+            <NavLink to={toPathAdmin} className={styles.mainHeaderSettingsIcon}>
               <HeaderAdminIcon loggedIn={isLoggedIn} />
             </NavLink>
           </div>
