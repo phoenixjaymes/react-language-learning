@@ -657,24 +657,6 @@ update-verb, update-perfect, update-imperfect {
 
 
 
-
-
-/* 
-    File     : _main-footer.scss
-    Date     : Oct 4, 2016
-    Author   : Jaymes Young <jaymes@phoenixjaymes.com>
-*/
-.main-footer {
-  background: #3131d2;
-  color: #ffc519;
-  height: 40px;
-  letter-spacing: 1px;
-  text-align: center; }
-  .main-footer__wrap {
-    height: 40px;
-    line-height: 40px; }
-
-
 /* 
     File     : _activity.scss
     Date     : Jan 21, 2017
