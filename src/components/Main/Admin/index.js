@@ -16,7 +16,7 @@ import '../../../css/forms.css';
 import svgAdd from './add-outline.svg';
 import svgUpdate from './edit-pencil.svg';
 import svgDelete from './trash.svg';
-import svgSearch from './search.svg';
+import svgSearch from './Search/search.svg';
 import svgRefresh from './refresh.svg';
 
 
