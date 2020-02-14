@@ -664,20 +664,12 @@ update-verb, update-perfect, update-imperfect {
 */
 
 
-  .activity__header {
-    background: #3131d2;
-    border-radius: 4px 4px 0 0;
-    margin-bottom: 0px;
-    width: 100%; }
+  
+
   .activity__close {
     margin-left: 5px;
     margin-right: 20px; }
-  .activity__heading {
-    color: #ffc519;
-    display: inline-block;
-    height: 35px;
-    line-height: 35px;
-    text-align: center; }
+
   .activity__content {
     flex-grow: 1;
     width: 100%; }
