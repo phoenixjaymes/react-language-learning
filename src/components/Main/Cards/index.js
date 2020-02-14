@@ -4,26 +4,7 @@ import { Link } from 'react-router-dom';
 import { LearningContext } from '../../Context';
 
 import ChangeCategoryButton from './CardsChangeCategoryButton';
-
-const CardOptionsLinks = ({ category, catagoryList, lang }) => {
-  const buttons = catagoryList.map(option => (
-    <Link key={option.id} to={`/${lang}/cards/${category}/${option.id}`} className="activity_buttons__btn">
-      {option.name}
-    </Link>
-  ));
-
-  return (
-    <div className="activity-buttons activity-categories">
-      {buttons}
-    </div>
-  );
-};
-
-CardOptionsLinks.propTypes = {
-  catagoryList: PropTypes.arrayOf(PropTypes.object),
-  category: PropTypes.string,
-  lang: PropTypes.string,
-};
+import ActivityLink from '../ActivityComponents/ActivityLink';
 
 // Cards Component
 class Cards extends Component {
@@ -55,6 +36,14 @@ class Cards extends Component {
     const { category, catagoryList } = this.state;
     const headingLabel = labels.us.languages[lang];
 
+    const buttons = catagoryList.map(option => (
+      <ActivityLink
+        key={option.id}
+        toPath={`/${lang}/cards/${category}/${option.id}`}
+        text={option.name}
+      />
+    ));
+
     return (
       <section className="flashcards">
         <h1>{`${headingLabel} Cards`}</h1>
@@ -75,11 +64,9 @@ class Cards extends Component {
           <Link to={`/${lang}/cards/study`} className="activity_buttons__btn">Study</Link>
         </div>
 
-        <CardOptionsLinks
-          lang={lang}
-          category={category}
-          catagoryList={catagoryList}
-        />
+        <div className="activity-buttons activity-categories">
+          {buttons}
+        </div>
       </section>
     );
   }
