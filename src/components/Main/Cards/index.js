@@ -23,7 +23,7 @@ CardOptionsLinks.propTypes = {
   lang: PropTypes.string,
 };
 
-const ActivityButton = ({ category, changeCategory }) => {
+const ChangeCategoryButton = ({ category, changeCategory }) => {
   const categoryUCase = category.charAt(0).toUpperCase() + category.substring(1);
   return (
     <button
@@ -37,7 +37,7 @@ const ActivityButton = ({ category, changeCategory }) => {
   );
 };
 
-ActivityButton.propTypes = {
+ChangeCategoryButton.propTypes = {
   category: PropTypes.string,
   changeCategory: PropTypes.func,
 };
@@ -79,14 +79,14 @@ class Cards extends Component {
         <h3>Select your Cards</h3>
 
         <div className="activity-buttons">
-          <ActivityButton category="adjective" changeCategory={this.changeCategory} />
+          <ChangeCategoryButton category="adjective" changeCategory={this.changeCategory} />
           <br />
-          <ActivityButton category="noun" changeCategory={this.changeCategory} />
+          <ChangeCategoryButton category="noun" changeCategory={this.changeCategory} />
           {lang !== 'za' && (
-            <ActivityButton category="gender" changeCategory={this.changeCategory} />
+            <ChangeCategoryButton category="gender" changeCategory={this.changeCategory} />
           )}
           <br />
-          <ActivityButton category="verb" changeCategory={this.changeCategory} />
+          <ChangeCategoryButton category="verb" changeCategory={this.changeCategory} />
           <br />
           <Link to={`/${lang}/cards/phrase`} className="activity_buttons__btn">Phrases</Link>
           <Link to={`/${lang}/cards/study`} className="activity_buttons__btn">Study</Link>
