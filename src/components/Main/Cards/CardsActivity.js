@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ActivityHeader from '../ActivityHeader';
+import ActivityWrap from '../ActivityComponents/ActivityWrap';
 import GenericCardWrap from './GenericCardWrap';
 import PhraseCard from './PhraseCard';
 import VerbCard from './VerbCard';
@@ -28,12 +28,12 @@ const CardsActivity = ({ match }) => {
   }
 
   return (
-    <div className="activity">
-      <div className="activity__wrap">
-        <ActivityHeader heading={`${heading} Cards`} page={`${lang}/cards`} />
-        {card}
-      </div>
-    </div>
+    <ActivityWrap
+      heading={`${heading} Cards`}
+      page={`${lang}/cards`}
+    >
+      {card}
+    </ActivityWrap>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import ActivityHeader from '../ActivityHeader';
+import ActivityWrap from '../ActivityComponents/ActivityWrap';
 import BlanksBoard from './BlanksBoard';
 import FinalMessage from '../FinalMessage';
 
@@ -22,28 +22,25 @@ class BlanksActivity extends Component {
     const { lang, category, id } = match.params;
 
     return (
-      <div className="activity">
-        <div className="activity__wrap">
+      <ActivityWrap
+        heading="Blanks"
+        page={`${lang}/blanks`}
+      >
+        <BlanksBoard
+          lang={lang}
+          type="blanks"
+          category={category}
+          activityId={id}
+          showMessage={this.showMessage}
+        />
 
-          <ActivityHeader heading="Blanks" page={`${lang}/blanks`} />
-
-          <BlanksBoard
-            lang={lang}
+        {isShownMessage && (
+          <FinalMessage
             type="blanks"
-            category={category}
-            activityId={id}
-            showMessage={this.showMessage}
+            lang={lang}
           />
-
-          {isShownMessage && (
-            <FinalMessage
-              type="blanks"
-              lang={lang}
-            />
-          )}
-
-        </div>
-      </div>
+        )}
+      </ActivityWrap>
     );
   }
 }

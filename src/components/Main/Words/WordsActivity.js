@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import ActivityHeader from '../ActivityHeader';
+import ActivityWrap from '../ActivityComponents/ActivityWrap';
 import WordBoard from './WordBoard';
 import FinalMessage from '../FinalMessage';
 
@@ -23,24 +23,23 @@ class WordsActivity extends Component {
     const wordsCategory = category.charAt(0).toUpperCase() + category.slice(1);
 
     return (
-      <div className="activity">
-        <div className="activity__wrap">
-          <ActivityHeader heading={`Match the ${wordsCategory}`} page={`${match.params.lang}/words`} />
+      <ActivityWrap
+        heading={`Match the ${wordsCategory}`}
+        page={`${match.params.lang}/words`}
+      >
+        <WordBoard
+          lang={match.params.lang}
+          category={match.params.category}
+          showMessage={this.showMessage}
+        />
 
-          <WordBoard
-            lang={match.params.lang}
-            category={match.params.category}
-            showMessage={this.showMessage}
+        {isShownMessage && (
+          <FinalMessage
+            type="words"
+            lang={lang}
           />
-
-          {isShownMessage && (
-            <FinalMessage
-              type="words"
-              lang={lang}
-            />
-          )}
-        </div>
-      </div>
+        )}
+      </ActivityWrap>
     );
   }
 }

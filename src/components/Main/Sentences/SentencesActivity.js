@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import ActivityHeader from '../ActivityHeader';
+import ActivityWrap from '../ActivityComponents/ActivityWrap';
 import SentenceBoard from './SentenceBoard';
 import FinalMessage from '../FinalMessage';
 
@@ -22,28 +22,25 @@ class SentencesActivity extends Component {
     const { lang, category, id } = match.params;
 
     return (
-      <div className="activity">
-        <div className="activity__wrap">
+      <ActivityWrap
+        heading="Sentences"
+        page={`${lang}/sentences`}
+      >
+        <SentenceBoard
+          lang={lang}
+          type="sentences"
+          category={category}
+          activityId={id}
+          showMessage={this.showMessage}
+        />
 
-          <ActivityHeader heading="Sentences" page={`${lang}/sentences`} />
-
-          <SentenceBoard
-            lang={lang}
+        {isShownMessage && (
+          <FinalMessage
             type="sentences"
-            category={category}
-            activityId={id}
-            showMessage={this.showMessage}
+            lang={lang}
           />
-
-          {isShownMessage && (
-            <FinalMessage
-              type="sentences"
-              lang={lang}
-            />
-          )}
-
-        </div>
-      </div>
+        )}
+      </ActivityWrap>
     );
   }
 }
