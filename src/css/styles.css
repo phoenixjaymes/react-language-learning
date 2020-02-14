@@ -662,46 +662,8 @@ update-verb, update-perfect, update-imperfect {
     Date     : Jan 21, 2017
     Author   : Jaymes Young <jaymes@phoenixjaymes.com>
 */
-.activity {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 500;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: #a9a9dc;
-  height: 100%;
-  width: 100%; }
-  .activity__wrap {
-    display: flex;
-    flex-direction: column;
-    background: #f1f1fa;
-    border-radius: 4px;
-    position: relative;
-    margin: 0 auto; }
-    @media (min-width: 0px) and (orientation: landscape) {
-      .activity__wrap {
-        width: 98%;
-        max-width: 500px;
-        min-height: 300px; } }
-    @media (min-width: 720px) and (orientation: landscape) {
-      .activity__wrap {
-        max-width: 600px;
-        min-height: 400px; } }
-    @media (min-width: 940px) and (orientation: landscape) {
-      .activity__wrap {
-        max-width: 700px;
-        min-height: 450px; } }
-    @media (min-width: 0px) and (orientation: portrait) {
-      .activity__wrap {
-        width: 98%;
-        max-width: 500px;
-        min-height: 460px; } }
-    @media (min-width: 720px) and (orientation: portrait) {
-      .activity__wrap {
-        min-height: 600px;
-        max-width: 500px; } }
+
+
   .activity__header {
     background: #3131d2;
     border-radius: 4px 4px 0 0;
