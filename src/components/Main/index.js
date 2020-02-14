@@ -25,20 +25,30 @@ import LoginForm from './LoginForm';
 const Main = ({ isGrammarMenuShown }) => (
   <main>
     <Switch>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/:lang" component={Home} />
+      <Route exact path="/">
+        <Home />
+      </Route>
+      <Route exact path="/:lang" component={Home}>
+        <Home />
+      </Route>
 
       <Route path="/:lang/cards/:category/:id?" render={({ match }) => <CardsActivity match={match} />} />
       <Route path="/:lang/cards" render={({ match }) => <Cards match={match} />} />
 
       <Route path="/:lang/words/:category/:id?" render={({ match }) => <WordsActivity match={match} />} />
-      <Route path="/:lang/words" component={Words} />
+      <Route path="/:lang/words">
+        <Words />
+      </Route>
 
       <Route path="/:lang/sentences/:category/:id?" render={({ match }) => <SentencesActivity match={match} />} />
-      <Route path="/:lang/sentences" component={Sentences} />
+      <Route path="/:lang/sentences">
+        <Sentences />
+      </Route>
 
       <Route path="/:lang/blanks/:category/:id?" render={({ match }) => <BlanksActivity match={match} />} />
-      <Route path="/:lang/blanks" component={Blanks} />
+      <Route path="/:lang/blanks">
+        <Blanks />
+      </Route>
 
       <Route
         path="/:lang/grammar"
@@ -67,7 +77,9 @@ const Main = ({ isGrammarMenuShown }) => (
         )}
       </LearningConsumer>
 
-      <Route component={NotFound} />
+      <Route>
+        <NotFound />
+      </Route>
     </Switch>
   </main>
 );
