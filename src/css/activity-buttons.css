@@ -1,7 +1,0 @@
-.activity-buttons {
-  display: grid;
-  width: 300px;
-  
-  grid-template-columns: 1fr, 1fr;
-
-}
