@@ -452,7 +452,7 @@ textarea {
 /*%btn-nav {
   background: $cold-purple;
 }*/
-.btn, .btn-activitiy, .btn-admin, .cards-controls__btn {
+.btn, .btn-activitiy, .btn-admin {
   border-radius: 4px;
   display: inline-block;
   font-size: 28px;
@@ -603,10 +603,6 @@ section {
       margin-bottom: 1.5625em;
       max-width: 300px; } }
 
-.flashcards {
-  margin: 0 auto;
-  max-width: 800px; }
-
 login, register, add-adjective, add-category, add-noun, add-phrase, add-sentence,
 add-verb,
 list-words,
@@ -620,11 +616,6 @@ update-verb, update-perfect, update-imperfect {
 .modal1 {
   z-index: 150; }
 
-/* 
-    File     : components/_index.scss
-    Date     : Sep 28, 2016
-    Author   : Jaymes Young <jaymes@phoenixjaymes.com>
-*/
 /* 
     File     : _buttons.scss
     Date     : Oct 22, 2016
