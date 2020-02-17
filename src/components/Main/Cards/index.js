@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { LearningContext } from '../../Context';
 
 import ChangeCategoryButton from './CardsChangeCategoryButton';
@@ -45,7 +44,7 @@ class Cards extends Component {
     ));
 
     return (
-      <section className="flashcards">
+      <section className="activity-section">
         <h1>{`${headingLabel} Cards`}</h1>
 
         <h3>Select your Cards</h3>
@@ -60,8 +59,14 @@ class Cards extends Component {
           <br />
           <ChangeCategoryButton category="verb" changeCategory={this.changeCategory} />
           <br />
-          <Link to={`/${lang}/cards/phrase`} className="activity_buttons__btn">Phrases</Link>
-          <Link to={`/${lang}/cards/study`} className="activity_buttons__btn">Study</Link>
+          <ActivityLink
+            toPath={`/${lang}/cards/phrase`}
+            text="Phrases"
+          />
+          <ActivityLink
+            toPath={`/${lang}/cards/study`}
+            text="Study"
+          />
         </div>
 
         <div className="activity-buttons activity-categories">

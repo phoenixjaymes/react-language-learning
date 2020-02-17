@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { LearningConsumer } from '../../Context';
+
+import ActivityLink from '../ActivityComponents/ActivityLink';
 
 const SentenceOptionsLinks = ({ lang, categories }) => {
   const buttons = categories.map(option => (
-    <Link key={option.id} type="button" to={`/${lang}/sentences/category/${option.id}`} className="activity_buttons__btn">{option.name}</Link>
+    <ActivityLink key={option.id} toPath={`/${lang}/sentences/category/${option.id}`} text={option.name} />
   ));
 
   return (
@@ -27,19 +28,31 @@ const Sentences = () => (
         const { categories, lang, labels } = context;
         const headingLabel = labels.us.languages[lang];
         return (
-          <section className="flashcards">
+          <section className="activity-section">
             <h1>{`${headingLabel} Sentences`}</h1>
 
             <h3>Select your Sentences</h3>
 
             <div className="activity-buttons activity-categories">
-              <Link to={`/${lang}/sentences/type/random`} className="activity_buttons__btn">Random</Link>
+              <ActivityLink
+                toPath={`/${lang}/sentences/type/random`}
+                text="Random"
+              />
               <br />
-              <Link to={`/${lang}/sentences/type/1`} className="activity_buttons__btn">Statement</Link>
+              <ActivityLink
+                toPath={`/${lang}/sentences/type/1`}
+                text="Statement"
+              />
 
-              <Link to={`/${lang}/sentences/type/2`} className="activity_buttons__btn">Question</Link>
+              <ActivityLink
+                toPath={`/${lang}/sentences/type/2`}
+                text="Question"
+              />
 
-              <Link to={`/${lang}/sentences/type/3`} className="activity_buttons__btn">Answer</Link>
+              <ActivityLink
+                toPath={`/${lang}/sentences/type/3`}
+                text="Answer"
+              />
               <br />
               <br />
               { categories.de !== undefined && (
