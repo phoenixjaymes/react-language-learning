@@ -195,42 +195,10 @@
     height: 30px;
     padding: 5px 0;
     width: 120px; }
+    
 .cards-form__select {
   display: inline-block;
   height: 30px;
   margin-bottom: 10px;
   width: 170px;
-}
-
-
-
-
-/* 
-    File     : _cards-controls.scss
-    Date     : Sep 29, 2016
-    Author   : Jaymes Young <jaymes@phoenixjaymes.com>
-*/
-.cards-controls {
-  text-align: center;
-  height: 40px;
-  width: 100%;
-}
-
-.cards-controls__btn {
-  background: #3131d2;
-  border: none;
-  color: #ffc519; 
-}
-
-.cards-controls__btn:hover {
-  color: #b4b4e0; 
-  cursor: pointer;
-}
-
-.cards-controls__count {
-  display: inline-block;
-  height: 40px;
-  line-height: 40px;
-  width: 140px;
-  vertical-align: top;
 }
