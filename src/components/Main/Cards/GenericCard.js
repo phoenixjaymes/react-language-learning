@@ -89,7 +89,9 @@ class GenericCard extends Component {
     } = this.state;
     const { flipCard, flipClass } = this.props;
     const newCurrentCard = currentCard + 1;
+
 console.log(image);
+
     return (
       <div className="activity__content--cards">
 
