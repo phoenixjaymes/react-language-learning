@@ -1,40 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 import withContext from '../../Context';
-
-const BlanksOptionsLinks = ({ lang, categories }) => {
-  const buttons = categories.map(option => (
-    <Link key={option.id} type="button" to={`/${lang}/blanks/${option.id}`} className="activity_buttons__btn">{option.name}</Link>
-  ));
-
-  return (
-    <div className="activity-buttons activity-categories">
-      {buttons}
-    </div>
-  );
-};
-
-BlanksOptionsLinks.propTypes = {
-  categories: PropTypes.arrayOf(PropTypes.object).isRequired,
-  lang: PropTypes.string.isRequired,
-};
+import ActivityLink from '../ActivityComponents/ActivityLink';
 
 const Blanks = ({ context }) => {
   const { categories, lang, labels } = context;
   const headingLabel = labels.us.languages[lang];
 
+  const buttons = categories[lang].blank.map(option => (
+    <ActivityLink key={option.id} toPath={`/${lang}/blanks/${option.id}`} text={option.name} />
+  ));
+
   return (
-    <section className="flashcards">
+    <section className="activity-section">
       <h1>{`${headingLabel} Blanks`}</h1>
 
       <h3>Select your Blanks</h3>
 
-      <BlanksOptionsLinks
-        lang={lang}
-        categories={categories[lang].blank}
-      />
+      <div className="activity-buttons activity-categories">
+        {buttons}
+      </div>
     </section>
   );
 };
