@@ -4,21 +4,21 @@
     Author   : Jaymes Young <jaymes@phoenixjaymes.com>
 */
 
-.layout-grid-form {
+/* .layout-grid-form {
   display: grid;
   grid-template-columns: 50% 50%;
   grid-gap: 20px;
   margin-left: auto;
   margin-right: auto;
   width: 95%;
-}
+} */
 
-.layout-grid-form > .form,
+/* .layout-grid-form > .form,
 .layout-grid-form .form--item-selector {
   width: 100%
-}
+} */
 
-.form,
+/* .form,
 .form--item-selector {
   background: #3131d2;
   margin: 0 auto 20px auto;
@@ -40,9 +40,9 @@
   .form--item-selector {
     max-width: 400px;
   }
-}
+} */
 
-@media (min-width: 940px) {
+/* @media (min-width: 940px) {
   .layout-grid-form {
     max-width: 920px;
   }
@@ -51,9 +51,9 @@
   .form--item-selector {
     max-width: 450px;
   }
-}
+} */
 
-.form__header {
+/* .form__header {
   border: 1px dotted #ffc519;
   border-radius: 5px;
   font-size: 1em;
@@ -63,7 +63,7 @@
   min-height: 35px;
   line-height: 35px;
   margin: 0 0 10px 0;
-}
+} */
 
 .form__grid-2 {
   display: grid;
@@ -71,12 +71,12 @@
   grid-gap: 10px;
 }
 
-.form__label {
+/* .form__label {
   color: #ffedb9;
   display: block;
   font-size: 1em;
   margin-bottom: 15px;
-}
+} */
 
   .form__label--language {
     background: yellow;
@@ -84,7 +84,7 @@
     margin: 20px 0;
     width: 20%; }
 
-  .form__label--verb {    
+  /* .form__label--verb {    
     display: grid;
     grid-template-columns: 60px auto;
     grid-gap: 5px;
@@ -94,7 +94,7 @@
     font-size: 1.125em;
     line-height: 30px;
     margin-bottom: 15px;
-  }
+  } */
 
   .form__label--half {
     font-size: 1.125em;
@@ -124,7 +124,7 @@
   flex: 0 0 49%;
   padding: 0; }
 
-.form__input {
+/* .form__input {
   display: block;
   height: 30px;
   margin-top: 10px;
@@ -134,26 +134,31 @@
   display: inline-block;
   height: 30px;
   margin-bottom: 0;
-}
+} */
 
   .form__input--half {
     display: inline-block;
     height: 30px;
     width: 100%; }
-  .form__input:focus {
-    background: #a9a9dc; }
 
-.form__textarea {
+  /* .form__input:focus {
+    background: #a9a9dc; } */
+
+
+
+
+/* .form__textarea {
   height: 60px;
   padding: 0 5px;
-  width: 100%; }
+  width: 100%; } */
 
-.form__select {
+/* .form__select {
   height: 30px;
   margin-top: 10px;
   width: 100%; }
+
   .form__select:focus {
-    background: #a9a9dc; }
+    background: #a9a9dc; } */
 
 .form__button {
   background: #a9a9dc;
@@ -164,6 +169,7 @@
   height: 30px;
   margin-top: 10px;
   width: 100%; }
+
   .form__button:focus {
     background: #ffedb9; }
 
@@ -239,13 +245,13 @@
 
 
 
-.item-select__wrap {
+/* .item-select__wrap {
   background: #ffedb9;
   border-radius: 4px;
   height: 300px;
   overflow: auto;
   padding: 5px;
-}
+} */
 
     @media (min-height: 600px) {
       .word-list__wrap {
@@ -254,7 +260,7 @@
       .word-list__wrap {
         height: 400px; } }
 
-.item-select__table {
+/* .item-select__table {
   border-collapse: collapse;
   width: 100%;
 }
@@ -275,7 +281,7 @@
 
 .item-select__table-td-translation {
   padding: 3px 0 3px 3px;
-}
+} */
 
 
 

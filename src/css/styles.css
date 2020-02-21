@@ -433,12 +433,13 @@ textarea {
 .none.card__back, .none.card__back--verb {
   background: #ffedb9; }
 
-.form__input, .form__input--verb, .form__input--half, .form__textarea, .form__select {
+.form__input--half {
   background: #ffedb9;
   border: 1px solid #ffc519;
   border-radius: 4px;
   margin-bottom: 10px;
-  padding: 0 5px; }
+  padding: 0 5px;
+}
 
 .modal, .modal1 {
   position: absolute;
