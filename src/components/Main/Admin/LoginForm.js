@@ -13,9 +13,10 @@ class LoginForm extends Component {
     itemPass: '',
   }
 
-  handleLearner = e => this.setState({ itemLearner: e.target.value })
-
-  handlePass = e => this.setState({ itemPass: e.target.value })
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -59,14 +60,14 @@ class LoginForm extends Component {
             label="User"
             name="itemLearner"
             value={itemLearner}
-            handleChange={this.handleLearner}
+            handleChange={this.handleChange}
           />
 
           <FormInput
             label="Password"
             name="itemPass"
             value={itemPass}
-            handleChange={this.handlePass}
+            handleChange={this.handleChange}
           />
 
           <button type="submit" className="form__button">Login</button>
