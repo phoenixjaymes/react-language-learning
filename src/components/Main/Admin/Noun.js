@@ -10,6 +10,8 @@ import FormMessage from './FormMessage';
 import Umlauts from './Umlauts';
 import ConfirmDialog from './ConfirmDialog';
 
+import styles from './forms.module.css';
+
 class Noun extends Component {
   constructor(props) {
     super(props);
@@ -246,13 +248,13 @@ class Noun extends Component {
 
     const langName = us.languages[lang];
     const heading = modifyType === 'update' ? `Update ${langName} Nouns` : `Add ${langName} Nouns`;
-    const gridClass = modifyType === 'update' ? 'layout-grid-form' : '';
+    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
 
     return (
       <div>
         <div className={gridClass}>
-          <form className="form" onSubmit={this.handleSubmit} onFocus={this.handleFocus}>
-            <h3 className="form__header">{heading}</h3>
+          <form className={styles.form} onSubmit={this.handleSubmit} onFocus={this.handleFocus}>
+            <h3 className={styles.header}>{heading}</h3>
             <div className="form__grid-2">
               <FormSelect
                 name="itemCategory"

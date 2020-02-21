@@ -6,6 +6,8 @@ import { LearningContext } from '../Context';
 import '../../css/forms.css';
 import '../../css/login.css';
 
+import styles from './Admin/forms.module.css';
+
 class LoginForm extends Component {
   state = {
     itemLearner: '',
@@ -51,8 +53,8 @@ class LoginForm extends Component {
     const { itemLearner, itemPass } = this.state;
     return (
       <div className="login-contanier">
-        <form className="form" onSubmit={this.handleSubmit}>
-          <h3 className="form__header">Please Login</h3>
+        <form className={styles.form} onSubmit={this.handleSubmit}>
+          <h3 className={styles.header}>Please Login</h3>
 
           <label className="form__label login-form__label" htmlFor="txtLearner">
             User

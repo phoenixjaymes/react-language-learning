@@ -6,6 +6,8 @@ import FormInput from './FormInput';
 import FormMessage from './FormMessage';
 import ConfirmDialog from './ConfirmDialog';
 
+import styles from './forms.module.css';
+
 class Category extends Component {
   constructor(props) {
     super(props);
@@ -139,13 +141,13 @@ class Category extends Component {
     const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
 
     const heading = modifyType === 'update' ? 'Update Category' : 'Add Category';
-    const gridClass = modifyType === 'update' ? 'layout-grid-form' : '';
+    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
 
     return (
       <div>
         <div className={gridClass}>
-          <form className="form" onSubmit={this.handleSubmit} onFocus={this.handleFocus}>
-            <h3 className="form__header">{heading}</h3>
+          <form className={styles.form} onSubmit={this.handleSubmit} onFocus={this.handleFocus}>
+            <h3 className={styles.header}>{heading}</h3>
             { modifyType !== 'update' && (
               <div>
                 <label className="form__label--check" htmlFor="addCategoryWord">

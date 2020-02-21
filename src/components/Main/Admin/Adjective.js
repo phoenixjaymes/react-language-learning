@@ -11,6 +11,8 @@ import FormMessage from './FormMessage';
 import ConfirmDialog from './ConfirmDialog';
 // import withUtilities from './withUtilities';
 
+import styles from './forms.module.css';
+
 class Adjective extends Component {
   constructor(props) {
     super(props);
@@ -248,13 +250,13 @@ class Adjective extends Component {
 
     const langName = us.languages[lang];
     const heading = modifyType === 'update' ? `Update ${langName} Adjectives` : `Add ${langName} Adjectives`;
-    const gridClass = modifyType === 'update' ? 'layout-grid-form' : '';
+    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
 
     return (
       <div>
         <div className={gridClass}>
-          <form className="form" onSubmit={this.handleSubmit} onFocus={this.handleFocus}>
-            <h3 className="form__header">{heading}</h3>
+          <form className={styles.form} onSubmit={this.handleSubmit} onFocus={this.handleFocus}>
+            <h3 className={styles.header}>{heading}</h3>
 
             <div className="form__grid-2">
               <FormSelect

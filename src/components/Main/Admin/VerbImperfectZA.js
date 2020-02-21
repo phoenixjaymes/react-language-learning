@@ -9,6 +9,7 @@ import FormMessage from './FormMessage';
 import Umlauts from './Umlauts';
 import ConfirmDialog from './ConfirmDialog';
 
+import styles from './forms.module.css';
 
 class VerbImperfectZA extends Component {
   constructor(props) {
@@ -155,9 +156,9 @@ class VerbImperfectZA extends Component {
 
     return (
       <div>
-        <div className="layout-grid-form">
-          <form className="form" autoComplete="off" onSubmit={this.handleSubmit} onFocus={this.handleFocus}>
-            <h3 className="form__header">Update Afrikaans Imperfect</h3>
+        <div className={styles.formLayoutGrid}>
+          <form className={styles.form} autoComplete="off" onSubmit={this.handleSubmit} onFocus={this.handleFocus}>
+            <h3 className={styles.header}>Update Afrikaans Imperfect</h3>
 
             <h3>{itemTranslation}</h3>
 

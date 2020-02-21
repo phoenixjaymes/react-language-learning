@@ -11,6 +11,8 @@ import FormMessage from './FormMessage';
 import Umlauts from './Umlauts';
 import ConfirmDialog from './ConfirmDialog';
 
+import styles from './forms.module.css';
+
 class VerbNl extends Component {
   constructor(props) {
     super(props);
@@ -233,13 +235,13 @@ class VerbNl extends Component {
     const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
 
     const heading = modifyType === 'update' ? 'Update Dutch Verb' : 'Add Dutch Verb';
-    const gridClass = modifyType === 'update' ? 'layout-grid-form' : '';
+    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
 
     return (
       <div>
         <div className={gridClass}>
-          <form className="form" autoComplete="off" onSubmit={this.handleSubmit} onFocus={this.handleFocus}>
-            <h3 className="form__header">{heading}</h3>
+          <form className={styles.form} autoComplete="off" onSubmit={this.handleSubmit} onFocus={this.handleFocus}>
+            <h3 className={styles.header}>{heading}</h3>
 
             <label className="form__label--check" htmlFor="upVerbSeparable">
               <input
