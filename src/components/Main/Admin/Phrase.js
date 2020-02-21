@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { LearningContext } from '../../Context';
 
 import UpdateSelector from './UpdateSelector';
-import FormInput from './FormInput';
+import FormTextarea from './FormComponents/FormTextarea';
 import FormMessage from './FormMessage';
 import Umlauts from './Umlauts';
 import ConfirmDialog from './ConfirmDialog';
+
+import styles from './forms.module.css';
 
 class Phrase extends Component {
   constructor(props) {
@@ -148,22 +150,22 @@ class Phrase extends Component {
 
     const langName = us.languages[lang];
     const heading = modifyType === 'update' ? `Update ${langName} Phrases` : `Add ${langName} Phrases`;
-    const gridClass = modifyType === 'update' ? 'layout-grid-form' : '';
+    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
 
     return (
       <div>
         <div className={gridClass}>
-          <form className="form" autoComplete="off" onSubmit={this.handleSubmit} onFocus={this.handleFocus}>
-            <h3 className="form__header">{heading}</h3>
+          <form className={styles.form} autoComplete="off" onSubmit={this.handleSubmit} onFocus={this.handleFocus}>
+            <h3 className={styles.header}>{heading}</h3>
 
-            <FormInput
+            <FormTextarea
               label="English"
               name="itemEnglish"
               value={itemEnglish}
               handleChange={this.handleChange}
             />
 
-            <FormInput
+            <FormTextarea
               label="Translation"
               name="itemTranslation"
               value={itemTranslation}

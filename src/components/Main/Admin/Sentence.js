@@ -6,9 +6,12 @@ import { LearningContext } from '../../Context';
 import UpdateSelector from './UpdateSelector';
 import FormSelect from './FormSelect';
 import FormInput from './FormInput';
+import FormTextarea from './FormComponents/FormTextarea';
 import FormMessage from './FormMessage';
 import Umlauts from './Umlauts';
 import ConfirmDialog from './ConfirmDialog';
+
+import styles from './forms.module.css';
 
 
 class Sentence extends Component {
@@ -193,13 +196,13 @@ class Sentence extends Component {
 
     const langName = us.languages[lang];
     const heading = modifyType === 'update' ? `Update ${langName} Sentences` : `Add ${langName} Sentences`;
-    const gridClass = modifyType === 'update' ? 'layout-grid-form' : '';
+    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
 
     return (
       <div>
         <div className={gridClass}>
-          <form className="form" onSubmit={this.handleSubmit} onFocus={this.handleFocus}>
-            <h3 className="form__header">{heading}</h3>
+          <form className={styles.form} onSubmit={this.handleSubmit} onFocus={this.handleFocus}>
+            <h3 className={styles.header}>{heading}</h3>
             <div className="form__grid-2">
               <FormSelect
                 name="itemType"
@@ -218,29 +221,19 @@ class Sentence extends Component {
               />
             </div>
 
-            <label className="form__label" htmlFor="txtSentence">
-              {labelStatement}
-              <textarea
-                id="txtSentence"
-                name="itemSentence"
-                className="form__textarea"
-                ng-focus="umlautFocus(undefined, undefined, '')"
-                value={itemSentence}
-                onChange={this.handleChange}
-              />
-            </label>
+            <FormTextarea
+              label={labelStatement}
+              name="itemSentence"
+              value={itemSentence}
+              handleChange={this.handleChange}
+            />
 
-            <label className="form__label" htmlFor="itemAnswer1">
-              {labelTranslation}
-              <textarea
-                id="itemAnswer1"
-                name="itemAnswer1"
-                className="form__textarea"
-                ng-focus="umlautFocus('formUpdateSentence', 'answer1', 'upSentAnswer1')"
-                value={itemAnswer1}
-                onChange={this.handleChange}
-              />
-            </label>
+            <FormTextarea
+              label={labelTranslation}
+              name="itemAnswer1"
+              value={itemAnswer1}
+              handleChange={this.handleChange}
+            />
 
             <Umlauts className="form-umlauts" input-type="word" input-field="translation" />
 
