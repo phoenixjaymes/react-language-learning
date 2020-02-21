@@ -68,6 +68,7 @@ class LoginForm extends Component {
             name="itemPass"
             value={itemPass}
             handleChange={this.handleChange}
+            type="password"
           />
 
           <button type="submit" className="form__button">Login</button>
