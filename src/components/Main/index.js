@@ -20,7 +20,7 @@ import BlanksActivity from './Blanks/BlanksActivity';
 import Grammar from './Grammar';
 import Admin from './Admin';
 import NotFound from './NotFound';
-import LoginForm from './LoginForm';
+import LoginForm from './Admin/LoginForm';
 
 const Main = ({ isGrammarMenuShown }) => (
   <main>
