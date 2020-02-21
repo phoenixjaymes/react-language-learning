@@ -1,0 +1,17 @@
+/* 
+    File     : footer.module.css
+    Date     : 13 Feb 20
+    Author   : Jaymes Young <jaymes@phoenixjaymes.com>
+*/
+.mainFooter {
+  background: #3131d2;
+  color: #ffc519;
+  height: 40px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.mainFooterWrap {
+  height: 40px;
+  line-height: 40px;
+}

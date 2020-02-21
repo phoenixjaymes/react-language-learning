@@ -1,0 +1,51 @@
+.searchForm {
+  display: grid;
+  grid-template-columns: 125px 125px 20px;
+  grid-gap: 10px;
+
+  background: #3131d2;
+  border-radius: 5px;
+  margin: 0 auto 20px auto;
+  padding: 5px 5px 10px 5px;
+  width: 300px;
+}
+
+.searchFormLabel {
+  color: #ffedb9;
+}
+
+.searchFormLabel select {
+  background: #ffedb9;
+  border: 1px solid #ffc519;
+  border-radius: 5px;
+  display: block;
+  height: 25px;
+  margin-top: 5px;
+  width: 125px;
+}
+
+.searchFormBtnSearch {
+  position: relative;
+}
+
+.searchFormBtnSearch span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  height: 20px;
+  width: 20px;
+}
+
+.searchFormBtnSearch span:hover {
+  background: #a9a9dc;
+}
+
+.searchFormBtnSearch img:hover {
+  cursor: pointer;
+  background: #a9a9dc;
+}
+
+.searchFormLabel select:focus {
+  background: #a9a9dc;
+}

@@ -1,0 +1,23 @@
+.button {
+  background: #ffedb9;
+  border: 1px solid #f0f;
+  border-radius: 4px;
+  border: none;
+
+  cursor: pointer;
+  padding: 6px 18px;
+}
+
+.button.clicked {
+  background: #add8e6;
+}
+
+.button.matched {
+  background: #FFF9EA;
+  color: #ccc;
+  cursor: default;
+}
+
+.button.incorrectClick {
+  border: 1px solid #f00;
+}

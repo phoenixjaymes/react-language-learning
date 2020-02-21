@@ -1,0 +1,14 @@
+.button {
+  background: #3131d2;
+  border: none;
+  border-radius: 4px;
+  color: #ededed;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  margin: 3px 2px;
+  padding: 0 7px;
+  text-align: center;
+  text-decoration: none;
+  min-width: 75px;
+}

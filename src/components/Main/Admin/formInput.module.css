@@ -1,0 +1,44 @@
+.label {
+  display: block;
+  font-size: 1em;
+}
+
+.labelVerb {    
+  display: grid;
+  grid-template-columns: 60px auto;
+  grid-gap: 5px;
+
+  font-size: 1.125em;
+  line-height: 30px;
+}
+
+.label,
+.labelVerb {
+  margin-bottom: 15px;
+}
+
+.input {
+  display: block;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.inputVerb {
+  display: inline-block;
+  margin-bottom: 0;
+}
+
+.input,
+.inputVerb {
+  background: #ffedb9;
+  border: 1px solid #ffc519;
+  border-radius: 4px;
+  height: 30px;
+  margin-bottom: 10px;
+  padding: 0 5px;
+}
+
+.input:focus,
+.inputVerb:focus {
+  background: #a9a9dc;
+}

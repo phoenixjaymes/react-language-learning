@@ -1,0 +1,15 @@
+.label {
+  display: block;
+  font-size: 1em;
+  margin-bottom: 15px;
+}
+
+.textarea {
+  background: #ffedb9;
+  border: 1px solid #ffc519;
+  border-radius: 4px;
+  height: 60px;
+  margin-bottom: 10px;
+  padding: 0 5px;
+  width: 100%;
+}

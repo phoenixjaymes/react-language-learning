@@ -1,0 +1,14 @@
+.header {
+  background: #3131d2;
+  border-radius: 4px 4px 0 0;
+  margin-bottom: 0px;
+  width: 100%;
+}
+
+.heading {
+  color: #ffc519;
+  display: inline-block;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+}

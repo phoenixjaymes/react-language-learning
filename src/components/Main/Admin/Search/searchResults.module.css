@@ -1,0 +1,49 @@
+.searchResults {
+  font-size: 1rem;
+  margin: 0 auto 20px auto;
+  width: 95%;
+}
+
+.searchResults tr:nth-child(odd) {
+  background: #ffedb9;
+}
+
+.searchResults th {
+  padding: 4px;
+}
+
+.searchResults td {
+  padding: 2px 3px;
+}
+
+.searchResults td:first-child {
+  text-align: center;
+}
+
+/***** Conjugation Hover *****/
+.searchResultsConjugation {
+  position: relative;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.searchResultsConjugation div {
+  position: absolute;
+  left: 50px;
+  top: 0px;
+  z-index: 10;
+
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 5px;
+  display: none;
+  padding: 5px;
+}
+
+.searchResultsConjugation:hover div {
+  display: block;
+}
+
+.searchResultsConjugation div table {
+  background: #fff;
+}
