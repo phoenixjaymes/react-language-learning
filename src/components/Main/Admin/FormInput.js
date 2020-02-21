@@ -1,18 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import styles from './formInput.module.css';
+
 const FormInput = ({
   label, name, value, handleChange, pos,
 }) => {
-  const classSuffix = pos === 'verb' ? '--verb' : '';
+  const labelClass = pos === 'verb' ? styles.labelVerb : styles.label;
+  const inputClass = pos === 'verb' ? styles.inputVerb : styles.input;
 
   return (
-    <label className={`form__label${classSuffix}`} htmlFor={name}>
+    <label className={labelClass} htmlFor={name}>
       {label}
       <input
         id={name}
         name={name}
-        className={`form__input${classSuffix}`}
+        className={inputClass}
         type="text"
         value={value}
         onChange={handleChange}

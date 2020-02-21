@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import styles from './forms.module.css';
+
 class UpdateSelectorCategory extends Component {
   state = {
     isVisible: true,
@@ -21,10 +23,10 @@ class UpdateSelectorCategory extends Component {
         (responseData) => {
           const wordList = responseData.data.map(item => (
             <tr key={item.id}>
-              <td className="item-select__table-td-translation">
+              <td className={styles.itemSelectorTranslation}>
                 <span className="tool" data-tip={item.category}>{item.category}</span>
               </td>
-              <td className="item-select__table-td-edit">
+              <td className={styles.itemSelectorEdit}>
                 <a href="#null" className="btn-edit" data-id={item.id} data-type={type} onClick={handleIconClick}>-</a>
               </td>
             </tr>
@@ -51,19 +53,19 @@ class UpdateSelectorCategory extends Component {
           </span>
         </button> */}
 
-        <form className="form--item-selector" id="frmListWords" style={this.state.isVisible ? { display: 'block' } : { display: 'none' }}>
-          <h3 className="form__header">Word List</h3>
+        <form className={styles.formItemSelector} id="frmListWords" style={this.state.isVisible ? { display: 'block' } : { display: 'none' }}>
+          <h3 className={styles.header}>Word List</h3>
 
           <button type="button" onClick={() => this.handleSelectOrButton('word')}>Word Categories</button>
           <button type="button" onClick={() => this.handleSelectOrButton('sentence')}>Sentence Categories</button>
 
-          <div className="item-select">
-            <div className="item-select__wrap">
-              <table className="item-select__table">
+          <div className={styles.itemSelector}>
+            <div className={styles.itemSelectorWrap}>
+              <table className={styles.itemSelectorTable}>
                 <tbody>
                   <tr>
-                    <th className="item-select__table-td-translation">Translation</th>
-                    <th className="item-select__table-td-edit">-</th>
+                    <th className={styles.itemSelectorTranslation}>Translation</th>
+                    <th className={styles.itemSelectorEdit} />
                   </tr>
 
                   {modifyList}

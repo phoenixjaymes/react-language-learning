@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import styles from './formSelect.module.css';
+
 const FormSelect = ({
   name, categories, selected, label, handleCategory,
 }) => {
@@ -9,12 +11,12 @@ const FormSelect = ({
   ));
 
   return (
-    <label className="form__label" htmlFor="selCategory">
+    <label className={styles.label} htmlFor="selCategory">
       {label}
       <select
         id="selCategory"
         name={name}
-        className="form__select"
+        className={styles.select}
         value={selected}
         onChange={handleCategory}
       >
