@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './formInput.module.css';
 
 const FormInput = ({
-  label, name, value, handleChange, pos,
+  label, name, value, handleChange, pos, type
 }) => {
   const labelClass = pos === 'verb' ? styles.labelVerb : styles.label;
   const inputClass = pos === 'verb' ? styles.inputVerb : styles.input;
@@ -16,13 +16,17 @@ const FormInput = ({
         id={name}
         name={name}
         className={inputClass}
-        type="text"
+        type={type}
         value={value}
         onChange={handleChange}
       />
     </label>
   );
 };
+
+FormInput.defaultProps = {
+  type: 'text',
+}
 
 FormInput.propTypes = {
   label: PropTypes.oneOfType([
@@ -33,6 +37,7 @@ FormInput.propTypes = {
   value: PropTypes.string,
   handleChange: PropTypes.func,
   pos: PropTypes.string,
+  type: PropTypes.string,
 };
 
 export default FormInput;
