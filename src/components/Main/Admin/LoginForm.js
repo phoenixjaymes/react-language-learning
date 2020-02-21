@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { LearningContext } from '../Context';
+import { LearningContext } from '../../Context';
 
-import '../../css/forms.css';
-import '../../css/login.css';
+import FormInput from './FormInput';
 
-import styles from './Admin/forms.module.css';
+import styles from './forms.module.css';
 
 class LoginForm extends Component {
   state = {
@@ -52,31 +51,23 @@ class LoginForm extends Component {
   render() {
     const { itemLearner, itemPass } = this.state;
     return (
-      <div className="login-contanier">
+      <div className={styles.loginWrap}>
         <form className={styles.form} onSubmit={this.handleSubmit}>
           <h3 className={styles.header}>Please Login</h3>
 
-          <label className="form__label login-form__label" htmlFor="txtLearner">
-            User
-            <input
-              id="txtLearner"
-              className="form__input"
-              type="text"
-              value={itemLearner}
-              onChange={this.handleLearner}
-            />
-          </label>
+          <FormInput
+            label="User"
+            name="itemLearner"
+            value={itemLearner}
+            handleChange={this.handleLearner}
+          />
 
-          <label className="form__label login-form__label" htmlFor="txtPassword">
-            Password
-            <input
-              id="txtPassword"
-              className="form__input"
-              type="password"
-              value={itemPass}
-              onChange={this.handlePass}
-            />
-          </label>
+          <FormInput
+            label="Password"
+            name="itemPass"
+            value={itemPass}
+            handleChange={this.handlePass}
+          />
 
           <button type="submit" className="form__button">Login</button>
         </form>
