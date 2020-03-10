@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import HomeImage from '../HomeImage';
+import HomeImage from '../Home/HomeImage';
 import withContext from '../../Context';
 import Articles from './Articles';
 import Pronouns from './Pronouns';
