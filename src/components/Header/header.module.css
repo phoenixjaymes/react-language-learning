@@ -1,0 +1,190 @@
+/* 
+    File     : header.module.css
+    Date     : 11 Feb 20
+    Author   : Jaymes Young <jaymes@phoenixjaymes.com>
+*/
+.mainHeader {
+  background: #3131d2;
+  margin-bottom: 0;
+}
+
+  @media (min-width: 720px) {
+    .mainHeader {
+      padding: 10px 0; } }
+
+  .mainHeaderWrap {
+    display: flex;
+    flex-flow: row wrap; }
+
+    @media (min-width: 720px) {
+      .mainHeaderWrap {
+        flex-wrap: nowrap;
+        text-align: right; } }
+
+
+  .mainHeaderLogo {
+    flex-basis: 40px;
+    order: 1;
+    height: 40px;
+    padding: 5px; }
+    @media (min-width: 720px) {
+      .mainHeaderLogo {
+        flex-basis: 50px;
+        height: 50px;
+        padding: 5px; } }
+
+  .mainHeaderName {
+    flex: 1;
+    order: 2;
+    color: #ffc519;
+    font-family: "Germania One", "Brush Script MT", cursive;
+    font-size: 1.375em;
+    line-height: 40px;
+    padding-left: 10px; }
+
+    @media (min-width: 544px) {
+      .mainHeaderName {
+        flex: 0 1 0;
+        white-space: nowrap; } }
+
+    @media (min-width: 720px) {
+      .mainHeaderName {
+        flex: 1 1 0;
+        font-size: 1.5em;
+        line-height: 50px;
+        white-space: nowrap; } }
+
+  .mainHeaderNav {
+    flex-basis: 100%;
+    order: 4;
+    height: 40px; }
+
+    @media (min-width: 544px) {
+      .mainHeaderNav {
+        flex: 1 0 auto;
+        order: 3; } }
+
+    @media (min-width: 720px) {
+      .mainHeaderNav {
+        flex: 0 1 auto;
+        width: 100%; } }
+
+  .mainHeaderSettings {
+    position: relative;
+    z-index: 50;
+    flex-basis: 50px;
+    order: 3; }
+
+    @media (min-width: 544px) {
+      .mainHeaderSettings {
+        order: 4; } }
+
+    @media (min-width: 720px) {
+      .mainHeaderSettings {
+        order: 4; } }
+
+  .mainHeaderSettingsIcon {
+    display: block;
+    height: 40px;
+
+    padding: 5px;
+
+    width: 40px; }
+
+    @media (min-width: 720px) {
+      .mainHeaderSettingsIcon {
+        height: 50px;
+        width: 50px; } }
+
+
+  /* 
+    File     : _mainMenu.scss
+*/
+.mainMenu {
+  text-align: center; }
+  @media (min-width: 544px) {
+    .mainMenu {
+      text-align: right; } }
+
+  @media (min-width: 720px) {
+    .mainMenu {
+      height: 50px; } }
+
+  .mainMenuItem {
+    display: inline-block;
+    font-weight: 600;
+    padding: 0 4px;
+    position: relative; }
+
+    @media (min-width: 720px) {
+      .mainMenuItem {
+        padding-top: 5px; } }
+
+    .mainMenuItem a,
+    .mainMenuItem  span {
+      display: inline-block;
+      line-height: 40px;
+      text-align: center;
+      text-decoration: none;
+      width: 100%; }
+
+  .mainMenuItem a:link, .mainMenuItem a:visited,
+  .mainMenuItem  span {
+    color: #ffc519; }
+
+  .mainMenuItem a:hover, .mainMenuItem a:active,
+  .mainMenuItem  span:hover {
+    color: #ffedb9; }
+
+.mainMenuItem-current a {
+  color: black;
+}
+
+
+/***** Nav Arrow ****/
+.arrowDown::after, 
+.arrowUp::after {
+  cursor: pointer;
+  display: inline-block;
+  font-size: .9rem;
+  padding-left: 3px;
+  text-align: right;
+}
+
+.arrowDown::after {
+  content: "\25BC";
+}
+
+.arrowUp::after {
+  content: "\25B2";
+}
+
+.subMenu {
+  position: absolute;
+  left: 0;
+  top: 40px;
+  z-index: 50;
+  
+  background: #3131d2;
+  border: solid #ffc519;
+  border-width: 0 1px 1px 1px;
+  display: none;
+  list-style: none;
+  padding-left: 10px;
+}
+
+  @media (min-width: 720px) {
+    .subMenu {
+      top: 60px; } }
+
+  .subMenuItem {
+    min-width: 100px;
+    text-align: left; }
+
+    .subMenuItem a,
+    .subMenuItem span {
+      text-align: left; }
+
+.subMenu.jsShowMenu {
+  display: block;
+}

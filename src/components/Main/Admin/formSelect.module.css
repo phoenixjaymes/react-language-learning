@@ -1,0 +1,20 @@
+.label {
+  display: block;
+  font-size: 1em;
+  margin-bottom: 15px;
+}
+
+.select {
+  background: #ffedb9;
+  border: 1px solid #ffc519;
+  border-radius: 4px;
+  height: 30px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding: 0 5px;
+  width: 100%;
+}
+
+.select:focus {
+  background: #a9a9dc;
+}

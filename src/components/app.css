@@ -1,0 +1,27 @@
+/***** Activity Global Styles *****/
+.activity-section {
+  margin: 0 auto;
+  max-width: 800px; 
+}
+
+.activityButtonsWrap {
+  display: grid;
+  width: 300px;
+  
+  grid-template-columns: 1fr, 1fr;
+
+}
+
+/***** Content Wrap *****/
+.contentWrap {
+  padding: 0 10px;
+  margin-left: auto;
+  margin-right: auto; }
+
+  @media (min-width: 544px) {
+    .contentWrap {
+      max-width: 576px; } }
+
+  @media (min-width: 720px) {
+    .contentWrap {
+      max-width: 720px; } }

@@ -1,0 +1,139 @@
+.formLayoutGrid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+}
+
+.formLayoutGrid > .form,
+.formLayoutGrid .formItemSelector {
+  width: 100%
+}
+
+/***** Header *****/
+.header {
+  border: 1px dotted #ffc519;
+  border-radius: 5px;
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #ffc519;
+  min-height: 35px;
+  line-height: 35px;
+  margin: 0 0 10px 0;
+}
+
+
+
+.form,
+.formItemSelector {
+  background: #3131d2;
+  margin: 0 auto 20px auto;
+  overflow: hidden;
+  padding: 10px;
+  position: relative;
+  width: 100%;
+}
+
+@media (min-width: 544px) {
+  .form,
+  .formItemSelector {
+    max-width: 300px;
+  }
+}
+
+@media (min-width: 720px) {
+  .form,
+  .formItemSelector {
+    max-width: 400px;
+  }
+}
+
+@media (min-width: 940px) {
+  .formLayoutGrid {
+    max-width: 920px;
+  }
+
+  .form,
+  .formItemSelector {
+    max-width: 450px;
+  }
+}
+
+
+
+
+.form {
+  background: #3131d2;
+  margin: 0 auto 20px auto;
+  overflow: hidden;
+  padding: 10px;
+  position: relative;
+  width: 100%;
+}
+
+.form label {
+  color: #ffedb9;
+}
+
+
+
+
+
+
+
+/***** Item Selector *****/
+.itemSelectorWrap {
+  background: #ffedb9;
+  border-radius: 4px;
+  height: 300px;
+  overflow: auto;
+  padding: 5px;
+}
+
+.itemSelectorTable {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* .itemSelectorRow {
+  text-align: left;
+} */
+
+.itemSelectorTable tr:nth-child(even) {
+  background: #fff;
+}
+
+.itemSelectorEdit {
+  vertical-align: middle;
+  padding: 3px 3px 3px 0;
+  width: 30px; 
+}
+
+.itemSelectorTranslation {
+  padding: 3px 0 3px 3px;
+  text-align: left;
+}
+
+/***** Login Form *****/
+.loginWrap {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.loginWrap form {
+  height: 265px;
+}
+
+@media (max-width: 543px) {
+  .loginWrap {
+    margin: 0 auto;
+    max-width: 400px;
+    padding: 0 20px;
+  }
+}

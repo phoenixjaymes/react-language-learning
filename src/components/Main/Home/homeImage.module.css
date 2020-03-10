@@ -1,0 +1,10 @@
+.imgWrap {
+  margin: 0 auto;
+  max-width: 1000px;
+  width: 80%;
+}
+
+.imgWrap img {
+  border-radius: 4px;
+  max-width: 100%;
+}
