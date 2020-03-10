@@ -1,20 +1,36 @@
-import React from 'react';
-import { LearningConsumer } from '../Context';
+import React, { useContext } from 'react';
+import { LearningContext } from '../../Context';
 
-import imgDe from '../home-img-de.svg';
-import imgNl from '../home-img-nl.svg';
+import styles from './homeImage.module.css';
 
-const HomeImage = () => (
-  <LearningConsumer>
-    {
-      (context) => {
-        const img = context.lang === 'de' ? imgDe : imgNl;
-        return (
-          <img className="home__image" src={img} alt="flashcard logo" />
-        );
-      }
-    }
-  </LearningConsumer>
-);
+import imgDE from './germany.jpg';
+import imgNL from './netherlands.jpg';
+import imgAF from './africa.jpg';
+
+const HomeImage = () => {
+  const value = useContext(LearningContext);
+  let img;
+
+  switch (value.lang) {
+    case 'de':
+      img = imgDE;
+      break;
+    case 'nl':
+      img = imgNL;
+      break;
+    case 'za':
+      img = imgAF;
+      break;
+    default:
+      img = imgDE;
+      break;
+  }
+
+  return (
+    <div className={styles.imgWrap}>
+      <img className="home__image" src={img} alt="flashcard logo" />
+    </div>
+  )
+};
 
 export default HomeImage;
