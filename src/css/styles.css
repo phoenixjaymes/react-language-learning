@@ -498,6 +498,13 @@ textarea {
   height: 100%;
   width: 100%; }
 
+
+
+
+
+
+
+
 /* 
     File     : _base.scss
     Date     : Sep 28, 2016
@@ -507,7 +514,8 @@ body {
   font-size: 16px;
   line-height: 1.25em;
   color: #000;
-  background: #a9a9dc;
+  /* background: #a9a9dc; */
+  background: #F6F6FB;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
   font-size: 16px; }
@@ -522,17 +530,23 @@ h1 {
   font-size: 2em;
   line-height: 1;
   font-weight: normal;
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+}
+
   @media (min-width: 720px) {
     h1 {
       font-size: 2.5em;
-      line-height: 1.125em; } }
+      line-height: 1.125em;
+      margin-bottom: 40px;
+    }
+  }
 
 h2 {
   font-size: 1.375em;
   line-height: 1.15385em;
   font-weight: normal;
   text-align: center; }
+  
   @media (min-width: 720px) {
     h2 {
       font-size: 1.5em;
@@ -590,11 +604,7 @@ section {
   margin: 0 auto;
 }
 
-.home__title {
-  margin-bottom: 40px; }
-  @media (min-width: 544px) {
-    .home__title {
-      margin-bottom: 60px; } }
+
 .home__image {
   display: block;
   margin: 0 auto 1.25em auto;
