@@ -5,7 +5,7 @@ import HomePhrase from './HomePhrase';
 
 const Home = () => (
   <section className="home">
-    <h1 className="home__title">Language Learning</h1>
+    <h1>Language Learning</h1>
     <HomeImage />
     <HomePhrase />
   </section>
