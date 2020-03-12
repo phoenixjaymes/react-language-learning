@@ -546,7 +546,7 @@ h2 {
   line-height: 1.15385em;
   font-weight: normal;
   text-align: center; }
-  
+
   @media (min-width: 720px) {
     h2 {
       font-size: 1.5em;
@@ -600,9 +600,7 @@ section {
   padding-top: 20px;
 }
 
-.home {
-  margin: 0 auto;
-}
+
 
 
 .home__image {
