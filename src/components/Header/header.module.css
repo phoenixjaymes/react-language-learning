@@ -173,17 +173,22 @@
   padding-left: 10px;
 }
 
-  @media (min-width: 720px) {
-    .subMenu {
-      top: 60px; } }
+@media (min-width: 720px) {
+  .subMenu {
+    top: 60px;
+  }
+}
 
-  .subMenuItem {
-    min-width: 100px;
-    text-align: left; }
+.subMenuItem {
+  min-width: 100px;
+  padding-right: 10px;
+  text-align: left;
+}
 
-    .subMenuItem a,
-    .subMenuItem span {
-      text-align: left; }
+.subMenuItem a,
+.subMenuItem span {
+  text-align: left;
+}
 
 .subMenu.jsShowMenu {
   display: block;
