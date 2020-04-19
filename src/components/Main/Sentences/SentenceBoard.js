@@ -72,7 +72,7 @@ class SentenceBoard extends Component {
   sentenceWordClick = (i) => {
     const { buttonToShow } = this.state;
 
-    if (buttonToShow === "check" || buttonToShow === "continue") {
+    if (buttonToShow === "continue" || buttonToShow === "finish") {
       return;
     }
 
@@ -90,7 +90,7 @@ class SentenceBoard extends Component {
   answerWordClick = (i) => {
     const { buttonToShow } = this.state;
 
-    if (buttonToShow === "check" || buttonToShow === "continue") {
+    if (buttonToShow === "continue" || buttonToShow === "finish") {
       return;
     }
 
