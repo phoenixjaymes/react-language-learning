@@ -79,7 +79,6 @@ class WordBoard extends Component {
         }),
       }));
     } else {
-      console.log("wrong click");
       this.setState((prevState) => ({
         words: words.map((word) => {
           if (id === word.id) {
