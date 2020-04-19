@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom'; 
 
 import SearchConjugation from './SearchConjugation';
 
 import styles from './searchResults.module.css';
 
-const SearchResults = ({ data }) => {
+const SearchResults = ({ data, itemType, lang }) => {
   const [searchHeader, setSearchHeader] = useState();
   const [searchRows, setSearchRows] = useState();
   const [sortColumn, setSortColumn] = useState('');
@@ -98,6 +99,14 @@ const SearchResults = ({ data }) => {
 
     const rows = data.map((row) => {
       const cells = keys.map((cell) => {
+        if (cell === 'id') {
+          return (
+            <td key="id" className={styles.searchId}>
+              <Link to={`/${lang}/admin/${itemType}/update/${row[cell]}`}>{row[cell]}</Link>
+            </td>
+          );
+        }
+
         if (cell === 'conjugation') {
           return (
             <td key="conjugation" className={styles.searchResultsConjugation}>
@@ -120,7 +129,7 @@ const SearchResults = ({ data }) => {
     });
 
     setSearchRows(rows);
-  }, [data]);
+  }, [data, itemType,lang]);
 
   useEffect(() => {
     if (data[0] !== undefined) {
@@ -141,6 +150,8 @@ const SearchResults = ({ data }) => {
 
 SearchResults.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
+  itemType: PropTypes.string,
+  lang: PropTypes.string,
 };
 
 export default SearchResults;
