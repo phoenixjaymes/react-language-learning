@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { LearningContext } from '../../../Context';
+import React, { Component } from "react";
+import { LearningContext } from "../../../Context";
 
-import SearchResults from './SearchResults';
+import SearchResults from "./SearchResults";
 
-import svgSearch from './search.svg';
-import styles from './search.module.css';
+import svgSearch from "./search.svg";
+import styles from "./search.module.css";
 
 class Search extends Component {
   constructor(props) {
@@ -12,8 +12,8 @@ class Search extends Component {
     this.state = {
       jsonData: [],
       modifiedData: [],
-      itemType: '',
-      itemRange: 'a-d',
+      itemType: "",
+      itemRange: "a-d",
       extraOptions: [],
     };
   }
@@ -26,12 +26,14 @@ class Search extends Component {
     // ));
 
     this.setState({ extraOptions: categories[lang][itemType] });
-  }
+  };
 
   handleType = (e) => {
-    if (e.target.value === 'adjective'
-    || e.target.value === 'noun'
-    || e.target.value === 'verb') {
+    if (
+      e.target.value === "adjective" ||
+      e.target.value === "noun" ||
+      e.target.value === "verb"
+    ) {
       this.getExtraOptions(e.target.value);
       this.setState({ itemType: e.target.value });
     } else {
@@ -40,49 +42,64 @@ class Search extends Component {
         extraOptions: [],
       });
     }
-  }
+  };
 
-  handleRange = (e) => this.setState({ itemRange: e.target.value })
+  handleRange = (e) => this.setState({ itemRange: e.target.value });
 
   handleSearchClick = () => {
     const { itemType, itemRange } = this.state;
     const { lang } = this.context;
 
-    if (itemType === '') {
+    if (itemType === "") {
       return;
     }
 
-    fetch(`http://phoenixjaymes.com/assets/data/language/get-search.php?lang=${lang}&type=${itemType}&range=${itemRange}`)
+    fetch(
+      `https://phoenixjaymes.com/assets/data/language/get-search.php?lang=${lang}&type=${itemType}&range=${itemRange}`
+    )
       .then((reponse) => reponse.json())
-      .then(
-        (responseData) => {
-          this.setState({
-            jsonData: responseData.data,
-            modifiedData: responseData.data,
-          });
-        },
-      )
+      .then((responseData) => {
+        this.setState({
+          jsonData: responseData.data,
+          modifiedData: responseData.data,
+        });
+      })
       .catch((error) => {
-        console.log('Error fetching and parsing data', error);
+        console.log("Error fetching and parsing data", error);
       });
-  }
+  };
 
   render() {
     const {
-      jsonData, modifiedData, itemType, itemRange, extraOptions,
+      jsonData,
+      modifiedData,
+      itemType,
+      itemRange,
+      extraOptions,
     } = this.state;
+    const { lang } = this.context;
     let results;
 
-    if (jsonData.status === 'fail') {
+    if (jsonData.status === "fail") {
       results = <h3>No results were returned</h3>;
     } else {
-      results = <SearchResults data={modifiedData} sortTable={this.sortTable} />;
+      results = (
+        <SearchResults
+          data={modifiedData}
+          sortTable={this.sortTable}
+          itemType={itemType}
+          lang={lang}
+        />
+      );
     }
 
     return (
       <div>
-        <form className={styles.searchForm} autoComplete="off" onSubmit={this.handleSubmit}>
-
+        <form
+          className={styles.searchForm}
+          autoComplete="off"
+          onSubmit={this.handleSubmit}
+        >
           <label className={styles.searchFormLabel} htmlFor="selType">
             Search Type
             <select
@@ -116,22 +133,26 @@ class Search extends Component {
               <option value="q-t">Q - T</option>
               <option value="u-z">U - Z</option>
               <option value="umlauts">Umlauts</option>
-              {extraOptions.length > 0 && (
+              {extraOptions.length > 0 &&
                 extraOptions.map((item) => (
-                  <option key={item.id} value={item.id}>{item.name}</option>
-                ))
-              )}
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
             </select>
           </label>
           <div className={styles.searchFormBtnSearch}>
-            <span onClick={this.handleSearchClick} role="button" onKeyPress={this.handleSearchClick}>
+            <span
+              onClick={this.handleSearchClick}
+              role="button"
+              onKeyPress={this.handleSearchClick}
+            >
               <img src={svgSearch} alt="search" />
             </span>
           </div>
         </form>
 
         {results}
-
       </div>
     );
   }

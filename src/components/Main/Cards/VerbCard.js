@@ -1,37 +1,39 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import CartControls from './CardControls';
+import CartControls from "./CardControls";
 
 class VerbCard extends Component {
   state = {
-    flipClass: '',
-    exampleClass: '',
-    exampleClassText: 'Examples',
+    flipClass: "",
+    exampleClass: "",
+    exampleClassText: "Examples",
     isLoaded: false,
     error: false,
     data: [],
     currentCard: 0,
     totalCards: 0,
-    english: '',
-    translation: '',
-    ich: '',
-    du: '',
-    er: '',
-    wir: '',
-    ihr: '',
-    Sie: '',
-    image: '',
-    gender: '',
-    example: '',
-    exPerfect: '',
-    exImperfect: '',
-  }
+    english: "",
+    translation: "",
+    ich: "",
+    du: "",
+    er: "",
+    wir: "",
+    ihr: "",
+    Sie: "",
+    image: "",
+    gender: "",
+    example: "",
+    exPerfect: "",
+    exImperfect: "",
+  };
 
   componentDidMount() {
     const { lang, category, activityId } = this.props;
-    fetch(`http://phoenixjaymes.com/assets/data/language/get-cards.php?lang=${lang}&pos=${category}&cat=${activityId}`)
-      .then(reponse => reponse.json())
+    fetch(
+      `https://phoenixjaymes.com/assets/data/language/get-cards.php?lang=${lang}&pos=${category}&cat=${activityId}`
+    )
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         this.setState({
           data: responseData.data,
@@ -53,19 +55,19 @@ class VerbCard extends Component {
         });
       })
       .catch((error) => {
-        console.log('Error fetching anaad parsing data', error);
+        console.log("Error fetching anaad parsing data", error);
         this.setState({ error: true, isLoaded: true });
       });
   }
 
   flipCard = () => {
     const { flipClass } = this.state;
-    if (flipClass === 'js-flip-card') {
-      this.setState({ flipClass: '' });
+    if (flipClass === "js-flip-card") {
+      this.setState({ flipClass: "" });
     } else {
-      this.setState({ flipClass: 'js-flip-card' });
+      this.setState({ flipClass: "js-flip-card" });
     }
-  }
+  };
 
   cardNext = () => {
     const { currentCard, totalCards } = this.state;
@@ -87,13 +89,13 @@ class VerbCard extends Component {
           example: prevState.data[cardNum].example,
           exPerfect: prevState.data[cardNum].ex_perfect,
           exImperfect: prevState.data[cardNum].ex_imperfect,
-          flipClass: '',
-          exampleClass: '',
-          exampleClassText: 'Examples',
+          flipClass: "",
+          exampleClass: "",
+          exampleClassText: "Examples",
         };
       });
     }
-  }
+  };
 
   cardBack = () => {
     const { currentCard } = this.state;
@@ -115,32 +117,48 @@ class VerbCard extends Component {
           example: prevState.data[cardNum].example,
           exPerfect: prevState.data[cardNum].ex_perfect,
           exImperfect: prevState.data[cardNum].ex_imperfect,
-          flipClass: '',
-          exampleClass: '',
-          exampleClassText: 'Examples',
+          flipClass: "",
+          exampleClass: "",
+          exampleClassText: "Examples",
         };
       });
     }
-  }
+  };
 
   toggleExamples = () => {
     const { exampleClass } = this.state;
-    if (exampleClass === '') {
-      this.setState({ exampleClass: 'showExamples', exampleClassText: 'Conjugation' });
+    if (exampleClass === "") {
+      this.setState({
+        exampleClass: "showExamples",
+        exampleClassText: "Conjugation",
+      });
     } else {
-      this.setState({ exampleClass: '', exampleClassText: 'Examples' });
+      this.setState({ exampleClass: "", exampleClassText: "Examples" });
     }
-  }
+  };
 
   render() {
     const {
-      flipClass, english, translation, example, exPerfect, exImperfect, exampleClass,
-      exampleClassText, ich, du, er, wir, ihr, Sie, currentCard, totalCards,
+      flipClass,
+      english,
+      translation,
+      example,
+      exPerfect,
+      exImperfect,
+      exampleClass,
+      exampleClassText,
+      ich,
+      du,
+      er,
+      wir,
+      ihr,
+      Sie,
+      currentCard,
+      totalCards,
     } = this.state;
     const newCurrentCard = currentCard + 1;
     return (
       <div className="activity__content--cards">
-
         <div className={`card ${flipClass}`}>
           {/* <!-- Front with no image --> */}
           <div className="card__front" ng-switch-when="none">
@@ -148,7 +166,13 @@ class VerbCard extends Component {
               <p className="card__text">{english}</p>
             </div>
 
-            <button type="button" className="card__button" onClick={this.flipCard}>Flip</button>
+            <button
+              type="button"
+              className="card__button"
+              onClick={this.flipCard}
+            >
+              Flip
+            </button>
           </div>
 
           {/* <!-- Back with no image --> */}
@@ -202,8 +226,20 @@ class VerbCard extends Component {
               <p className="card__example">{exImperfect}</p>
             </div>
 
-            <button type="button" className="card__txt-examples" onClick={this.toggleExamples}>{exampleClassText}</button>
-            <button type="button" className="card__txt-flip" onClick={this.flipCard}>Flip</button>
+            <button
+              type="button"
+              className="card__txt-examples"
+              onClick={this.toggleExamples}
+            >
+              {exampleClassText}
+            </button>
+            <button
+              type="button"
+              className="card__txt-flip"
+              onClick={this.flipCard}
+            >
+              Flip
+            </button>
           </div>
         </div>
 

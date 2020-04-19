@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import { LearningContext } from '../../Context';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+import { LearningContext } from "../../Context";
 
-import FormInput from './FormInput';
+import FormInput from "./FormInput";
 
-import styles from './forms.module.css';
+import styles from "./forms.module.css";
 
 class LoginForm extends Component {
   state = {
-    itemLearner: '',
-    itemPass: '',
-  }
+    itemLearner: "",
+    itemPass: "",
+  };
 
   handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
-  }
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -24,20 +24,20 @@ class LoginForm extends Component {
     const { itemLearner, itemPass } = this.state;
     const { history } = this.props;
     const formData = new FormData();
-    formData.append('learner', itemLearner);
-    formData.append('password', itemPass);
+    formData.append("learner", itemLearner);
+    formData.append("password", itemPass);
 
-    fetch('http://phoenixjaymes.com/lab/flashcards/assets/inc/fc-login.php', {
-      method: 'POST',
+    fetch("https://phoenixjaymes.com/lab/flashcards/assets/inc/fc-login.php", {
+      method: "POST",
       body: formData,
     })
-      .then(reponse => reponse.json())
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         if (responseData.success === true) {
           actions.setLogin(true);
 
           // Set session storage
-          sessionStorage.setItem('isLoggedIn', true);
+          sessionStorage.setItem("isLoggedIn", true);
           const newPath = `/${lang}/admin`;
           history.push(newPath);
         } else {
@@ -45,9 +45,9 @@ class LoginForm extends Component {
         }
       })
       .catch((error) => {
-        console.log('Error fetching and parsing data', error);
+        console.log("Error fetching and parsing data", error);
       });
-  }
+  };
 
   render() {
     const { itemLearner, itemPass } = this.state;
@@ -71,7 +71,9 @@ class LoginForm extends Component {
             type="password"
           />
 
-          <button type="submit" className="form__button">Login</button>
+          <button type="submit" className="form__button">
+            Login
+          </button>
         </form>
       </div>
     );

@@ -1,25 +1,27 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import CartControls from './CardControls';
+import CartControls from "./CardControls";
 
 class PhraseCard extends Component {
   state = {
-    flipClass: '',
+    flipClass: "",
     isLoaded: false,
     error: false,
     data: [],
     currentCard: 0,
     totalCards: 0,
-    english: '',
-    translation: '',
-  }
+    english: "",
+    translation: "",
+  };
 
   componentDidMount() {
     const { category, lang } = this.props;
 
-    fetch(`http://phoenixjaymes.com/assets/data/language/get-cards.php?lang=${lang}&pos=${category}`)
-      .then(reponse => reponse.json())
+    fetch(
+      `https://phoenixjaymes.com/assets/data/language/get-cards.php?lang=${lang}&pos=${category}`
+    )
+      .then((reponse) => reponse.json())
       .then((responseData) => {
         this.setState({
           data: responseData.data,
@@ -30,19 +32,19 @@ class PhraseCard extends Component {
         });
       })
       .catch((error) => {
-        console.log('Error fetching and parsing data', error);
+        console.log("Error fetching and parsing data", error);
         this.setState({ error: true, isLoaded: true });
       });
   }
 
   flipCard = () => {
     const { flipClass } = this.state;
-    if (flipClass === 'js-flip-card') {
-      this.setState({ flipClass: '' });
+    if (flipClass === "js-flip-card") {
+      this.setState({ flipClass: "" });
     } else {
-      this.setState({ flipClass: 'js-flip-card' });
+      this.setState({ flipClass: "js-flip-card" });
     }
-  }
+  };
 
   cardNext = () => {
     const { currentCard, totalCards } = this.state;
@@ -54,11 +56,11 @@ class PhraseCard extends Component {
           english: prevState.data[cardNum].english,
           translation: prevState.data[cardNum].translation,
           gender: prevState.data[cardNum].gender,
-          flipClass: '',
+          flipClass: "",
         };
       });
     }
-  }
+  };
 
   cardBack = () => {
     const { currentCard } = this.state;
@@ -70,28 +72,37 @@ class PhraseCard extends Component {
           english: prevState.data[cardNum].english,
           translation: prevState.data[cardNum].translation,
           gender: prevState.data[cardNum].gender,
-          flipClass: '',
+          flipClass: "",
         };
       });
     }
-  }
+  };
 
   render() {
     const {
-      flipClass, english, translation, currentCard, totalCards,
+      flipClass,
+      english,
+      translation,
+      currentCard,
+      totalCards,
     } = this.state;
     const newCurrentCard = currentCard + 1;
 
     return (
       <div className="activity__content--cards">
-
         <div className={`card ${flipClass}`}>
           <div className="card__front">
             <div className="card__text-wrap">
               <p className="card__text">{english}</p>
             </div>
 
-            <button type="button" className="card__button" onClick={this.flipCard}>Flip</button>
+            <button
+              type="button"
+              className="card__button"
+              onClick={this.flipCard}
+            >
+              Flip
+            </button>
           </div>
 
           <div className="card__back {{gender}}">
@@ -99,7 +110,13 @@ class PhraseCard extends Component {
               <p className="card__text">{translation}</p>
             </div>
 
-            <button type="button" className="card__button" onClick={this.flipCard}>Flip</button>
+            <button
+              type="button"
+              className="card__button"
+              onClick={this.flipCard}
+            >
+              Flip
+            </button>
           </div>
         </div>
 
@@ -109,7 +126,6 @@ class PhraseCard extends Component {
           cardBack={this.cardBack}
           cardNext={this.cardNext}
         />
-
       </div>
     );
   }

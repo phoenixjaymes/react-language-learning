@@ -1,43 +1,45 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { LearningContext } from '../../Context';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { LearningContext } from "../../Context";
 
 // Components
-import UpdateSelector from './UpdateSelector';
-import FormInput from './FormInput';
-import FormMessage from './FormMessage';
-import Umlauts from './Umlauts';
-import ConfirmDialog from './ConfirmDialog';
+import UpdateSelector from "./UpdateSelector";
+import FormInput from "./FormInput";
+import FormMessage from "./FormMessage";
+import Umlauts from "./Umlauts";
+import ConfirmDialog from "./ConfirmDialog";
 
-import styles from './forms.module.css';
+import styles from "./forms.module.css";
 
 class VerbImperfectZA extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemId: '',
-      itemTranslation: '-',
-      itemImperfect: '',
-      itemExample: '',
-      itemType: '',
-      response: '',
-      status: '',
+      itemId: "",
+      itemTranslation: "-",
+      itemImperfect: "",
+      itemExample: "",
+      itemType: "",
+      response: "",
+      status: "",
       isDialogShown: false,
-      dialogMessage: 'Are you sure you want to make this change?',
+      dialogMessage: "Are you sure you want to make this change?",
     };
   }
 
   clearForm = () => {
-    console.log('clearing form');
-  }
+    console.log("clearing form");
+  };
 
   // Icon click in UpdateSelector
   handleIconClick = (e) => {
-    const itemId = e.target.getAttribute('data-id');
+    const itemId = e.target.getAttribute("data-id");
     const { lang } = this.context;
 
     // change url to get pos from props or match objects
-    fetch(`http://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=imperfect&id=${itemId}`)
+    fetch(
+      `https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=imperfect&id=${itemId}`
+    )
       .then((reponse) => reponse.json())
       .then((responseData) => {
         const data = responseData.data.item;
@@ -50,114 +52,126 @@ class VerbImperfectZA extends Component {
         });
       })
       .catch((error) => {
-        console.log('Error fetching and parsing data', error);
+        console.log("Error fetching and parsing data", error);
       });
-  }
+  };
 
   handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
-  }
+  };
 
   isValid = () => {
-    const {
-      itemExample, itemEk,
-    } = this.state;
+    const { itemExample, itemEk } = this.state;
 
-    if (itemExample === ''
-      || itemEk === '') {
+    if (itemExample === "" || itemEk === "") {
       return false;
     }
     return true;
-  }
+  };
 
   handleYesClick = () => {
     this.setState({
       isDialogShown: false,
     });
     this.submitForm();
-  }
+  };
 
   handleCancelClick = () => {
     this.setState({
       isDialogShown: false,
     });
-  }
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
 
     if (!this.isValid()) {
-      this.setState({ response: 'Please fill in all feilds' });
+      this.setState({ response: "Please fill in all feilds" });
       return;
     }
 
     this.setState({
       isDialogShown: true,
-      response: '',
+      response: "",
     });
-  }
+  };
 
   submitForm = () => {
     const { lang } = this.context;
-    const {
-      itemId, itemExample, itemType, itemImperfect,
-    } = this.state;
-    const fetchUrl = 'http://phoenixjaymes.com/assets/data/language/update-item.php';
+    const { itemId, itemExample, itemType, itemImperfect } = this.state;
+    const fetchUrl =
+      "https://phoenixjaymes.com/assets/data/language/update-item.php";
 
     const formData = new FormData();
-    formData.append('lang', lang);
-    formData.append('id', itemId);
-    formData.append('pos', 'imperfect');
-    formData.append('translation', itemImperfect.trim());
-    formData.append('example', itemExample.trim());
-    formData.append('type', itemType);
+    formData.append("lang", lang);
+    formData.append("id", itemId);
+    formData.append("pos", "imperfect");
+    formData.append("translation", itemImperfect.trim());
+    formData.append("example", itemExample.trim());
+    formData.append("type", itemType);
 
-    fetch(fetchUrl,
-      {
-        method: 'POST',
-        body: formData,
-      })
+    fetch(fetchUrl, {
+      method: "POST",
+      body: formData,
+    })
       .then((reponse) => reponse.json())
       .then((responseData) => {
         this.setState({
           response: `${responseData.status}: ${responseData.data.message}`,
           status: responseData.status,
         });
-        if (responseData.status === 'success') {
+        if (responseData.status === "success") {
           this.clearForm();
         }
       })
       .catch((error) => {
-        console.log('Error fetching and parsing data', error);
+        console.log("Error fetching and parsing data", error);
       });
-  }
+  };
 
   handleFocus = () => {
     this.setState({
-      response: '',
-      status: '',
+      response: "",
+      status: "",
     });
-  }
+  };
 
   render() {
     const { categories, lang } = this.context;
     const {
-      isDialogShown, dialogMessage, itemTranslation, itemExample, itemImperfect, itemType,
-      response, status,
+      isDialogShown,
+      dialogMessage,
+      itemTranslation,
+      itemExample,
+      itemImperfect,
+      itemType,
+      response,
+      status,
     } = this.state;
     const { modifyType, categoryName } = this.props;
 
     const categoryOptions = categories[lang].verb.map((category) => (
-      <option key={category.id} value={category.id}>{category.name}</option>
+      <option key={category.id} value={category.id}>
+        {category.name}
+      </option>
     ));
 
-    const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
+    const btnValue = `${modifyType
+      .charAt(0)
+      .toUpperCase()}${modifyType.substring(1)} ${categoryName
+      .charAt(0)
+      .toUpperCase()}${categoryName.substring(1)}`;
 
     return (
       <div>
         <div className={styles.formLayoutGrid}>
-          <form className={styles.form} autoComplete="off" onSubmit={this.handleSubmit} onFocus={this.handleFocus}>
+          <form
+            className={styles.form}
+            autoComplete="off"
+            onSubmit={this.handleSubmit}
+            onFocus={this.handleFocus}
+          >
             <h3 className={styles.header}>Update Afrikaans Imperfect</h3>
 
             <h3>{itemTranslation}</h3>
@@ -170,7 +184,7 @@ class VerbImperfectZA extends Component {
                   className="form__check"
                   type="radio"
                   value="mixed"
-                  checked={itemType === 'mixed'}
+                  checked={itemType === "mixed"}
                   onChange={this.handleChange}
                 />
                 Mixed
@@ -183,7 +197,7 @@ class VerbImperfectZA extends Component {
                   className="form__check"
                   type="radio"
                   value="strong"
-                  checked={itemType === 'strong'}
+                  checked={itemType === "strong"}
                   onChange={this.handleChange}
                 />
                 Strong
@@ -196,14 +210,18 @@ class VerbImperfectZA extends Component {
                   className="form__check"
                   type="radio"
                   value="weak"
-                  checked={itemType === 'weak'}
+                  checked={itemType === "weak"}
                   onChange={this.handleChange}
                 />
                 Weak
               </label>
             </div>
 
-            <Umlauts className="form-umlauts" input-type="verb" input-field="translation" />
+            <Umlauts
+              className="form-umlauts"
+              input-type="verb"
+              input-field="translation"
+            />
 
             <FormInput
               label="Imperfect"
@@ -219,22 +237,27 @@ class VerbImperfectZA extends Component {
               handleChange={this.handleChange}
             />
 
-            <input className="form__button" type="submit" value={`${btnValue}`} />
-
-            <FormMessage
-              response={response}
-              status={status}
+            <input
+              className="form__button"
+              type="submit"
+              value={`${btnValue}`}
             />
+
+            <FormMessage response={response} status={status} />
           </form>
 
-          { modifyType === 'update' && (
+          {modifyType === "update" && (
             <UpdateSelector
               lang={lang}
               type={categoryName}
               categories={categories[lang].verb}
               handleIconClick={this.handleIconClick}
             >
-              <select id="selCategoryList" className="form__select" name="selCategoryList">
+              <select
+                id="selCategoryList"
+                className="form__select"
+                name="selCategoryList"
+              >
                 <option value="0">Select</option>
                 {categoryOptions}
               </select>

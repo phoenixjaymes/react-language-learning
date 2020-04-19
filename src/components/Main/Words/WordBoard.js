@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import WordBoardButton from './WordBoardButton';
+import WordBoardButton from "./WordBoardButton";
 
 import styles from "./wordBoard.module.css";
 
@@ -13,7 +13,7 @@ class WordBoard extends Component {
     words: [],
     firstClickedId: undefined,
     firstClickedMatchId: undefined,
-  }
+  };
 
   componentDidMount() {
     const { category, lang } = this.props;
@@ -24,12 +24,14 @@ class WordBoard extends Component {
       });
     };
 
-    fetch(`http://phoenixjaymes.com/assets/data/language/get-words.php?lang=${lang}&pos=${category}`)
+    fetch(
+      `https://phoenixjaymes.com/assets/data/language/get-words.php?lang=${lang}&pos=${category}`
+    )
       .then((reponse) => reponse.json())
       .then((responseData) => wordList(responseData.data))
       .catch((error) => {
         this.setState({ isLoaded: true, error: true });
-        console.log('Error fetching and parsing data', error);
+        console.log("Error fetching and parsing data", error);
       });
   }
 
@@ -52,14 +54,13 @@ class WordBoard extends Component {
         };
       }),
     });
-  }
+  };
 
   checkForMatch = (id, matchId) => {
     const { words, firstClickedMatchId } = this.state;
 
     if (matchId === firstClickedMatchId) {
- 
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         firstClickedId: undefined,
         firstClickedMatchId: undefined,
         words: words.map((word) => {
@@ -77,8 +78,9 @@ class WordBoard extends Component {
           };
         }),
       }));
-    } else {  console.log('wrong click');
-      this.setState(prevState => ({
+    } else {
+      console.log("wrong click");
+      this.setState((prevState) => ({
         words: words.map((word) => {
           if (id === word.id) {
             return {
@@ -93,7 +95,7 @@ class WordBoard extends Component {
         }),
       }));
     }
-  }
+  };
 
   handleWordClick = (obj) => {
     const { firstClickedId } = this.state;
@@ -108,7 +110,7 @@ class WordBoard extends Component {
         this.checkForMatch(id, matchId);
       }
     }
-  }
+  };
 
   render() {
     const { words } = this.state;
@@ -120,9 +122,7 @@ class WordBoard extends Component {
 
     return (
       <div className={styles.words}>
-        <ul className={styles.wordsWrap}>
-          {listOfWords}
-        </ul>
+        <ul className={styles.wordsWrap}>{listOfWords}</ul>
       </div>
     );
   }

@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import GenericCardImg from './GenericCardImg';
-import GenericCardNoImg from './GenericCardNoImg';
-import withFlipAndToggle from './withFlipAndToggle';
-import CartControls from './CardControls';
+import GenericCardImg from "./GenericCardImg";
+import GenericCardNoImg from "./GenericCardNoImg";
+import withFlipAndToggle from "./withFlipAndToggle";
+import CartControls from "./CardControls";
 // import Loading from '../Loading';
 
 class GenericCardWrap extends Component {
@@ -14,12 +14,12 @@ class GenericCardWrap extends Component {
     data: [],
     currentCard: 0,
     totalCards: 0,
-    english: '',
-    translation: '',
-    example: '',
-    image: '',
-    gender: '',
-  }
+    english: "",
+    translation: "",
+    example: "",
+    image: "",
+    gender: "",
+  };
 
   componentDidMount() {
     const { lang, category, activityId } = this.props;
@@ -37,11 +37,13 @@ class GenericCardWrap extends Component {
       });
     };
 
-    fetch(`http://phoenixjaymes.com/assets/data/language/get-cards.php?lang=${lang}&pos=${category}&cat=${activityId}`)
+    fetch(
+      `https://phoenixjaymes.com/assets/data/language/get-cards.php?lang=${lang}&pos=${category}&cat=${activityId}`
+    )
       .then((reponse) => reponse.json())
       .then((responseData) => genericDeck(responseData.data))
       .catch((error) => {
-        console.log('Error fetching and parsing data', error);
+        console.log("Error fetching and parsing data", error);
         this.setState({ error: true, isLoaded: true });
       });
   }
@@ -65,7 +67,7 @@ class GenericCardWrap extends Component {
     }
 
     setFlipClass();
-  }
+  };
 
   cardBack = () => {
     const { currentCard } = this.state;
@@ -79,22 +81,28 @@ class GenericCardWrap extends Component {
           example: prevState.data[cardNum].example,
           image: prevState.data[cardNum].img,
           gender: prevState.data[cardNum].gender,
-          flipClass: '',
+          flipClass: "",
         };
       });
     }
-  }
+  };
 
   render() {
     const {
-      english, translation, gender, example, image, currentCard, totalCards,
+      english,
+      translation,
+      gender,
+      example,
+      image,
+      currentCard,
+      totalCards,
     } = this.state;
     const { flipCard, flipClass } = this.props;
     const newCurrentCard = currentCard + 1;
 
     return (
       <div className="activity__content--cards">
-        {image === 'none' ? (
+        {image === "none" ? (
           <GenericCardNoImg
             flipClass={flipClass}
             english={english}
@@ -123,7 +131,6 @@ class GenericCardWrap extends Component {
         />
 
         {/* <Loading /> */}
-
       </div>
     );
   }

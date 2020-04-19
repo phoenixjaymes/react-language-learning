@@ -1,54 +1,56 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { LearningContext } from '../../Context';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { LearningContext } from "../../Context";
 
-import { conjugatePresent } from './conjugateVerbs';
+import { conjugatePresent } from "./conjugateVerbs";
 
 // Components
-import UpdateSelector from './UpdateSelector';
-import FormInput from './FormInput';
-import FormMessage from './FormMessage';
-import Umlauts from './Umlauts';
-import ConfirmDialog from './ConfirmDialog';
+import UpdateSelector from "./UpdateSelector";
+import FormInput from "./FormInput";
+import FormMessage from "./FormMessage";
+import Umlauts from "./Umlauts";
+import ConfirmDialog from "./ConfirmDialog";
 
-import styles from './forms.module.css';
+import styles from "./forms.module.css";
 
 class VerbNl extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemId: '',
-      itemEnglish: '',
-      itemInfinitive: '',
-      itemTranslation: '',
-      itemExample: '',
-      itemType: '',
-      itemSeparable: 'no',
-      itemReflexive: 'no',
-      itemIk: '',
-      itemJij: '',
-      itemHij: '',
-      itemU: '',
-      itemWij: '',
-      itemJullie: '',
-      itemZij: '',
-      response: '',
-      status: '',
+      itemId: "",
+      itemEnglish: "",
+      itemInfinitive: "",
+      itemTranslation: "",
+      itemExample: "",
+      itemType: "",
+      itemSeparable: "no",
+      itemReflexive: "no",
+      itemIk: "",
+      itemJij: "",
+      itemHij: "",
+      itemU: "",
+      itemWij: "",
+      itemJullie: "",
+      itemZij: "",
+      response: "",
+      status: "",
       isDialogShown: false,
-      dialogMessage: 'Are you sure you want to make this change?',
+      dialogMessage: "Are you sure you want to make this change?",
     };
   }
 
   clearForm = () => {
-    console.log('clearing form');
-  }
+    console.log("clearing form");
+  };
 
   // Icon click in UpdateSelector
   handleIconClick = (e) => {
-    const itemId = e.target.getAttribute('data-id');
+    const itemId = e.target.getAttribute("data-id");
     const { lang } = this.context;
 
-    fetch(`http://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=verb&id=${itemId}`)
+    fetch(
+      `https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=verb&id=${itemId}`
+    )
       .then((reponse) => reponse.json())
       .then((responseData) => {
         const data = responseData.data.item;
@@ -73,9 +75,9 @@ class VerbNl extends Component {
         });
       })
       .catch((error) => {
-        console.log('Error fetching and parsing data', error);
+        console.log("Error fetching and parsing data", error);
       });
-  }
+  };
 
   handleConjugateClick = () => {
     const { itemTranslation } = this.state;
@@ -88,159 +90,218 @@ class VerbNl extends Component {
       itemIhr: ihr,
       itemSie: sie,
     });
-  }
+  };
 
   handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
-  }
+  };
 
   handleTranslation = (e) => {
     this.setState({
       itemTranslation: e.target.value,
-      itemInfinitive: e.target.value.replace(/·/g, '').replace(/\([\wÄÖÜäöü¨ß·-]*\)/i, '').trim(),
+      itemInfinitive: e.target.value
+        .replace(/·/g, "")
+        .replace(/\([\wÄÖÜäöü¨ß·-]*\)/i, "")
+        .trim(),
     });
-  }
+  };
 
-  handleSeparable = () => this.setState((prevState) => ({ itemSeparable: prevState.itemSeparable === 'yes' ? 'no' : 'yes' }))
+  handleSeparable = () =>
+    this.setState((prevState) => ({
+      itemSeparable: prevState.itemSeparable === "yes" ? "no" : "yes",
+    }));
 
-  handleReflexive = () => this.setState((prevState) => ({ itemReflexive: prevState.itemReflexive === 'yes' ? 'no' : 'yes' }))
+  handleReflexive = () =>
+    this.setState((prevState) => ({
+      itemReflexive: prevState.itemReflexive === "yes" ? "no" : "yes",
+    }));
 
   isValid = () => {
     const {
-      itemEnglish, itemInfinitive, itemTranslation, itemExample, itemType,
-      itemIk, itemJij, itemHij, itemU, itemWij, itemJullie, itemZij,
+      itemEnglish,
+      itemInfinitive,
+      itemTranslation,
+      itemExample,
+      itemType,
+      itemIk,
+      itemJij,
+      itemHij,
+      itemU,
+      itemWij,
+      itemJullie,
+      itemZij,
     } = this.state;
 
     if (
-      itemEnglish === ''
-      || itemInfinitive === ''
-      || itemTranslation === ''
-      || itemExample === ''
-      || itemType === ''
-      || itemIk === ''
-      || itemJij === ''
-      || itemHij === ''
-      || itemU === ''
-      || itemWij === ''
-      || itemJullie === ''
-      || itemZij === ''
+      itemEnglish === "" ||
+      itemInfinitive === "" ||
+      itemTranslation === "" ||
+      itemExample === "" ||
+      itemType === "" ||
+      itemIk === "" ||
+      itemJij === "" ||
+      itemHij === "" ||
+      itemU === "" ||
+      itemWij === "" ||
+      itemJullie === "" ||
+      itemZij === ""
     ) {
       return false;
     }
     return true;
-  }
+  };
 
   handleYesClick = () => {
     this.setState({
       isDialogShown: false,
     });
     this.submitForm();
-  }
+  };
 
   handleCancelClick = () => {
     this.setState({
       isDialogShown: false,
     });
-  }
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
 
     if (!this.isValid()) {
-      this.setState({ response: 'Please fill in all feilds' });
+      this.setState({ response: "Please fill in all feilds" });
       return;
     }
 
     this.setState({
       isDialogShown: true,
-      response: '',
+      response: "",
     });
-  }
+  };
 
   submitForm = () => {
     const { lang } = this.context;
     let fetchUrl;
     const {
-      itemId, itemEnglish, itemInfinitive, itemTranslation, itemExample, itemType, itemSeparable,
-      itemReflexive, itemIk, itemJij, itemHij, itemU, itemWij, itemJullie, itemZij,
+      itemId,
+      itemEnglish,
+      itemInfinitive,
+      itemTranslation,
+      itemExample,
+      itemType,
+      itemSeparable,
+      itemReflexive,
+      itemIk,
+      itemJij,
+      itemHij,
+      itemU,
+      itemWij,
+      itemJullie,
+      itemZij,
     } = this.state;
     const { modifyType } = this.props;
 
     const formData = new FormData();
-    formData.append('lang', lang);
-    formData.append('pos', 'verb');
-    formData.append('english', itemEnglish.trim());
-    formData.append('infinitive', itemInfinitive.trim());
-    formData.append('translation', itemTranslation.trim());
-    formData.append('example', itemExample.trim());
-    formData.append('type', itemType);
-    formData.append('separable', itemSeparable);
-    formData.append('reflexive', itemReflexive);
-    formData.append('ik', itemIk.trim());
-    formData.append('jij', itemJij.trim());
-    formData.append('hij', itemHij.trim());
-    formData.append('u', itemU.trim());
-    formData.append('wij', itemWij.trim());
-    formData.append('jullie', itemJullie.trim());
-    formData.append('zij', itemZij.trim());
+    formData.append("lang", lang);
+    formData.append("pos", "verb");
+    formData.append("english", itemEnglish.trim());
+    formData.append("infinitive", itemInfinitive.trim());
+    formData.append("translation", itemTranslation.trim());
+    formData.append("example", itemExample.trim());
+    formData.append("type", itemType);
+    formData.append("separable", itemSeparable);
+    formData.append("reflexive", itemReflexive);
+    formData.append("ik", itemIk.trim());
+    formData.append("jij", itemJij.trim());
+    formData.append("hij", itemHij.trim());
+    formData.append("u", itemU.trim());
+    formData.append("wij", itemWij.trim());
+    formData.append("jullie", itemJullie.trim());
+    formData.append("zij", itemZij.trim());
 
-    if (modifyType === 'add') {
-      fetchUrl = 'http://phoenixjaymes.com/assets/data/language/add-item.php';
+    if (modifyType === "add") {
+      fetchUrl = "https://phoenixjaymes.com/assets/data/language/add-item.php";
     } else {
-      formData.append('id', itemId);
-      fetchUrl = 'http://phoenixjaymes.com/assets/data/language/update-item.php';
+      formData.append("id", itemId);
+      fetchUrl =
+        "https://phoenixjaymes.com/assets/data/language/update-item.php";
     }
 
-    fetch(fetchUrl,
-      {
-        method: 'POST',
-        body: formData,
-      })
+    fetch(fetchUrl, {
+      method: "POST",
+      body: formData,
+    })
       .then((reponse) => reponse.json())
       .then((responseData) => {
         this.setState({
           response: `${responseData.status}: ${responseData.data.message}`,
           status: responseData.status,
         });
-        if (responseData.status === 'success') {
+        if (responseData.status === "success") {
           this.clearForm();
         }
       })
       .catch((error) => {
-        console.log('Error fetching and parsing data', error);
+        console.log("Error fetching and parsing data", error);
       });
-  }
+  };
 
   handleFocus = () => {
     this.setState({
-      response: '',
-      status: '',
+      response: "",
+      status: "",
     });
-  }
+  };
 
   render() {
     const { categories, lang } = this.context;
     const {
-      isDialogShown, dialogMessage, itemEnglish, itemInfinitive, itemTranslation, itemExample,
-      itemType, itemSeparable, itemReflexive, itemIk, itemJij, itemHij, itemU, itemWij,
-      itemJullie, itemZij, response, status,
+      isDialogShown,
+      dialogMessage,
+      itemEnglish,
+      itemInfinitive,
+      itemTranslation,
+      itemExample,
+      itemType,
+      itemSeparable,
+      itemReflexive,
+      itemIk,
+      itemJij,
+      itemHij,
+      itemU,
+      itemWij,
+      itemJullie,
+      itemZij,
+      response,
+      status,
     } = this.state;
     const { modifyType, categoryName } = this.props;
 
     const categoryOptions = categories[lang].verb.map((category) => (
-      <option key={category.id} value={category.id}>{category.name}</option>
+      <option key={category.id} value={category.id}>
+        {category.name}
+      </option>
     ));
 
-    const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
+    const btnValue = `${modifyType
+      .charAt(0)
+      .toUpperCase()}${modifyType.substring(1)} ${categoryName
+      .charAt(0)
+      .toUpperCase()}${categoryName.substring(1)}`;
 
-    const heading = modifyType === 'update' ? 'Update Dutch Verb' : 'Add Dutch Verb';
-    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
+    const heading =
+      modifyType === "update" ? "Update Dutch Verb" : "Add Dutch Verb";
+    const gridClass = modifyType === "update" ? styles.formLayoutGrid : "";
 
     return (
       <div>
         <div className={gridClass}>
-          <form className={styles.form} autoComplete="off" onSubmit={this.handleSubmit} onFocus={this.handleFocus}>
+          <form
+            className={styles.form}
+            autoComplete="off"
+            onSubmit={this.handleSubmit}
+            onFocus={this.handleFocus}
+          >
             <h3 className={styles.header}>{heading}</h3>
 
             <label className="form__label--check" htmlFor="upVerbSeparable">
@@ -249,7 +310,7 @@ class VerbNl extends Component {
                 name="itemSeparable"
                 className="form__check"
                 type="checkbox"
-                checked={itemSeparable === 'yes'}
+                checked={itemSeparable === "yes"}
                 onChange={this.handleSeparable}
               />
               Separable
@@ -261,7 +322,7 @@ class VerbNl extends Component {
                 name="itemReflexive"
                 className="form__check"
                 type="checkbox"
-                checked={itemReflexive === 'yes'}
+                checked={itemReflexive === "yes"}
                 onChange={this.handleReflexive}
               />
               Reflexive
@@ -275,7 +336,7 @@ class VerbNl extends Component {
                   className="form__check"
                   type="radio"
                   value="mixed"
-                  checked={itemType === 'mixed'}
+                  checked={itemType === "mixed"}
                   onChange={this.handleChange}
                 />
                 Mixed
@@ -288,7 +349,7 @@ class VerbNl extends Component {
                   className="form__check"
                   type="radio"
                   value="strong"
-                  checked={itemType === 'strong'}
+                  checked={itemType === "strong"}
                   onChange={this.handleChange}
                 />
                 Strong
@@ -301,7 +362,7 @@ class VerbNl extends Component {
                   className="form__check"
                   type="radio"
                   value="weak"
-                  checked={itemType === 'weak'}
+                  checked={itemType === "weak"}
                   onChange={this.handleChange}
                 />
                 Weak
@@ -322,7 +383,11 @@ class VerbNl extends Component {
               handleChange={this.handleTranslation}
             />
 
-            <Umlauts className="form-umlauts" input-type="verb" input-field="translation" />
+            <Umlauts
+              className="form-umlauts"
+              input-type="verb"
+              input-field="translation"
+            />
 
             <FormInput
               label="Example"
@@ -331,7 +396,11 @@ class VerbNl extends Component {
               handleChange={this.handleChange}
             />
 
-            <button type="button" className="form__conjugate__button" onClick={this.handleConjugateClick}>
+            <button
+              type="button"
+              className="form__conjugate__button"
+              onClick={this.handleConjugateClick}
+            >
               Conjugate
             </button>
 
@@ -391,22 +460,27 @@ class VerbNl extends Component {
               pos="verb"
             />
 
-            <input className="form__button" type="submit" value={`${btnValue}`} />
-
-            <FormMessage
-              response={response}
-              status={status}
+            <input
+              className="form__button"
+              type="submit"
+              value={`${btnValue}`}
             />
+
+            <FormMessage response={response} status={status} />
           </form>
 
-          { modifyType === 'update' && (
+          {modifyType === "update" && (
             <UpdateSelector
               lang={lang}
               type={categoryName}
               categories={categories[lang].verb}
               handleIconClick={this.handleIconClick}
             >
-              <select id="selCategoryList" className="form__select" name="selCategoryList">
+              <select
+                id="selCategoryList"
+                className="form__select"
+                name="selCategoryList"
+              >
                 <option value="0">Select</option>
                 {categoryOptions}
               </select>

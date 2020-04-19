@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import withFlipAndToggle from './withFlipAndToggle';
-import CartControls from './CardControls';
+import withFlipAndToggle from "./withFlipAndToggle";
+import CartControls from "./CardControls";
 // import Loading from '../Loading';
 
 class GenericCard extends Component {
@@ -12,12 +12,12 @@ class GenericCard extends Component {
     data: [],
     currentCard: 0,
     totalCards: 0,
-    english: '',
-    translation: '',
-    example: '',
-    image: '',
-    gender: '',
-  }
+    english: "",
+    translation: "",
+    example: "",
+    image: "",
+    gender: "",
+  };
 
   componentDidMount() {
     const { lang, category, activityId } = this.props;
@@ -35,11 +35,13 @@ class GenericCard extends Component {
       });
     };
 
-    fetch(`http://phoenixjaymes.com/assets/data/language/get-cards.php?lang=${lang}&pos=${category}&cat=${activityId}`)
+    fetch(
+      `https://phoenixjaymes.com/assets/data/language/get-cards.php?lang=${lang}&pos=${category}&cat=${activityId}`
+    )
       .then((reponse) => reponse.json())
       .then((responseData) => genericDeck(responseData.data))
       .catch((error) => {
-        console.log('Error fetching and parsing data', error);
+        console.log("Error fetching and parsing data", error);
         this.setState({ error: true, isLoaded: true });
       });
   }
@@ -63,7 +65,7 @@ class GenericCard extends Component {
     }
 
     setFlipClass();
-  }
+  };
 
   cardBack = () => {
     const { currentCard } = this.state;
@@ -77,24 +79,29 @@ class GenericCard extends Component {
           example: prevState.data[cardNum].example,
           image: prevState.data[cardNum].img,
           gender: prevState.data[cardNum].gender,
-          flipClass: '',
+          flipClass: "",
         };
       });
     }
-  }
+  };
 
   render() {
     const {
-      english, translation, gender, example, image, currentCard, totalCards,
+      english,
+      translation,
+      gender,
+      example,
+      image,
+      currentCard,
+      totalCards,
     } = this.state;
     const { flipCard, flipClass } = this.props;
     const newCurrentCard = currentCard + 1;
 
-console.log(image);
+    console.log(image);
 
     return (
       <div className="activity__content--cards">
-
         <div className={`card ${flipClass}`}>
           {/* <!-- Front with no image --> */}
           <div className="card__front" ng-switch-when="none">
@@ -102,7 +109,9 @@ console.log(image);
               <p className="card__text">{english}</p>
             </div>
 
-            <button type="button" className="card__button" onClick={flipCard}>Flip</button>
+            <button type="button" className="card__button" onClick={flipCard}>
+              Flip
+            </button>
           </div>
 
           {/* <!-- Back with no image --> */}
@@ -113,7 +122,9 @@ console.log(image);
 
             <p className="card__example">{example}</p>
 
-            <button type="button" className="card__button" onClick={flipCard}>Flip</button>
+            <button type="button" className="card__button" onClick={flipCard}>
+              Flip
+            </button>
           </div>
         </div>
 
@@ -125,7 +136,6 @@ console.log(image);
         />
 
         {/* <Loading /> */}
-
       </div>
     );
   }

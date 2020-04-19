@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import SentenceSolution from './SentenceSolution';
-import SentenceCheck from './SentenceCheck';
+import SentenceSolution from "./SentenceSolution";
+import SentenceCheck from "./SentenceCheck";
 
 class SentenceBoard extends Component {
   state = {
@@ -12,33 +12,33 @@ class SentenceBoard extends Component {
     buttonToShow: undefined,
     isCorrect: undefined,
 
-    boardHeading: '',
+    boardHeading: "",
     sentences: [],
     currentSentence: 0,
     totalSentences: 0,
-    sentence: '',
-    type: '',
-    category: '',
-    answer: '',
+    sentence: "",
+    type: "",
+    category: "",
+    answer: "",
     words: [],
 
     sentenceWordsArray: [],
     answerWordsArray: [],
-  }
+  };
 
   componentDidMount() {
     const { lang, category, activityId } = this.props;
     const sentenceList = (list) => {
       let newHeading;
 
-      if (list[0].type === '1') {
-        newHeading = 'Create the Sentence';
-      } else if (list[0].type === '2') {
-        newHeading = 'Create the Question';
-      } else if (list[0].type === '3') {
-        newHeading = 'Answer the Question';
+      if (list[0].type === "1") {
+        newHeading = "Create the Sentence";
+      } else if (list[0].type === "2") {
+        newHeading = "Create the Question";
+      } else if (list[0].type === "3") {
+        newHeading = "Answer the Question";
       } else {
-        newHeading = 'Make something sensible';
+        newHeading = "Make something sensible";
       }
 
       this.setState({
@@ -59,18 +59,20 @@ class SentenceBoard extends Component {
       });
     };
 
-    fetch(`http://phoenixjaymes.com/assets/data/language/get-sentences.php?lang=${lang}&cat=${category}&id=${activityId}`)
+    fetch(
+      `https://phoenixjaymes.com/assets/data/language/get-sentences.php?lang=${lang}&cat=${category}&id=${activityId}`
+    )
       .then((reponse) => reponse.json())
       .then((responseData) => sentenceList(responseData.data))
       .catch((error) => {
-        console.log('Error fetching and parsing data', error);
+        console.log("Error fetching and parsing data", error);
       });
   }
 
   sentenceWordClick = (i) => {
     const { buttonToShow } = this.state;
 
-    if (buttonToShow === 'check' || buttonToShow === 'continue') {
+    if (buttonToShow === "check" || buttonToShow === "continue") {
       return;
     }
 
@@ -83,12 +85,12 @@ class SentenceBoard extends Component {
         sentenceWordsArray: oldArray,
       };
     });
-  }
+  };
 
   answerWordClick = (i) => {
     const { buttonToShow } = this.state;
 
-    if (buttonToShow === 'check' || buttonToShow === 'continue') {
+    if (buttonToShow === "check" || buttonToShow === "continue") {
       return;
     }
 
@@ -99,20 +101,20 @@ class SentenceBoard extends Component {
 
       return {
         answerWordsArray: oldArray,
-        buttonToShow: 'check',
+        buttonToShow: "check",
         canCheck: true,
       };
     });
-  }
+  };
 
   checkSentenceClick = () => {
     const { answer, sentenceWordsArray } = this.state;
-    if (answer === sentenceWordsArray.join(' ')) {
-      this.setState({ isCorrect: true, buttonToShow: 'continue' });
+    if (answer === sentenceWordsArray.join(" ")) {
+      this.setState({ isCorrect: true, buttonToShow: "continue" });
     } else {
-      this.setState({ isCorrect: false, buttonToShow: 'continue' });
+      this.setState({ isCorrect: false, buttonToShow: "continue" });
     }
-  }
+  };
 
   continueSentencesClick = () => {
     const { currentSentence, totalSentences } = this.state;
@@ -121,14 +123,14 @@ class SentenceBoard extends Component {
         const sentenceNum = prevState.currentSentence + 1;
         let newHeading;
 
-        if (prevState.sentences[sentenceNum].type === '1') {
-          newHeading = 'Create the Sentence';
-        } else if (prevState.sentences[sentenceNum].type === '2') {
-          newHeading = 'Create the Question';
-        } else if (prevState.sentences[sentenceNum].type === '3') {
-          newHeading = 'Answer the Question';
+        if (prevState.sentences[sentenceNum].type === "1") {
+          newHeading = "Create the Sentence";
+        } else if (prevState.sentences[sentenceNum].type === "2") {
+          newHeading = "Create the Question";
+        } else if (prevState.sentences[sentenceNum].type === "3") {
+          newHeading = "Answer the Question";
         } else {
-          newHeading = 'Make something sensible';
+          newHeading = "Make something sensible";
         }
 
         return {
@@ -148,11 +150,11 @@ class SentenceBoard extends Component {
       });
     } else {
       this.setState({
-        buttonToShow: 'finish',
+        buttonToShow: "finish",
         isCorrect: undefined,
       });
     }
-  }
+  };
 
   finishSentencesClick = () => {
     const { showMessage } = this.props;
@@ -161,29 +163,37 @@ class SentenceBoard extends Component {
       isCorrect: undefined,
     });
     showMessage(true);
-  }
+  };
 
   render() {
     const {
-      sentenceWordsArray, answerWordsArray, buttonToShow, boardHeading, sentence,
-      isCorrect, answer,
+      sentenceWordsArray,
+      answerWordsArray,
+      buttonToShow,
+      boardHeading,
+      sentence,
+      isCorrect,
+      answer,
     } = this.state;
     const sentenceWords = sentenceWordsArray.map((word, i) => (
       <li key={i} className="sentences__item">
-        <button type="button" onClick={this.sentenceWordClick.bind(this, i)}>{word}</button>
+        <button type="button" onClick={this.sentenceWordClick.bind(this, i)}>
+          {word}
+        </button>
       </li>
     ));
 
     const answerWords = answerWordsArray.map((word, i) => (
       <li key={i} className="sentences__item">
-        <button type="button" onClick={this.answerWordClick.bind(this, i)}>{word}</button>
+        <button type="button" onClick={this.answerWordClick.bind(this, i)}>
+          {word}
+        </button>
       </li>
     ));
 
     return (
       <div className="activity__content sentences">
         <div className="sentences__words">
-
           <h3 className="sentences__heading">{boardHeading}</h3>
           <p className="sentences__sentence">{sentence}</p>
 
@@ -200,12 +210,8 @@ class SentenceBoard extends Component {
             />
           </div>
 
-          <SentenceSolution
-            isCorrect={isCorrect}
-            answer={answer}
-          />
+          <SentenceSolution isCorrect={isCorrect} answer={answer} />
         </div>
-
       </div>
     );
   }
