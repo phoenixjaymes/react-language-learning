@@ -56,7 +56,26 @@ class WordBoard extends Component {
     });
   };
 
+  isFinalMatch = () => {
+    const { words } = this.state;
+    const wordsCnt = words.length;
+    let matchedCnt = 2;
+
+    words.forEach((word) => {
+      if (word.isMatched === true) {
+        matchedCnt += 1;
+      }
+    });
+
+    if (matchedCnt >= wordsCnt) {
+      return true;
+    }
+
+    return false;
+  };
+
   checkForMatch = (id, matchId) => {
+    const { showMessage } = this.props;
     const { words, firstClickedMatchId } = this.state;
 
     if (matchId === firstClickedMatchId) {
@@ -78,6 +97,10 @@ class WordBoard extends Component {
           };
         }),
       }));
+
+      if (this.isFinalMatch()) {
+        showMessage(true);
+      }
     } else {
       this.setState((prevState) => ({
         words: words.map((word) => {
