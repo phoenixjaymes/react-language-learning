@@ -33,7 +33,23 @@ class Sentence extends Component {
   }
 
   clearForm = () => {
-    console.log("clearing form");
+    const { modifyType } = this.props;
+
+    if (modifyType === "update") {
+      this.setState({
+        itemId: "",
+        itemSentence: "",
+        itemAnswer1: "",
+        itemType: "",
+        itemCategory: "",
+      });
+    } else {
+      this.setState({
+        itemId: "",
+        itemSentence: "",
+        itemAnswer1: "",
+      });
+    }
   };
 
   setLabels = (id) => {
@@ -210,8 +226,8 @@ class Sentence extends Component {
     const btnValue = `${modifyType
       .charAt(0)
       .toUpperCase()}${modifyType.substring(1)} ${categoryName
-      .charAt(0)
-      .toUpperCase()}${categoryName.substring(1)}`;
+        .charAt(0)
+        .toUpperCase()}${categoryName.substring(1)}`;
 
     const langName = us.languages[lang];
     const heading =
