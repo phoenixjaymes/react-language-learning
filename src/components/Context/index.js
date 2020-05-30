@@ -34,7 +34,7 @@ export class Provider extends Component {
         loading: false,
       });
     } else {
-      fetch("https://phoenixjaymes.com/assets/data/language/get-categories.php")
+      fetch("https://phoenixjaymes.com/api/language/categories/app")
         .then((reponse) => reponse.json())
         .then((responseData) => {
           sessionStorage.setItem(
@@ -60,7 +60,7 @@ export class Provider extends Component {
   refreshCategories = () => {
     this.setState({ loading: true });
 
-    fetch("https://phoenixjaymes.com/assets/data/language/get-categories.php")
+    fetch("https://phoenixjaymes.com/api/language/categories/app")
       .then((reponse) => reponse.json())
       .then((responseData) => {
         sessionStorage.setItem("categories", JSON.stringify(responseData.data));
