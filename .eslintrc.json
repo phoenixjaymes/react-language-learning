@@ -1,0 +1,42 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "env": {
+    "node": false,
+    "es6": true,
+    "browser": true
+  },
+  "extends": [
+    "react-app",
+    "airbnb"
+  ],
+  "plugins": [
+    "react",
+    "import",
+    "jsx-a11y",
+    "react-hooks"
+  ],
+  "rules": {
+    "linebreak-style": "off",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
+    "react/require-default-props": 0,
+    "react/jsx-props-no-spreading": [
+      1,
+      {
+        "exceptions": [
+          "WrappedComponent"
+        ]
+      }
+    ]
+  }
+}
