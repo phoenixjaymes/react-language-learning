@@ -1,82 +1,82 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { LearningContext } from "../../Context";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { LearningContext } from '../../Context';
 
 // Components
-import UpdateSelector from "./UpdateSelector";
-import FormSelect from "./FormSelect";
-import FormInput from "./FormInput";
-import FormTextarea from "./FormComponents/FormTextarea";
-import FormMessage from "./FormMessage";
-import Umlauts from "./Umlauts";
-import ConfirmDialog from "./ConfirmDialog";
+import UpdateSelector from './UpdateSelector';
+import FormSelect from './FormSelect';
+import FormInput from './FormInput';
+import FormTextarea from './FormComponents/FormTextarea';
+import FormMessage from './FormMessage';
+import Umlauts from './Umlauts';
+import ConfirmDialog from './ConfirmDialog';
 
-import styles from "./forms.module.css";
+import styles from './forms.module.css';
 
 class Sentence extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemId: "",
-      itemSentence: "",
-      itemType: "",
-      itemCategory: "",
-      itemAnswer1: "",
-      itemExtraWords: "",
-      response: "",
-      status: "",
-      labelStatement: "Statement",
-      labelTranslation: "Translation",
+      itemId: '',
+      itemSentence: '',
+      itemType: '',
+      itemCategory: '',
+      itemAnswer1: '',
+      itemExtraWords: '',
+      response: '',
+      status: '',
+      labelStatement: 'Statement',
+      labelTranslation: 'Translation',
       isDialogShown: false,
-      dialogMessage: "Are you sure you want to make this change?",
+      dialogMessage: 'Are you sure you want to make this change?',
     };
   }
 
   clearForm = () => {
     const { modifyType } = this.props;
 
-    if (modifyType === "update") {
+    if (modifyType === 'update') {
       this.setState({
-        itemId: "",
-        itemSentence: "",
-        itemAnswer1: "",
-        itemType: "",
-        itemCategory: "",
+        itemId: '',
+        itemSentence: '',
+        itemAnswer1: '',
+        itemType: '',
+        itemCategory: '',
       });
     } else {
       this.setState({
-        itemId: "",
-        itemSentence: "",
-        itemAnswer1: "",
+        itemId: '',
+        itemSentence: '',
+        itemAnswer1: '',
       });
     }
   };
 
   setLabels = (id) => {
-    if (id === "1") {
+    if (id === '1') {
       this.setState({
-        labelStatement: "Statement - english",
-        labelTranslation: "Translation",
+        labelStatement: 'Statement - english',
+        labelTranslation: 'Translation',
       });
-    } else if (id === "2") {
+    } else if (id === '2') {
       this.setState({
-        labelStatement: "Question - english",
-        labelTranslation: "Translation",
+        labelStatement: 'Question - english',
+        labelTranslation: 'Translation',
       });
-    } else if (id === "3") {
+    } else if (id === '3') {
       this.setState({
-        labelStatement: "Question - foreign",
-        labelTranslation: "Answer - foreign",
+        labelStatement: 'Question - foreign',
+        labelTranslation: 'Answer - foreign',
       });
     }
   };
 
   handleIconClick = (e) => {
-    const itemId = e.target.getAttribute("data-id");
+    const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
 
     fetch(
-      `https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=sentence&id=${itemId}`
+      `https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=sentence&id=${itemId}`,
     )
       .then((reponse) => reponse.json())
       .then((responseData) => {
@@ -93,7 +93,7 @@ class Sentence extends Component {
         });
       })
       .catch((error) => {
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
       });
   };
 
@@ -109,13 +109,15 @@ class Sentence extends Component {
   };
 
   isValid = () => {
-    const { itemSentence, itemType, itemCategory, itemAnswer1 } = this.state;
+    const {
+      itemSentence, itemType, itemCategory, itemAnswer1,
+    } = this.state;
 
     if (
-      itemSentence === "" ||
-      itemType === "" ||
-      itemCategory === "" ||
-      itemAnswer1 === ""
+      itemSentence === ''
+      || itemType === ''
+      || itemCategory === ''
+      || itemAnswer1 === ''
     ) {
       return false;
     }
@@ -140,13 +142,13 @@ class Sentence extends Component {
     e.preventDefault();
 
     if (!this.isValid()) {
-      this.setState({ response: "Please fill in all feilds" });
+      this.setState({ response: 'Please fill in all feilds' });
       return;
     }
 
     this.setState({
       isDialogShown: true,
-      response: "",
+      response: '',
     });
   };
 
@@ -163,24 +165,23 @@ class Sentence extends Component {
     const { modifyType } = this.props;
     let fetchUrl;
     const formData = new FormData();
-    formData.append("lang", lang);
-    formData.append("pos", "sentence");
-    formData.append("sentence", itemSentence.trim());
-    formData.append("type", itemType);
-    formData.append("category", itemCategory);
-    formData.append("answer1", itemAnswer1.trim());
-    formData.append("extra", itemExtraWords.trim());
+    formData.append('lang', lang);
+    formData.append('pos', 'sentence');
+    formData.append('sentence', itemSentence.trim());
+    formData.append('type', itemType);
+    formData.append('category', itemCategory);
+    formData.append('answer1', itemAnswer1.trim());
+    formData.append('extra', itemExtraWords.trim());
 
-    if (modifyType === "add") {
-      fetchUrl = "https://phoenixjaymes.com/assets/data/language/add-item.php";
+    if (modifyType === 'add') {
+      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/add-item.php';
     } else {
-      formData.append("id", itemId);
-      fetchUrl =
-        "https://phoenixjaymes.com/assets/data/language/update-item.php";
+      formData.append('id', itemId);
+      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/update-item.php';
     }
 
     fetch(fetchUrl, {
-      method: "POST",
+      method: 'POST',
       body: formData,
     })
       .then((reponse) => reponse.json())
@@ -189,19 +190,19 @@ class Sentence extends Component {
           response: `${responseData.status}: ${responseData.data.message}`,
           status: responseData.status,
         });
-        if (responseData.status === "success") {
+        if (responseData.status === 'success') {
           this.clearForm();
         }
       })
       .catch((error) => {
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
       });
   };
 
   handleFocus = () => {
     this.setState({
-      response: "",
-      status: "",
+      response: '',
+      status: '',
     });
   };
 
@@ -225,16 +226,13 @@ class Sentence extends Component {
 
     const btnValue = `${modifyType
       .charAt(0)
-      .toUpperCase()}${modifyType.substring(1)} ${categoryName
-        .charAt(0)
-        .toUpperCase()}${categoryName.substring(1)}`;
+      .toUpperCase()}${modifyType.substring(1)} ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
 
     const langName = us.languages[lang];
-    const heading =
-      modifyType === "update"
-        ? `Update ${langName} Sentences`
-        : `Add ${langName} Sentences`;
-    const gridClass = modifyType === "update" ? styles.formLayoutGrid : "";
+    const heading = modifyType === 'update'
+      ? `Update ${langName} Sentences`
+      : `Add ${langName} Sentences`;
+    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
 
     return (
       <div>
@@ -299,7 +297,7 @@ class Sentence extends Component {
             <FormMessage response={response} status={status} />
           </form>
 
-          {modifyType === "update" && (
+          {modifyType === 'update' && (
             <UpdateSelector
               lang={lang}
               type={categoryName}
