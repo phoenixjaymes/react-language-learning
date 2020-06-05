@@ -169,7 +169,7 @@ class Sentence extends Component {
     formData.append("type", itemType);
     formData.append("category", itemCategory);
     formData.append("answer1", itemAnswer1.trim());
-    formData.append("extraWords", itemExtraWords.trim());
+    formData.append("extra", itemExtraWords.trim());
 
     if (modifyType === "add") {
       fetchUrl = "https://phoenixjaymes.com/assets/data/language/add-item.php";
