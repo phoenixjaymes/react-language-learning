@@ -33,11 +33,12 @@ class LoginForm extends Component {
     })
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        if (responseData.success === true) {
+        if (responseData.success === 'success') {
           actions.setLogin(true);
 
           // Set session storage
           sessionStorage.setItem("isLoggedIn", true);
+          sessionStorage.setItem("jwt", responseData.data.jwt);
           const newPath = `/${lang}/admin`;
           history.push(newPath);
         } else {
