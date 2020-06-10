@@ -14,11 +14,13 @@ import LoadingError from './Loading/LoadingError';
 import ErrorBoundary from './ErrorBoundary';
 
 class App extends Component {
-  state = {
-    error: false,
-    isLangMenuVisible: false,
-    isActivityMenuVisible: false,
-    isGrammarMenuShown: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLangMenuVisible: false,
+      isActivityMenuVisible: false,
+      isGrammarMenuShown: false,
+    };
   }
 
   setSubMenuVisible = (e) => {
