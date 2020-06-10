@@ -28,7 +28,7 @@ const Main = ({ isGrammarMenuShown }) => (
       <Route exact path="/">
         <Home />
       </Route>
-      <Route exact path="/:lang" component={Home}>
+      <Route exact path="/:lang">
         <Home />
       </Route>
 
@@ -63,15 +63,15 @@ const Main = ({ isGrammarMenuShown }) => (
 
       <Route path="/:lang/login" render={() => <LoginForm />} />
       <LearningConsumer>
-        { context => (
+        {context => (
           <Route
             path="/:lang/admin"
             render={() => (
               !context.isLoggedIn ? (
                 <Redirect to="/de" />
               ) : (
-                <Admin />
-              )
+                  <Admin />
+                )
             )}
           />
         )}
