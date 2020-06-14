@@ -29,8 +29,15 @@ class VerbCard extends Component {
   };
 
   componentDidMount() {
-    const { lang, category, activityId } = this.props;
-    const fetchUrl = `https://phoenixjaymes.com/api/language/verbcards?lang=${lang}&cat=${activityId}`;
+    const { lang, activityId } = this.props;
+    const tenses = ['present', 'perfect', 'imperfect'];
+    let fetchUrl;
+
+    if (tenses.includes(activityId)) {
+      fetchUrl = `https://phoenixjaymes.com/api/language/verbcards?lang=${lang}&tense=${activityId}`;
+    } else {
+      fetchUrl = `https://phoenixjaymes.com/api/language/verbcards?lang=${lang}&${activityId}=yes`;
+    }
 
     fetch(fetchUrl)
       .then((reponse) => reponse.json())
@@ -256,7 +263,6 @@ class VerbCard extends Component {
 
 VerbCard.propTypes = {
   lang: PropTypes.string,
-  category: PropTypes.string,
   activityId: PropTypes.string,
 };
 
