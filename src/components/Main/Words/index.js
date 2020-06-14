@@ -12,8 +12,6 @@ const Words = ({ context }) => {
     <section className="activity-section">
       <h1>{`${headingLabel} Words`}</h1>
 
-      <h3>Select your Words</h3>
-
       <div className="activity-buttons">
         <ActivityLink
           toPath={`/${lang}/words/adjective`}
@@ -24,7 +22,7 @@ const Words = ({ context }) => {
           text="Nouns"
         />
         <ActivityLink
-            toPath={`/${lang}/words/verb`}
+          toPath={`/${lang}/words/verb`}
           text="Verbs"
         />
       </div>
