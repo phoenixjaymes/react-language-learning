@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import WordBoardButton from "./WordBoardButton";
+import WordBoardButton from './WordBoardButton';
 
-import styles from "./wordBoard.module.css";
+import styles from './wordBoard.module.css';
 
 class WordBoard extends Component {
   state = {
@@ -25,13 +25,13 @@ class WordBoard extends Component {
     };
 
     fetch(
-      `https://phoenixjaymes.com/assets/data/language/get-words.php?lang=${lang}&pos=${category}`
+      `https://phoenixjaymes.com/api/language/words?lang=${lang}&pos=${category}`
     )
       .then((reponse) => reponse.json())
       .then((responseData) => wordList(responseData.data))
       .catch((error) => {
         this.setState({ isLoaded: true, error: true });
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
       });
   }
 
