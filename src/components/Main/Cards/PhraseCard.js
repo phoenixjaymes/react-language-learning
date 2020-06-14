@@ -17,10 +17,9 @@ class PhraseCard extends Component {
 
   componentDidMount() {
     const { category, lang } = this.props;
+    const fetchUrl = `https://phoenixjaymes.com/api/language/phrasecards?lang=${lang}`;
 
-    fetch(
-      `https://phoenixjaymes.com/assets/data/language/get-cards.php?lang=${lang}&pos=${category}`
-    )
+    fetch(fetchUrl)
       .then((reponse) => reponse.json())
       .then((responseData) => {
         this.setState({

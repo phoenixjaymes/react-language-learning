@@ -23,6 +23,7 @@ class GenericCardWrap extends Component {
 
   componentDidMount() {
     const { lang, category, activityId } = this.props;
+    let fetchUrl;
 
     const genericDeck = (deck) => {
       this.setState({
@@ -37,9 +38,15 @@ class GenericCardWrap extends Component {
       });
     };
 
-    fetch(
-      `https://phoenixjaymes.com/assets/data/language/get-cards.php?lang=${lang}&pos=${category}&cat=${activityId}`
-    )
+    if (category === 'adjective') {
+      fetchUrl = `https://phoenixjaymes.com/api/language/adjectivecards?lang=${lang}&cat=${activityId}`;
+    } else if (category === 'noun') {
+      fetchUrl = `https://phoenixjaymes.com/api/language/nouncards?lang=${lang}&cat=${activityId}`;
+    } else if (category === 'gender') {
+      fetchUrl = `https://phoenixjaymes.com/api/language/nouncards?lang=${lang}&gender=${activityId}`;
+    }
+
+    fetch(fetchUrl)
       .then((reponse) => reponse.json())
       .then((responseData) => genericDeck(responseData.data))
       .catch((error) => {
@@ -112,16 +119,16 @@ class GenericCardWrap extends Component {
             example={example}
           />
         ) : (
-          <GenericCardImg
-            flipClass={flipClass}
-            english={english}
-            flipCard={flipCard}
-            gender={gender}
-            translation={translation}
-            example={example}
-            image={image}
-          />
-        )}
+            <GenericCardImg
+              flipClass={flipClass}
+              english={english}
+              flipCard={flipCard}
+              gender={gender}
+              translation={translation}
+              example={example}
+              image={image}
+            />
+          )}
 
         <CartControls
           currentCard={newCurrentCard}

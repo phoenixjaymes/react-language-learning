@@ -30,9 +30,9 @@ class VerbCard extends Component {
 
   componentDidMount() {
     const { lang, category, activityId } = this.props;
-    fetch(
-      `https://phoenixjaymes.com/assets/data/language/get-cards.php?lang=${lang}&pos=${category}&cat=${activityId}`
-    )
+    const fetchUrl = `https://phoenixjaymes.com/api/language/verbcards?lang=${lang}&cat=${activityId}`;
+
+    fetch(fetchUrl)
       .then((reponse) => reponse.json())
       .then((responseData) => {
         this.setState({
