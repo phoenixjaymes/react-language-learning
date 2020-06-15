@@ -1,22 +1,22 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import CartControls from "./CardControls";
+import CartControls from './CardControls';
 
 class PhraseCard extends Component {
   state = {
-    flipClass: "",
+    flipClass: '',
     isLoaded: false,
     error: false,
     data: [],
     currentCard: 0,
     totalCards: 0,
-    english: "",
-    translation: "",
+    english: '',
+    translation: '',
   };
 
   componentDidMount() {
-    const { category, lang } = this.props;
+    const { lang } = this.props;
     const fetchUrl = `https://phoenixjaymes.com/api/language/phrasecards?lang=${lang}`;
 
     fetch(fetchUrl)
@@ -31,17 +31,17 @@ class PhraseCard extends Component {
         });
       })
       .catch((error) => {
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
         this.setState({ error: true, isLoaded: true });
       });
   }
 
   flipCard = () => {
     const { flipClass } = this.state;
-    if (flipClass === "js-flip-card") {
-      this.setState({ flipClass: "" });
+    if (flipClass === 'js-flip-card') {
+      this.setState({ flipClass: '' });
     } else {
-      this.setState({ flipClass: "js-flip-card" });
+      this.setState({ flipClass: 'js-flip-card' });
     }
   };
 
@@ -55,7 +55,7 @@ class PhraseCard extends Component {
           english: prevState.data[cardNum].english,
           translation: prevState.data[cardNum].translation,
           gender: prevState.data[cardNum].gender,
-          flipClass: "",
+          flipClass: '',
         };
       });
     }
@@ -71,7 +71,7 @@ class PhraseCard extends Component {
           english: prevState.data[cardNum].english,
           translation: prevState.data[cardNum].translation,
           gender: prevState.data[cardNum].gender,
-          flipClass: "",
+          flipClass: '',
         };
       });
     }
@@ -132,7 +132,6 @@ class PhraseCard extends Component {
 
 PhraseCard.propTypes = {
   lang: PropTypes.string,
-  category: PropTypes.string,
 };
 
 export default PhraseCard;
