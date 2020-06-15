@@ -4,9 +4,12 @@ import { Link } from 'react-router-dom';
 
 import styles from './activityLink.module.css';
 
-const ActivityLink = ({ toPath, text }) => (
-    <Link to={toPath} className={styles.button}>{text}</Link>
+const ActivityLink = ({ toPath, text }) => {
+  const ucText = text.charAt(0).toUpperCase() + text.slice(1);
+  return (
+    <Link to={toPath} className={styles.button}>{ucText}</Link>
   );
+};
 
 ActivityLink.propTypes = {
   toPath: PropTypes.string,
