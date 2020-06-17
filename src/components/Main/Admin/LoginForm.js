@@ -1,17 +1,20 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import { LearningContext } from "../../Context";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { LearningContext } from '../../Context';
 
-import FormInput from "./FormInput";
+import FormInput from './FormInput';
 
-import styles from "./forms.module.css";
+import styles from './forms.module.css';
 
 class LoginForm extends Component {
-  state = {
-    itemLearner: "",
-    itemPass: "",
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      itemUser: '',
+      itemPass: '',
+    };
+  }
 
   handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,14 +24,14 @@ class LoginForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { actions, lang } = this.context;
-    const { itemLearner, itemPass } = this.state;
+    const { itemUser, itemPass } = this.state;
     const { history } = this.props;
     const formData = new FormData();
-    formData.append("learner", itemLearner);
-    formData.append("password", itemPass);
+    formData.append('user', itemUser);
+    formData.append('password', itemPass);
 
-    fetch("https://phoenixjaymes.com/lab/flashcards/assets/inc/fc-login.php", {
-      method: "POST",
+    fetch('https://phoenixjaymes.com/api/language/login.php', {
+      method: 'POST',
       body: formData,
     })
       .then((reponse) => reponse.json())
@@ -37,8 +40,8 @@ class LoginForm extends Component {
           actions.setLogin(true);
 
           // Set session storage
-          sessionStorage.setItem("isLoggedIn", true);
-          sessionStorage.setItem("jwt", responseData.data.jwt);
+          sessionStorage.setItem('isLoggedIn', true);
+          sessionStorage.setItem('jwt', responseData.data.jwt);
           const newPath = `/${lang}/admin`;
           history.push(newPath);
         } else {
@@ -46,12 +49,12 @@ class LoginForm extends Component {
         }
       })
       .catch((error) => {
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
       });
   };
 
   render() {
-    const { itemLearner, itemPass } = this.state;
+    const { itemUser, itemPass } = this.state;
     return (
       <div className={styles.loginWrap}>
         <form className={styles.form} onSubmit={this.handleSubmit}>
@@ -59,8 +62,8 @@ class LoginForm extends Component {
 
           <FormInput
             label="User"
-            name="itemLearner"
-            value={itemLearner}
+            name="itemUser"
+            value={itemUser}
             handleChange={this.handleChange}
           />
 
