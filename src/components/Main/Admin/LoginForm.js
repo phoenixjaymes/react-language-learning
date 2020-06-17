@@ -36,7 +36,7 @@ class LoginForm extends Component {
     })
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        if (responseData.success === 'success') {
+        if (responseData.status === 'success') {
           actions.setLogin(true);
 
           // Set session storage
