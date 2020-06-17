@@ -1,29 +1,33 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import SentenceSolution from "../Sentences/SentenceSolution";
-import SentenceCheck from "../Sentences/SentenceCheck";
+import SentenceSolution from '../Sentences/SentenceSolution';
+import SentenceCheck from '../Sentences/SentenceCheck';
+import ActivityBtnBlank from '../ActivityComponents/ActivityBtnBlank';
 
 class BlanksBoard extends Component {
-  state = {
-    isLoaded: false,
-    error: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoaded: false,
+      error: false,
 
-    buttonToShow: undefined,
-    isCorrect: undefined,
+      buttonToShow: undefined,
+      isCorrect: undefined,
 
-    boardHeading: "",
+      boardHeading: '',
 
-    currentSentence: 0,
-    totalSentences: 0,
-    blanks: [],
-    sentence: "",
-    answer: "",
-    sentenceArray: [],
-    answerArray: [],
-    blankIndex: "",
-    wordOptionsArray: [],
-  };
+      currentSentence: 0,
+      totalSentences: 0,
+      blanks: [],
+      sentence: '',
+      answer: '',
+      sentenceArray: [],
+      answerArray: [],
+      blankIndex: '',
+      wordOptionsArray: [],
+    };
+  }
 
   componentDidMount() {
     const { lang, category } = this.props;
@@ -35,23 +39,23 @@ class BlanksBoard extends Component {
       .then((responseData) => {
         this.setState({
           blanks: responseData.data,
-          sentenceArray: responseData.data[0].sentence.split(" "),
-          answerArray: responseData.data[0].answer.split(" "),
-          blankIndex: responseData.data[0].sentence.split(" ").indexOf("_"),
+          sentenceArray: responseData.data[0].sentence.split(' '),
+          answerArray: responseData.data[0].answer.split(' '),
+          blankIndex: responseData.data[0].sentence.split(' ').indexOf('_'),
           wordOptionsArray: responseData.data[0].words,
           totalSentences: responseData.data.length,
           isLoaded: true,
         });
       })
       .catch((error) => {
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
       });
   }
 
   answerWordClick = (word) => {
     const { blankIndex, buttonToShow } = this.state;
 
-    if (buttonToShow === "continue") {
+    if (buttonToShow === 'continue') {
       return;
     }
 
@@ -61,7 +65,7 @@ class BlanksBoard extends Component {
 
       return {
         sentenceArray: oldArray,
-        buttonToShow: "check",
+        buttonToShow: 'check',
       };
     });
   };
@@ -69,10 +73,10 @@ class BlanksBoard extends Component {
   checkSentenceClick = () => {
     const { sentenceArray, answerArray } = this.state;
 
-    if (sentenceArray.join(" ") === answerArray.join(" ")) {
-      this.setState({ isCorrect: true, buttonToShow: "continue" });
+    if (sentenceArray.join(' ') === answerArray.join(' ')) {
+      this.setState({ isCorrect: true, buttonToShow: 'continue' });
     } else {
-      this.setState({ isCorrect: false, buttonToShow: "continue" });
+      this.setState({ isCorrect: false, buttonToShow: 'continue' });
     }
   };
 
@@ -88,15 +92,15 @@ class BlanksBoard extends Component {
           currentSentence: sentenceNum,
           sentenceWordsArray: [],
           isCorrect: undefined,
-          sentenceArray: blanks[sentenceNum].sentence.split(" "),
-          blankIndex: blanks[sentenceNum].sentence.split(" ").indexOf("_"),
-          answerArray: blanks[sentenceNum].answer.split(" "),
+          sentenceArray: blanks[sentenceNum].sentence.split(' '),
+          blankIndex: blanks[sentenceNum].sentence.split(' ').indexOf('_'),
+          answerArray: blanks[sentenceNum].answer.split(' '),
           wordOptionsArray: blanks[sentenceNum].words,
         };
       });
     } else {
       this.setState({
-        buttonToShow: "finish",
+        buttonToShow: 'finish',
         isCorrect: undefined,
       });
     }
@@ -124,11 +128,12 @@ class BlanksBoard extends Component {
     } = this.state;
 
     const sentenceWithBlanks = sentenceArray.map((word, i) => {
-      if (word === "_") {
+      if (word === '_') {
         return (
           <span key={i} className="sentences__word blank">
-            {" "}
-            &nbsp;{" "}
+            {' '}
+            &nbsp;
+            {' '}
           </span>
         );
       }
@@ -136,23 +141,23 @@ class BlanksBoard extends Component {
       if (i === blankIndex) {
         return (
           <span key={i} className="sentences__word underline">
-            {word}{" "}
+            {word}
+            {' '}
           </span>
         );
       }
 
       return (
         <span key={i} className="sentences__word">
-          {word}{" "}
+          {word}
+          {' '}
         </span>
       );
     });
 
     const wordOptions = wordOptionsArray.map((word) => (
       <li key={word.id} className="sentences__item">
-        <button type="button" onClick={() => this.answerWordClick(word.word)}>
-          {word.word}
-        </button>
+        <ActivityBtnBlank label={word.word} handleClick={this.answerWordClick} />
       </li>
     ));
 
@@ -185,7 +190,6 @@ class BlanksBoard extends Component {
 BlanksBoard.propTypes = {
   lang: PropTypes.string,
   category: PropTypes.string,
-  activityId: PropTypes.string,
   showMessage: PropTypes.func,
 };
 
