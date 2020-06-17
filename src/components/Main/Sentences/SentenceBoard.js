@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import SentenceSolution from './SentenceSolution';
 import SentenceCheck from './SentenceCheck';
+import ActivityBtnSentence from '../ActivityComponents/ActivityBtnSentence';
 
 class SentenceBoard extends Component {
   state = {
@@ -183,17 +184,13 @@ class SentenceBoard extends Component {
     } = this.state;
     const sentenceWords = sentenceWordsArray.map((word, i) => (
       <li key={i} className="sentences__item">
-        <button type="button" onClick={this.sentenceWordClick.bind(this, i)}>
-          {word}
-        </button>
+        <ActivityBtnSentence label={word} id={i} handleClick={this.sentenceWordClick} />
       </li>
     ));
 
     const answerWords = answerWordsArray.map((word, i) => (
       <li key={i} className="sentences__item">
-        <button type="button" onClick={this.answerWordClick.bind(this, i)}>
-          {word}
-        </button>
+        <ActivityBtnSentence label={word} id={i} handleClick={this.answerWordClick} />
       </li>
     ));
 
