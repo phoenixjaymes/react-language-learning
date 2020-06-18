@@ -1,35 +1,41 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { LearningContext } from "../../Context";
+import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
+import { LearningContext } from '../../Context';
 
-import styles from "./forms.module.css";
+import FormSelect from './FormSelect';
 
-class UpdateSelector extends Component {
-  state = {
-    isVisible: true,
-    modifyList: [],
-  };
+import styles from './forms.module.css';
 
-  handleShowHideClick = () => {
-    const { isVisible } = this.state;
-    this.setState({ isVisible: !isVisible });
-  };
+const UpdateSelector = ({
+  type, handleIconClick, children, fetchUrl, propNameDisplay, propNameToolTip,
+}) => {
+  const value = useContext(LearningContext);
+  const { lang, categories } = value;
+  // const [isVisible, setIsVisible] = useState(true);
+  const [modifyList, setModifyList] = useState([]);
+  const [selectedOption, setSelectedOption] = useState('');
 
-  handleSelectOrButton = (e) => {
+  // const handleShowHideClick = () => {
+  //   const { isVisible } = this.state;
+  //   this.setState({ isVisible: !isVisible });
+  // };
+
+  const handleSelect = (e) => {
     const categoryId = e.target.value;
-    const { lang } = this.context;
-    const { type, handleIconClick } = this.props;
+    setSelectedOption(categoryId);
 
-    fetch(
-      `https://phoenixjaymes.com/assets/data/language/updates?qnt=all&lang=${lang}&pos=${type}&category=${categoryId}`
-    )
+    if (categoryId === '') {
+      return;
+    }
+
+    fetch(`${fetchUrl}${categoryId}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
         const wordList = responseData.data.map((item) => (
           <tr key={item.id}>
             <td className={styles.itemSelectorTranslation}>
-              <span className="tool" data-tip={item.english}>
-                {item.translation}
+              <span className="tool" data-tip={item[propNameToolTip]}>
+                {item[propNameDisplay]}
               </span>
             </td>
             <td className={styles.itemSelectorEdit}>
@@ -44,62 +50,66 @@ class UpdateSelector extends Component {
             </td>
           </tr>
         ));
-        this.setState({ modifyList: wordList });
+
+        setModifyList(wordList);
       })
       .catch((error) => {
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
       });
   };
 
-  getChild = () => {
-    const { children } = this.props;
-    if (children.type === "span") {
-      return React.cloneElement(children, {
-        onClick: this.handleSelectOrButton,
-      });
-    }
+  // const getChild = () => {
+  //   if (children.type === 'span') {
+  //     return React.cloneElement(children, {
+  //       onClick: handleSelect,
+  //     });
+  //   }
 
-    return React.cloneElement(children, {
-      onChange: this.handleSelectOrButton,
-    });
-  };
+  //   return React.cloneElement(children, {
+  //     onChange: handleSelect,
+  //   });
+  // };
 
-  render() {
-    const { modifyList } = this.state;
-    return (
-      <form className={styles.formItemSelector} id="frmListWords">
-        <h3 className={styles.header}>Item Selector</h3>
-        <label className={styles.label} htmlFor="selCategoryList">
-          {this.getChild()}
-        </label>
+  return (
+    <form className={styles.formItemSelector} id="frmListWords">
+      <h3 className={styles.header}>Item Selector</h3>
+      {/* <label className={styles.label} htmlFor="selCategoryList">
+        {getChild()}
+      </label> */}
 
-        <div className={styles.itemSelector}>
-          <div className={styles.itemSelectorWrap}>
-            <table className={styles.itemSelectorTable}>
-              <tbody>
-                <tr>
-                  <th className={styles.itemSelectorTranslation}>
-                    Translation
-                  </th>
-                  <th className={styles.itemSelectorEdit} />
-                </tr>
+      <FormSelect
+        name="selectedOption"
+        label=""
+        categories={categories[lang].sentence_cat}
+        selected={selectedOption}
+        handleCategory={handleSelect}
+      />
 
-                {modifyList}
-              </tbody>
-            </table>
-          </div>
+      <div className={styles.itemSelector}>
+        <div className={styles.itemSelectorWrap}>
+          <table className={styles.itemSelectorTable}>
+            <tbody>
+              <tr>
+                <th className={styles.itemSelectorTranslation}>Translation</th>
+                <th className={styles.itemSelectorEdit} />
+              </tr>
+
+              {modifyList}
+            </tbody>
+          </table>
         </div>
-      </form>
-    );
-  }
+      </div>
+    </form>
+  );
 }
-
-UpdateSelector.contextType = LearningContext;
 
 UpdateSelector.propTypes = {
   type: PropTypes.string.isRequired,
   handleIconClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+  fetchUrl: PropTypes.string,
+  propNameDisplay: PropTypes.string,
+  propNameToolTip: PropTypes.string,
 };
 
 export default UpdateSelector;
