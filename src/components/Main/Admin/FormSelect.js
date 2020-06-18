@@ -6,9 +6,10 @@ import styles from './formSelect.module.css';
 const FormSelect = ({
   name, categories, selected, label, handleCategory,
 }) => {
-  const categoryOptions = categories.map(category => (
-    <option key={category.id} value={category.id}>{category.name}</option>
-  ));
+  const categoryOptions = categories.map((category) => {
+    const ucText = category.name.charAt(0).toUpperCase() + category.name.slice(1);
+    return (<option key={category.id} value={category.id}>{ucText}</option>);
+  });
 
   return (
     <label className={styles.label} htmlFor="selCategory">
