@@ -1,0 +1,26 @@
+.buttonWrap {
+  margin-bottom: 10px;
+  padding: 3px;
+  text-align: center;
+}
+
+.pText {
+  margin-bottom: 7px;
+}
+
+.pText span {
+  border-bottom: 1px dotted #ffedb9;
+  color: #ffedb9;
+  display: inline-block;
+  padding-bottom: 3px;
+}
+
+.label {
+  display: inline-block;
+  margin: 0 4px;
+
+}
+
+.radio {
+  margin: 0 3px;
+}
