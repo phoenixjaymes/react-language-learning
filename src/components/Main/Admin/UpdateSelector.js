@@ -7,18 +7,14 @@ import FormSelect from './FormSelect';
 import styles from './forms.module.css';
 
 const UpdateSelector = ({
-  type, handleIconClick, children, fetchUrl, propNameDisplay, propNameToolTip,
+  categoryType, handleIconClick, fetchUrl, propNameDisplay, propNameToolTip,
 }) => {
   const value = useContext(LearningContext);
   const { lang, categories } = value;
-  // const [isVisible, setIsVisible] = useState(true);
   const [modifyList, setModifyList] = useState([]);
   const [selectedOption, setSelectedOption] = useState('');
-
-  // const handleShowHideClick = () => {
-  //   const { isVisible } = this.state;
-  //   this.setState({ isVisible: !isVisible });
-  // };
+  const generalCatNames = ['general', 'generalSentence', 'generalPhrase'];
+  const categoriesLang = generalCatNames.includes(categoryType) ? 'all' : lang;
 
   const handleSelect = (e) => {
     const categoryId = e.target.value;
@@ -58,29 +54,14 @@ const UpdateSelector = ({
       });
   };
 
-  // const getChild = () => {
-  //   if (children.type === 'span') {
-  //     return React.cloneElement(children, {
-  //       onClick: handleSelect,
-  //     });
-  //   }
-
-  //   return React.cloneElement(children, {
-  //     onChange: handleSelect,
-  //   });
-  // };
-
   return (
     <form className={styles.formItemSelector} id="frmListWords">
       <h3 className={styles.header}>Item Selector</h3>
-      {/* <label className={styles.label} htmlFor="selCategoryList">
-        {getChild()}
-      </label> */}
 
       <FormSelect
         name="selectedOption"
         label=""
-        categories={categories[lang].sentence_cat}
+        categories={categories[categoriesLang][categoryType]}
         selected={selectedOption}
         handleCategory={handleSelect}
       />
@@ -91,7 +72,7 @@ const UpdateSelector = ({
             <tbody>
               <tr>
                 <th className={styles.itemSelectorTranslation}>Translation</th>
-                <th className={styles.itemSelectorEdit} />
+                <th className={styles.itemSelectorEdit}> </th>
               </tr>
 
               {modifyList}
@@ -101,12 +82,11 @@ const UpdateSelector = ({
       </div>
     </form>
   );
-}
+};
 
 UpdateSelector.propTypes = {
-  type: PropTypes.string.isRequired,
+  categoryType: PropTypes.string.isRequired,
   handleIconClick: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
   fetchUrl: PropTypes.string,
   propNameDisplay: PropTypes.string,
   propNameToolTip: PropTypes.string,
