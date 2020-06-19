@@ -15,7 +15,7 @@ const Conjunctions = ({ context }) => {
     return <NlConjunctions heading={`${languages[lang]} Conjunctions`} />;
   }
 
-  if (lang === 'za') {
+  if (lang === 'af') {
     return <ZaConjunctions heading={`${languages[lang]} Conjunctions`} />;
   }
 

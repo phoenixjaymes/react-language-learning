@@ -15,7 +15,7 @@ const prepositions = ({ context }) => {
     return <NlPrepositions heading={`${languages[lang]} Prepositions`} />;
   }
 
-  if (lang === 'za') {
+  if (lang === 'af') {
     return <ZaPrepositions heading={`${languages[lang]} Prepositions`} />;
   }
 

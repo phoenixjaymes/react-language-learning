@@ -34,7 +34,7 @@ class Header extends Component {
 
     const deLabel = labels[lang].languages.de;
     const nlLabel = labels[lang].languages.nl;
-    const zaLabel = labels[lang].languages.za;
+    const afLabel = labels[lang].languages.af;
 
     const cardsLabel = labels[lang].activities.cards;
     const wordsLabel = labels[lang].activities.words;
@@ -63,7 +63,7 @@ class Header extends Component {
                 <ul className={`${styles.subMenu} ${subLangClass}`}>
                   <li className={styles.subMenuItem} onClick={() => this.handleLanguageClick('de')}><span>{deLabel}</span></li>
                   <li className={styles.subMenuItem} onClick={() => this.handleLanguageClick('nl')}><span>{nlLabel}</span></li>
-                  <li className={styles.subMenuItem} onClick={() => this.handleLanguageClick('za')}><span>{zaLabel}</span></li>
+                  <li className={styles.subMenuItem} onClick={() => this.handleLanguageClick('af')}><span>{afLabel}</span></li>
                 </ul>
               </li>
 

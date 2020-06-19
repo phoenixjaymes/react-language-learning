@@ -13,7 +13,7 @@ const Pronouns = ({ context }) => {
     return <DePronouns heading={`${languages[lang]} Pronouns`} />;
   }
 
-  if (lang === 'za') {
+  if (lang === 'af') {
     return <DePronouns heading={`${languages[lang]} Pronouns`} />;
   }
 

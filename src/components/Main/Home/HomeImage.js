@@ -18,7 +18,7 @@ const HomeImage = () => {
     case 'nl':
       img = imgNL;
       break;
-    case 'za':
+    case 'af':
       img = imgAF;
       break;
     default:

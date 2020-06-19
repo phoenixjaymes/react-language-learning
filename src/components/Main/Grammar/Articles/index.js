@@ -15,7 +15,7 @@ const Articles = ({ context }) => {
     return <NlArticles heading={`${languages[lang]} Articles`} />;
   }
 
-  if (lang === 'za') {
+  if (lang === 'af') {
     return <ZaArticles heading={`${languages[lang]} Articles`} />;
   }
 

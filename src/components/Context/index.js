@@ -97,7 +97,7 @@ export class Provider extends Component {
     const languageNames = {
       de: "German",
       nl: "Dutch",
-      za: "Afrikaans",
+      af: "Afrikaans",
     };
 
     document.title = `${languageNames[lang]} ${title} | Language Learning`;

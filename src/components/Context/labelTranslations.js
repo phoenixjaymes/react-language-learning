@@ -3,7 +3,7 @@ const labelTranslations = {
     languages: {
       de: 'German',
       nl: 'Dutch',
-      za: 'Afrikaans',
+      af: 'Afrikaans',
     },
     activities: {
       cards: 'Cards',
@@ -16,7 +16,7 @@ const labelTranslations = {
     languages: {
       de: 'Deutsch',
       nl: 'Niederländisch',
-      za: 'Afrikaans',
+      af: 'Afrikaans',
     },
     activities: {
       cards: 'Karten',
@@ -29,7 +29,7 @@ const labelTranslations = {
     languages: {
       de: 'Duitse',
       nl: 'Nederlands',
-      za: 'Afrikaans',
+      af: 'Afrikaans',
     },
     activities: {
       cards: 'Kaarten',
@@ -38,11 +38,11 @@ const labelTranslations = {
       blanks: 'Blanken',
     },
   },
-  za: {
+  af: {
     languages: {
       de: 'Duitse',
       nl: 'Nederlands',
-      za: 'Afrikaans',
+      af: 'Afrikaans',
     },
     activities: {
       cards: 'Kaarte',

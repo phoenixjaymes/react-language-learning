@@ -31,7 +31,7 @@ class Cards extends Component {
           />
 
           <h2>Nouns</h2>
-          {lang !== 'za' && (
+          {lang !== 'af' && (
             <CardCategoriesGeneric
               lang={lang}
               category="gender"
