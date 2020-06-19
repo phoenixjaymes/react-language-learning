@@ -1,50 +1,48 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { LearningContext } from "../../Context";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { LearningContext } from '../../Context';
 
 // Components
-import UpdateSelector from "./UpdateSelector";
-import FormSelect from "./FormSelect";
-import FormInput from "./FormInput";
-import FormTextarea from "./FormComponents/FormTextarea";
-import FormMessage from "./FormMessage";
-import Umlauts from "./Umlauts";
-import ConfirmDialog from "./ConfirmDialog";
+import UpdateSelector from './UpdateSelector';
+import FormSelect from './FormSelect';
+import FormInput from './FormInput';
+import FormTextarea from './FormComponents/FormTextarea';
+import FormMessage from './FormMessage';
+import Umlauts from './Umlauts';
+import ConfirmDialog from './ConfirmDialog';
 
-import styles from "./forms.module.css";
+import styles from './forms.module.css';
 
 class Blank extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemId: "",
-      itemCategory: "",
-      itemSentence: "",
-      itemAnswer: "",
-      itemWords: "",
-      response: "",
-      status: "",
+      itemId: '',
+      itemCategory: '',
+      itemSentence: '',
+      itemAnswer: '',
+      itemWords: '',
+      response: '',
+      status: '',
       isDialogShown: false,
-      dialogMessage: "Are you sure you want to make this change?",
+      dialogMessage: 'Are you sure you want to make this change?',
     };
   }
 
   clearForm = () => {
     this.setState({
-      itemId: "",
-      itemSentence: "",
-      itemAnswer: "",
+      itemId: '',
+      itemSentence: '',
+      itemAnswer: '',
       // itemWords: '',
     });
   };
 
   handleIconClick = (e) => {
-    const itemId = e.target.getAttribute("data-id");
+    const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
 
-    fetch(
-      `https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=blank&id=${itemId}`
-    )
+    fetch(`https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=blank&id=${itemId}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
         const data = responseData.data.item;
@@ -58,7 +56,7 @@ class Blank extends Component {
         });
       })
       .catch((error) => {
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
       });
   };
 
@@ -68,13 +66,15 @@ class Blank extends Component {
   };
 
   isValid = () => {
-    const { itemSentence, itemAnswer, itemWords, itemCategory } = this.state;
+    const {
+      itemSentence, itemAnswer, itemWords, itemCategory,
+    } = this.state;
 
     if (
-      itemSentence === "" ||
-      itemAnswer === "" ||
-      itemWords === "" ||
-      itemCategory === ""
+      itemSentence === ''
+      || itemAnswer === ''
+      || itemWords === ''
+      || itemCategory === ''
     ) {
       return false;
     }
@@ -99,13 +99,13 @@ class Blank extends Component {
     e.preventDefault();
 
     if (!this.isValid()) {
-      this.setState({ response: "Please fill in all feilds" });
+      this.setState({ response: 'Please fill in all feilds' });
       return;
     }
 
     this.setState({
       isDialogShown: true,
-      response: "",
+      response: '',
     });
   };
 
@@ -121,23 +121,22 @@ class Blank extends Component {
     const { modifyType } = this.props;
     let fetchUrl;
     const formData = new FormData();
-    formData.append("lang", lang);
-    formData.append("pos", "blank");
-    formData.append("category", itemCategory);
-    formData.append("sentence", itemSentence.trim());
-    formData.append("answer", itemAnswer.trim());
-    formData.append("words", itemWords.trim());
+    formData.append('lang', lang);
+    formData.append('pos', 'blank');
+    formData.append('category', itemCategory);
+    formData.append('sentence', itemSentence.trim());
+    formData.append('answer', itemAnswer.trim());
+    formData.append('words', itemWords.trim());
 
-    if (modifyType === "add") {
-      fetchUrl = "https://phoenixjaymes.com/assets/data/language/add-item.php";
+    if (modifyType === 'add') {
+      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/add-item.php';
     } else {
-      formData.append("id", itemId);
-      fetchUrl =
-        "https://phoenixjaymes.com/assets/data/language/update-item.php";
+      formData.append('id', itemId);
+      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/update-item.php';
     }
 
     fetch(fetchUrl, {
-      method: "POST",
+      method: 'POST',
       body: formData,
     })
       .then((reponse) => reponse.json())
@@ -146,19 +145,19 @@ class Blank extends Component {
           response: `${responseData.status}: ${responseData.data.message}`,
           status: responseData.status,
         });
-        if (responseData.status === "success") {
+        if (responseData.status === 'success') {
           this.clearForm();
         }
       })
       .catch((error) => {
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
       });
   };
 
   handleFocus = () => {
     this.setState({
-      response: "",
-      status: "",
+      response: '',
+      status: '',
     });
   };
 
@@ -177,24 +176,15 @@ class Blank extends Component {
     } = this.state;
     const { modifyType, categoryName } = this.props;
 
-    const btnValue = `${modifyType
-      .charAt(0)
-      .toUpperCase()}${modifyType.substring(1)} ${categoryName
-      .charAt(0)
-      .toUpperCase()}${categoryName.substring(1)}`;
-
-    const categoryOptions = categories[lang].blank.map((category) => (
-      <option key={category.id} value={category.id}>
-        {category.name}
-      </option>
-    ));
+    const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)}
+       ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
 
     const langName = us.languages[lang];
-    const heading =
-      modifyType === "update"
-        ? `Update ${langName} Blanks`
-        : `Add ${langName} Blanks`;
-    const gridClass = modifyType === "update" ? styles.formLayoutGrid : "";
+    const heading = modifyType === 'update'
+      ? `Update ${langName} Blanks`
+      : `Add ${langName} Blanks`;
+    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
+    const fetchUrl = `https://phoenixjaymes.com/api/language/blanks?lang=${lang}&cat=`;
 
     return (
       <div>
@@ -255,22 +245,14 @@ class Blank extends Component {
             /> */}
           </form>
 
-          {modifyType === "update" && (
+          {modifyType === 'update' && (
             <UpdateSelector
-              lang={lang}
-              type={categoryName}
-              categories={categories}
+              categoryType="blank"
               handleIconClick={this.handleIconClick}
-            >
-              <select
-                id="selCategoryList"
-                className="form__select"
-                name="selCategoryList"
-              >
-                <option value="0">Select</option>
-                {categoryOptions}
-              </select>
-            </UpdateSelector>
+              fetchUrl={fetchUrl}
+              propNameDisplay="sentence"
+              propNameToolTip="answer"
+            />
           )}
         </div>
 

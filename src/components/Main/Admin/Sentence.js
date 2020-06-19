@@ -234,6 +234,8 @@ class Sentence extends Component {
       : `Add ${langName} Sentences`;
     const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
 
+    const fetchUrl = `https://phoenixjaymes.com/api/language/sentences?lang=${lang}&cat=`;
+
     return (
       <div>
         <div className={gridClass}>
@@ -299,13 +301,12 @@ class Sentence extends Component {
 
           {modifyType === 'update' && (
             <UpdateSelector
-              lang={lang}
-              type={categoryName}
-              categories={categories}
+              categoryType="sentence_cat"
               handleIconClick={this.handleIconClick}
-            >
-              <span>Get List</span>
-            </UpdateSelector>
+              fetchUrl={fetchUrl}
+              propNameDisplay="answer1"
+              propNameToolTip="sentence"
+            />
           )}
         </div>
 

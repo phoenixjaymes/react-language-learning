@@ -1,61 +1,61 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { LearningContext } from "../../Context";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { LearningContext } from '../../Context';
 
 // Components
-import UpdateSelector from "./UpdateSelector";
-import FormSelect from "./FormSelect";
-import FormInput from "./FormInput";
-import FormMessage from "./FormMessage";
-import Umlauts from "./Umlauts";
-import ConfirmDialog from "./ConfirmDialog";
+import UpdateSelector from './UpdateSelector';
+import FormSelect from './FormSelect';
+import FormInput from './FormInput';
+import FormMessage from './FormMessage';
+import Umlauts from './Umlauts';
+import ConfirmDialog from './ConfirmDialog';
 
-import styles from "./forms.module.css";
+import styles from './forms.module.css';
 
 class Noun extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemId: "",
-      itemEnglish: "",
-      itemBase: "",
-      itemTranslation: "",
-      itemExample: "",
-      itemGender: "",
-      itemImage: "none",
-      itemCategory: "",
-      itemCategory2: "5",
-      response: "",
-      status: "",
+      itemId: '',
+      itemEnglish: '',
+      itemBase: '',
+      itemTranslation: '',
+      itemExample: '',
+      itemGender: '',
+      itemImage: 'none',
+      itemCategory: '',
+      itemCategory2: '5',
+      response: '',
+      status: '',
       isDialogShown: false,
-      dialogMessage: "Are you sure you want to make this change?",
+      dialogMessage: 'Are you sure you want to make this change?',
     };
   }
 
   clearForm = () => {
     const { modifyType } = this.props;
 
-    if (modifyType === "update") {
+    if (modifyType === 'update') {
       this.setState({
-        itemId: "",
-        itemEnglish: "",
-        itemBase: "",
-        itemTranslation: "",
-        itemExample: "",
-        itemImage: "none",
-        itemGender: "",
-        itemCategory: "",
-        itemCategory2: "5",
+        itemId: '',
+        itemEnglish: '',
+        itemBase: '',
+        itemTranslation: '',
+        itemExample: '',
+        itemImage: 'none',
+        itemGender: '',
+        itemCategory: '',
+        itemCategory2: '5',
       });
     } else {
       this.setState({
-        itemId: "",
-        itemEnglish: "",
-        itemBase: "",
-        itemTranslation: "",
-        itemExample: "",
-        itemImage: "none",
-        itemGender: "",
+        itemId: '',
+        itemEnglish: '',
+        itemBase: '',
+        itemTranslation: '',
+        itemExample: '',
+        itemImage: 'none',
+        itemGender: '',
       });
     }
   };
@@ -63,10 +63,8 @@ class Noun extends Component {
   handleIconClick = (e) => {
     const { lang } = this.context;
     const { isUpdateDeleteListVisible } = this.state;
-    const itemId = e.target.getAttribute("data-id");
-    fetch(
-      `https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=noun&id=${itemId}`
-    )
+    const itemId = e.target.getAttribute('data-id');
+    fetch(`https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=noun&id=${itemId}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
         const data = responseData.data.item;
@@ -81,12 +79,12 @@ class Noun extends Component {
           itemCategory: data.category,
           itemCategory2: data.category2,
           isUpdateDeleteListVisible: !isUpdateDeleteListVisible,
-          response: "",
-          status: "",
+          response: '',
+          status: '',
         });
       })
       .catch((error) => {
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
       });
   };
 
@@ -121,8 +119,8 @@ class Noun extends Component {
     this.setState({
       itemTranslation: e.target.value,
       itemBase: e.target.value
-        .replace(/\bder\s|\bdie\s|\bdas\s|\bde\s|\bhet\s/i, "")
-        .replace(/\([\wÄÖÜäöü¨ß·-]*\)/i, ""),
+        .replace(/\bder\s|\bdie\s|\bdas\s|\bde\s|\bhet\s/i, '')
+        .replace(/\([\wÄÖÜäöü¨ß·-]*\)/i, ''),
       itemGender,
     });
   };
@@ -140,14 +138,14 @@ class Noun extends Component {
     } = this.state;
 
     if (
-      itemEnglish === "" ||
-      itemBase === "" ||
-      itemTranslation === "" ||
-      itemExample === "" ||
-      itemGender === "" ||
-      itemImage === "" ||
-      itemCategory === "" ||
-      itemCategory2 === ""
+      itemEnglish === ''
+      || itemBase === ''
+      || itemTranslation === ''
+      || itemExample === ''
+      || itemGender === ''
+      || itemImage === ''
+      || itemCategory === ''
+      || itemCategory2 === ''
     ) {
       return false;
     }
@@ -172,13 +170,13 @@ class Noun extends Component {
     e.preventDefault();
 
     if (!this.isValid()) {
-      this.setState({ response: "Please fill in all feilds" });
+      this.setState({ response: 'Please fill in all feilds' });
       return;
     }
 
     this.setState({
       isDialogShown: true,
-      response: "",
+      response: '',
     });
   };
 
@@ -198,27 +196,26 @@ class Noun extends Component {
     const { modifyType } = this.props;
     let fetchUrl;
     const formData = new FormData();
-    formData.append("lang", lang);
-    formData.append("pos", "noun");
-    formData.append("english", itemEnglish.trim());
-    formData.append("base", itemBase.trim());
-    formData.append("translation", itemTranslation.trim());
-    formData.append("example", itemExample.trim());
-    formData.append("gender", itemGender);
-    formData.append("img", itemImage.trim());
-    formData.append("category", itemCategory);
-    formData.append("category2", itemCategory2);
+    formData.append('lang', lang);
+    formData.append('pos', 'noun');
+    formData.append('english', itemEnglish.trim());
+    formData.append('base', itemBase.trim());
+    formData.append('translation', itemTranslation.trim());
+    formData.append('example', itemExample.trim());
+    formData.append('gender', itemGender);
+    formData.append('img', itemImage.trim());
+    formData.append('category', itemCategory);
+    formData.append('category2', itemCategory2);
 
-    if (modifyType === "add") {
-      fetchUrl = "https://phoenixjaymes.com/assets/data/language/add-item.php";
+    if (modifyType === 'add') {
+      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/add-item.php';
     } else {
-      formData.append("id", itemId);
-      fetchUrl =
-        "https://phoenixjaymes.com/assets/data/language/update-item.php";
+      formData.append('id', itemId);
+      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/update-item.php';
     }
 
     fetch(fetchUrl, {
-      method: "POST",
+      method: 'POST',
       body: formData,
     })
       .then((reponse) => reponse.json())
@@ -227,19 +224,19 @@ class Noun extends Component {
           response: `${responseData.status}: ${responseData.data.message}`,
           status: responseData.status,
         });
-        if (responseData.status === "success") {
+        if (responseData.status === 'success') {
           this.clearForm();
         }
       })
       .catch((error) => {
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
       });
   };
 
   handleFocus = () => {
     this.setState({
-      response: "",
-      status: "",
+      response: '',
+      status: '',
     });
   };
 
@@ -262,30 +259,16 @@ class Noun extends Component {
     } = this.state;
     const { modifyType, categoryName } = this.props;
 
-    // Update category options
-    let categoryOptions = [];
-    if (modifyType === "update") {
-      categoryOptions = categories[lang].noun.map((category) => (
-        <option key={category.id} value={category.id}>
-          {category.name}
-        </option>
-      ));
-    } else {
-      categoryOptions = [];
-    }
-
-    const btnValue = `${modifyType
-      .charAt(0)
-      .toUpperCase()}${modifyType.substring(1)} ${categoryName
-      .charAt(0)
-      .toUpperCase()}${categoryName.substring(1)}`;
+    const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
+      ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
 
     const langName = us.languages[lang];
-    const heading =
-      modifyType === "update"
-        ? `Update ${langName} Nouns`
-        : `Add ${langName} Nouns`;
-    const gridClass = modifyType === "update" ? styles.formLayoutGrid : "";
+    const heading = modifyType === 'update'
+      ? `Update ${langName} Nouns`
+      : `Add ${langName} Nouns`;
+    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
+    const fetchUrl = `https://phoenixjaymes.com/api/language/nouns?lang=${lang}&cat=`;
+
 
     return (
       <div>
@@ -364,22 +347,14 @@ class Noun extends Component {
             <FormMessage response={response} status={status} />
           </form>
 
-          {modifyType === "update" && (
+          {modifyType === 'update' && (
             <UpdateSelector
-              lang={lang}
-              type={categoryName}
-              categories={categories[lang].noun}
+              categoryType="noun"
               handleIconClick={this.handleIconClick}
-            >
-              <select
-                id="selCategoryList"
-                className="form__select"
-                name="selCategoryList"
-              >
-                <option value="0">Select</option>
-                {categoryOptions}
-              </select>
-            </UpdateSelector>
+              fetchUrl={fetchUrl}
+              propNameDisplay="translation"
+              propNameToolTip="english"
+            />
           )}
         </div>
 

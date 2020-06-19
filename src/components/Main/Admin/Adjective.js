@@ -1,35 +1,35 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { LearningContext } from "../../Context";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { LearningContext } from '../../Context';
 
 // Components
-import UpdateSelector from "./UpdateSelector";
-import FormSelect from "./FormSelect";
-import FormInput from "./FormInput";
-import FormMessage from "./FormMessage";
+import UpdateSelector from './UpdateSelector';
+import FormSelect from './FormSelect';
+import FormInput from './FormInput';
+import FormMessage from './FormMessage';
 // import Umlauts from './Umlauts';
-import ConfirmDialog from "./ConfirmDialog";
+import ConfirmDialog from './ConfirmDialog';
 // import withUtilities from './withUtilities';
 
-import styles from "./forms.module.css";
+import styles from './forms.module.css';
 
 class Adjective extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemId: "",
-      itemEnglish: "",
-      itemTranslation: "",
-      itemExample: "",
-      itemImage: "none",
-      itemCategory: "",
-      itemCategory2: "5",
-      response: "",
-      status: "",
+      itemId: '',
+      itemEnglish: '',
+      itemTranslation: '',
+      itemExample: '',
+      itemImage: 'none',
+      itemCategory: '',
+      itemCategory2: '5',
+      response: '',
+      status: '',
       isDialogShown: false,
-      dialogMessage: "Are you sure you want to make this change?",
-      umlauts: ["itemTranslation", "itemExample"],
-      umlautItem: "",
+      dialogMessage: 'Are you sure you want to make this change?',
+      umlauts: ['itemTranslation', 'itemExample'],
+      umlautItem: '',
       umlautStyles: {},
     };
   }
@@ -37,33 +37,33 @@ class Adjective extends Component {
   clearForm = () => {
     const { modifyType } = this.props;
 
-    if (modifyType === "update") {
+    if (modifyType === 'update') {
       this.setState({
-        itemId: "",
-        itemEnglish: "",
-        itemTranslation: "",
-        itemExample: "",
-        itemImage: "none",
-        itemCategory: "",
-        itemCategory2: "",
+        itemId: '',
+        itemEnglish: '',
+        itemTranslation: '',
+        itemExample: '',
+        itemImage: 'none',
+        itemCategory: '',
+        itemCategory2: '',
       });
     } else {
       this.setState({
-        itemId: "",
-        itemEnglish: "",
-        itemTranslation: "",
-        itemExample: "",
-        itemImage: "none",
+        itemId: '',
+        itemEnglish: '',
+        itemTranslation: '',
+        itemExample: '',
+        itemImage: 'none',
       });
     }
   };
 
   clearMessage = () => {
-    console.log("clearing message");
+    console.log('clearing message');
   };
 
   handleIconClick = (e) => {
-    const itemId = e.target.getAttribute("data-id");
+    const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
     fetch(
       `https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=adjective&id=${itemId}`
@@ -84,7 +84,7 @@ class Adjective extends Component {
         });
       })
       .catch((error) => {
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
       });
   };
 
@@ -104,12 +104,12 @@ class Adjective extends Component {
     } = this.state;
 
     if (
-      itemEnglish === "" ||
-      itemTranslation === "" ||
-      itemExample === "" ||
-      itemImage === "" ||
-      itemCategory === "" ||
-      itemCategory2 === ""
+      itemEnglish === '' ||
+      itemTranslation === '' ||
+      itemExample === '' ||
+      itemImage === '' ||
+      itemCategory === '' ||
+      itemCategory2 === ''
     ) {
       return false;
     }
@@ -135,15 +135,15 @@ class Adjective extends Component {
 
     if (!this.isValid()) {
       this.setState({
-        response: "Please fill in all feilds",
-        status: "fail",
+        response: 'Please fill in all feilds',
+        status: 'fail',
       });
       return;
     }
 
     this.setState({
       isDialogShown: true,
-      response: "",
+      response: '',
     });
   };
 
@@ -161,25 +161,28 @@ class Adjective extends Component {
     const { modifyType } = this.props;
     let fetchUrl;
     const formData = new FormData();
-    formData.append("lang", lang);
-    formData.append("pos", "adjective");
-    formData.append("english", itemEnglish.trim());
-    formData.append("translation", itemTranslation.trim());
-    formData.append("example", itemExample.trim());
-    formData.append("img", itemImage.trim());
-    formData.append("category", itemCategory);
-    formData.append("category2", itemCategory2);
+    formData.append('lang', lang);
+    formData.append('pos', 'adjective');
+    formData.append('english', itemEnglish.trim());
+    formData.append('translation', itemTranslation.trim());
+    formData.append('example', itemExample.trim());
+    formData.append('img', itemImage.trim());
+    formData.append('category', itemCategory);
+    formData.append('category2', itemCategory2);
 
-    if (modifyType === "add") {
-      fetchUrl = "https://phoenixjaymes.com/assets/data/language/add-item.php";
+    if (modifyType === 'add') {
+      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/add-item.php';
     } else {
-      formData.append("id", itemId);
+      formData.append('id', itemId);
       fetchUrl =
-        "https://phoenixjaymes.com/assets/data/language/update-item.php";
+        'https://phoenixjaymes.com/assets/data/language/update-item.php';
     }
 
     fetch(fetchUrl, {
-      method: "POST",
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
+      },
       body: formData,
     })
       .then((reponse) => reponse.json())
@@ -188,12 +191,12 @@ class Adjective extends Component {
           response: `${responseData.status}: ${responseData.data.message}`,
           status: responseData.status,
         });
-        if (responseData.status === "success") {
+        if (responseData.status === 'success') {
           this.clearForm();
         }
       })
       .catch((error) => {
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
       });
   };
 
@@ -235,8 +238,8 @@ class Adjective extends Component {
 
   handleFocus = () => {
     this.setState({
-      response: "",
-      status: "",
+      response: '',
+      status: '',
     });
   };
 
@@ -257,30 +260,16 @@ class Adjective extends Component {
     } = this.state;
     const { modifyType, categoryName } = this.props;
 
-    // Update category options
-    let categoryOptions = [];
-    if (modifyType === "update") {
-      categoryOptions = categories[lang].adjective.map((category) => (
-        <option key={category.id} value={category.id}>
-          {category.name}
-        </option>
-      ));
-    } else {
-      categoryOptions = [];
-    }
-
-    const btnValue = `${modifyType
-      .charAt(0)
-      .toUpperCase()}${modifyType.substring(1)} ${categoryName
-      .charAt(0)
-      .toUpperCase()}${categoryName.substring(1)}`;
+    const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
+      ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
 
     const langName = us.languages[lang];
-    const heading =
-      modifyType === "update"
-        ? `Update ${langName} Adjectives`
-        : `Add ${langName} Adjectives`;
-    const gridClass = modifyType === "update" ? styles.formLayoutGrid : "";
+    const heading = modifyType === 'update'
+      ? `Update ${langName} Adjectives`
+      : `Add ${langName} Adjectives`;
+    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
+
+    const fetchUrl = `https://phoenixjaymes.com/api/language/adjectives?lang=${lang}&cat=`;
 
     return (
       <div>
@@ -346,22 +335,14 @@ class Adjective extends Component {
             <FormMessage response={response} status={status} />
           </form>
 
-          {modifyType === "update" && (
+          {modifyType === 'update' && (
             <UpdateSelector
-              lang={lang}
-              type={categoryName}
-              categories={categories[lang].adjective}
+              categoryType="adjective"
               handleIconClick={this.handleIconClick}
-            >
-              <select
-                id="selCategoryList"
-                className="form__select"
-                name="selCategoryList"
-              >
-                <option value="0">Select</option>
-                {categoryOptions}
-              </select>
-            </UpdateSelector>
+              fetchUrl={fetchUrl}
+              propNameDisplay="translation"
+              propNameToolTip="english"
+            />
           )}
         </div>
 

@@ -1,39 +1,37 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { LearningContext } from "../../Context";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { LearningContext } from '../../Context';
 
-import UpdateSelector from "./UpdateSelector";
-import FormTextarea from "./FormComponents/FormTextarea";
-import FormMessage from "./FormMessage";
-import Umlauts from "./Umlauts";
-import ConfirmDialog from "./ConfirmDialog";
+import UpdateSelector from './UpdateSelector';
+import FormTextarea from './FormComponents/FormTextarea';
+import FormMessage from './FormMessage';
+import Umlauts from './Umlauts';
+import ConfirmDialog from './ConfirmDialog';
 
-import styles from "./forms.module.css";
+import styles from './forms.module.css';
 
 class Phrase extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemId: "",
-      itemEnglish: "",
-      itemTranslation: "",
-      response: "",
-      status: "",
+      itemId: '',
+      itemEnglish: '',
+      itemTranslation: '',
+      response: '',
+      status: '',
       isDialogShown: false,
-      dialogMessage: "Are you sure you want to make this change?",
+      dialogMessage: 'Are you sure you want to make this change?',
     };
   }
 
   clearForm = () => {
-    console.log("clearing form");
+    console.log('clearing form');
   };
 
   handleIconClick = (e) => {
-    const itemId = e.target.getAttribute("data-id");
+    const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
-    fetch(
-      `https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=phrase&id=${itemId}`
-    )
+    fetch(`https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=phrase&id=${itemId}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
         const data = responseData.data.item;
@@ -44,7 +42,7 @@ class Phrase extends Component {
         });
       })
       .catch((error) => {
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
       });
   };
 
@@ -61,7 +59,7 @@ class Phrase extends Component {
   isValid = () => {
     const { itemEnglish, itemTranslation } = this.state;
 
-    if (itemEnglish === "" || itemTranslation === "") {
+    if (itemEnglish === '' || itemTranslation === '') {
       return false;
     }
     return true;
@@ -85,13 +83,13 @@ class Phrase extends Component {
     e.preventDefault();
 
     if (!this.isValid()) {
-      this.setState({ response: "Please fill in all feilds" });
+      this.setState({ response: 'Please fill in all feilds' });
       return;
     }
 
     this.setState({
       isDialogShown: true,
-      response: "",
+      response: '',
     });
   };
 
@@ -101,21 +99,20 @@ class Phrase extends Component {
     const { modifyType } = this.props;
     let fetchUrl;
     const formData = new FormData();
-    formData.append("lang", lang);
-    formData.append("pos", "phrase");
-    formData.append("english", itemEnglish.trim());
-    formData.append("translation", itemTranslation.trim());
+    formData.append('lang', lang);
+    formData.append('pos', 'phrase');
+    formData.append('english', itemEnglish.trim());
+    formData.append('translation', itemTranslation.trim());
 
-    if (modifyType === "add") {
-      fetchUrl = "https://phoenixjaymes.com/assets/data/language/add-item.php";
+    if (modifyType === 'add') {
+      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/add-item.php';
     } else {
-      formData.append("id", itemId);
-      fetchUrl =
-        "https://phoenixjaymes.com/assets/data/language/update-item.php";
+      formData.append('id', itemId);
+      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/update-item.php';
     }
 
     fetch(fetchUrl, {
-      method: "POST",
+      method: 'POST',
       body: formData,
     })
       .then((reponse) => reponse.json())
@@ -124,24 +121,24 @@ class Phrase extends Component {
           response: `${responseData.status}: ${responseData.data.message}`,
           status: responseData.status,
         });
-        if (responseData.status === "success") {
+        if (responseData.status === 'success') {
           this.clearForm();
         }
       })
       .catch((error) => {
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
       });
   };
 
   handleFocus = () => {
     this.setState({
-      response: "",
-      status: "",
+      response: '',
+      status: '',
     });
   };
 
   render() {
-    const { categories, lang, labels } = this.context;
+    const { lang, labels } = this.context;
     const { us } = labels;
     const {
       isDialogShown,
@@ -153,18 +150,15 @@ class Phrase extends Component {
     } = this.state;
     const { modifyType, categoryName } = this.props;
 
-    const btnValue = `${modifyType
-      .charAt(0)
-      .toUpperCase()}${modifyType.substring(1)} ${categoryName
-      .charAt(0)
-      .toUpperCase()}${categoryName.substring(1)}`;
+    const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
+      ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
 
     const langName = us.languages[lang];
-    const heading =
-      modifyType === "update"
-        ? `Update ${langName} Phrases`
-        : `Add ${langName} Phrases`;
-    const gridClass = modifyType === "update" ? styles.formLayoutGrid : "";
+    const heading = modifyType === 'update'
+      ? `Update ${langName} Phrases`
+      : `Add ${langName} Phrases`;
+    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
+    const fetchUrl = `https://phoenixjaymes.com/api/language/phrases?lang=${lang}&cat=`;
 
     return (
       <div>
@@ -206,15 +200,14 @@ class Phrase extends Component {
             <FormMessage response={response} status={status} />
           </form>
 
-          {modifyType === "update" && (
+          {modifyType === 'update' && (
             <UpdateSelector
-              lang={lang}
-              type={categoryName}
-              categories={categories}
+              categoryType="phrase"
               handleIconClick={this.handleIconClick}
-            >
-              <span>Get List</span>
-            </UpdateSelector>
+              fetchUrl={fetchUrl}
+              propNameDisplay="translation"
+              propNameToolTip="english"
+            />
           )}
         </div>
 
