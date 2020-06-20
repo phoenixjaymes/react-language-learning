@@ -37,19 +37,35 @@ class BlanksBoard extends Component {
     )
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        this.setState({
-          blanks: responseData.data,
-          sentenceArray: responseData.data[0].sentence.split(' '),
-          answerArray: responseData.data[0].answer.split(' '),
-          blankIndex: responseData.data[0].sentence.split(' ').indexOf('_'),
-          wordOptionsArray: responseData.data[0].words,
-          totalSentences: responseData.data.length,
-          isLoaded: true,
-        });
+
+        if (responseData.status === 'success') {
+          const data = responseData.data[0];
+
+          this.setState({
+            blanks: responseData.data,
+            sentenceArray: data.sentence.split(' '),
+            answerArray: data.answer.split(' '),
+            blankIndex: data.sentence.split(' ').indexOf('_'),
+            wordOptionsArray: this.makeWordObjects(data.words),
+            totalSentences: responseData.data.length,
+            isLoaded: true,
+          });
+
+        } else {
+          console.log(responseData);
+        }
       })
       .catch((error) => {
         console.log('Error fetching and parsing data', error);
       });
+  }
+
+  makeWordObjects = (words) => {
+    const arrWords = [];
+    words.split(',').forEach((item, i) => {
+      arrWords.push({ id: i, word: item });
+    });
+    return arrWords;
   }
 
   answerWordClick = (word) => {
@@ -95,7 +111,7 @@ class BlanksBoard extends Component {
           sentenceArray: blanks[sentenceNum].sentence.split(' '),
           blankIndex: blanks[sentenceNum].sentence.split(' ').indexOf('_'),
           answerArray: blanks[sentenceNum].answer.split(' '),
-          wordOptionsArray: blanks[sentenceNum].words,
+          wordOptionsArray: this.makeWordObjects(blanks[sentenceNum].words),
         };
       });
     } else {
