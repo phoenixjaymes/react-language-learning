@@ -48,29 +48,32 @@ class VerbNl extends Component {
     const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
 
-    fetch(`https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=verb&id=${itemId}`)
+    fetch(`https://phoenixjaymes.com/api/language/verbs/${itemId}?lang=${lang}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        const data = responseData.data.item;
-        const isSeparableChecked = data.separable;
-        const isReflexiveChecked = data.reflexive;
-        this.setState({
-          itemId: data.id,
-          itemEnglish: data.english,
-          itemInfinitive: data.infinitive,
-          itemTranslation: data.translation,
-          itemExample: data.example,
-          itemType: data.type,
-          itemSeparable: isSeparableChecked,
-          itemReflexive: isReflexiveChecked,
-          itemIk: data.ik,
-          itemJij: data.jij,
-          itemHij: data.hij,
-          itemU: data.u,
-          itemWij: data.wij,
-          itemJullie: data.jullie,
-          itemZij: data.zij,
-        });
+        if (responseData.status === 'success') {
+          const data = responseData.data[0];
+          const { present } = data;
+          this.setState({
+            itemId: data.id,
+            itemEnglish: data.english,
+            itemInfinitive: data.infinitive,
+            itemTranslation: data.translation,
+            itemExample: data.example,
+            itemType: data.type,
+            itemSeparable: data.separable,
+            itemReflexive: data.reflexive,
+            itemIk: present.ik,
+            itemJij: present.jij,
+            itemHij: present.hij,
+            itemU: present.u,
+            itemWij: present.wij,
+            itemJullie: present.jullie,
+            itemZij: present.zij,
+          });
+        } else {
+          console.log(responseData);
+        }
       })
       .catch((error) => {
         console.log('Error fetching and parsing data', error);

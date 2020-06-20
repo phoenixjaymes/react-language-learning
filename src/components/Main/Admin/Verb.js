@@ -47,28 +47,32 @@ class Verb extends Component {
     const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
 
-    fetch(`https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=verb&id=${itemId}`)
+    fetch(`https://phoenixjaymes.com/api/language/verbs/${itemId}?lang=${lang}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        const data = responseData.data.item;
-        const isSeparableChecked = data.separable;
-        const isReflexiveChecked = data.reflexive;
-        this.setState({
-          itemId: data.id,
-          itemEnglish: data.english,
-          itemInfinitive: data.infinitive,
-          itemTranslation: data.translation,
-          itemExample: data.example,
-          itemType: data.type,
-          itemSeparable: isSeparableChecked,
-          itemReflexive: isReflexiveChecked,
-          itemIch: data.ich,
-          itemDu: data.du,
-          itemEr: data.er_sie_es,
-          itemWir: data.wir,
-          itemIhr: data.ihr,
-          itemSie: data.sie_Sie,
-        });
+        if (responseData.status === 'success') {
+          const data = responseData.data[0];
+          const { present } = data;
+
+          this.setState({
+            itemId: data.id,
+            itemEnglish: data.english,
+            itemInfinitive: data.infinitive,
+            itemTranslation: data.translation,
+            itemExample: data.example,
+            itemType: data.type,
+            itemSeparable: data.separable,
+            itemReflexive: data.reflexive,
+            itemIch: present.ich,
+            itemDu: present.du,
+            itemEr: present.er_sie_es,
+            itemWir: present.wir,
+            itemIhr: present.ihr,
+            itemSie: present.sie_sie,
+          });
+        } else {
+          console.log(responseData);
+        }
       })
       .catch((error) => {
         console.log('Error fetching and parsing data', error);

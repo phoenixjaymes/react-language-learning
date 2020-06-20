@@ -44,24 +44,28 @@ class VerbImperfect extends Component {
     const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
 
-    // change url to get pos from props or match objects
-    fetch(`https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=imperfect&id=${itemId}`)
+    fetch(`https://phoenixjaymes.com/api/language/verbs/${itemId}?lang=${lang}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        const data = responseData.data.item;
-        this.setState({
-          itemId: data.id,
-          itemTranslation: data.translation,
-          itemExample: data.example,
-          itemType: data.type,
-          itemIk: data.ik,
-          itemJij: data.jij,
-          itemHij: data.hij,
-          itemU: data.u,
-          itemWij: data.wij,
-          itemJullie: data.jullie,
-          itemZij: data.zij,
-        });
+        if (responseData.status === 'success') {
+          const data = responseData.data[0];
+          const { imperfect } = data;
+          this.setState({
+            itemId: data.id,
+            itemTranslation: data.translation,
+            itemExample: data.example,
+            itemType: data.type,
+            itemIk: imperfect.ik,
+            itemJij: imperfect.jij,
+            itemHij: imperfect.hij,
+            itemU: imperfect.u,
+            itemWij: imperfect.wij,
+            itemJullie: imperfect.jullie,
+            itemZij: imperfect.zij,
+          });
+        } else {
+          console.log(responseData);
+        }
       })
       .catch((error) => {
         console.log('Error fetching and parsing data', error);

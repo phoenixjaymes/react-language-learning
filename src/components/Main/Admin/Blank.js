@@ -42,18 +42,22 @@ class Blank extends Component {
     const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
 
-    fetch(`https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=blank&id=${itemId}`)
+    fetch(`https://phoenixjaymes.com/api/language/blanks/${itemId}?lang=${lang}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        const data = responseData.data.item;
+        if (responseData.status === 'success') {
+          const data = responseData.data[0];
 
-        this.setState({
-          itemId: data.id,
-          itemSentence: data.sentence,
-          itemCategory: data.category,
-          itemAnswer: data.answer,
-          itemWords: data.words,
-        });
+          this.setState({
+            itemId: data.id,
+            itemSentence: data.sentence,
+            itemCategory: data.category,
+            itemAnswer: data.answer,
+            itemWords: data.words,
+          });
+        } else {
+          console.log(responseData);
+        }
       })
       .catch((error) => {
         console.log('Error fetching and parsing data', error);

@@ -75,22 +75,23 @@ class Sentence extends Component {
     const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
 
-    fetch(
-      `https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=sentence&id=${itemId}`,
-    )
+    fetch(`https://phoenixjaymes.com/api/language/sentences/${itemId}?lang=${lang}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        const data = responseData.data.item;
-
-        this.setLabels(data.type);
-        this.setState({
-          itemId: data.id,
-          itemSentence: data.sentence,
-          itemType: data.type,
-          itemCategory: data.category,
-          itemAnswer1: data.answer1,
-          itemExtraWords: data.extraWords,
-        });
+        if (responseData.status === 'success') {
+          const data = responseData.data[0];
+          this.setLabels(data.type);
+          this.setState({
+            itemId: data.id,
+            itemSentence: data.sentence,
+            itemType: data.type,
+            itemCategory: data.category,
+            itemAnswer1: data.answer1,
+            itemExtraWords: data.extra,
+          });
+        } else {
+          console.log(responseData);
+        }
       })
       .catch((error) => {
         console.log('Error fetching and parsing data', error);

@@ -36,18 +36,21 @@ class VerbImperfectZA extends Component {
     const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
 
-    // change url to get pos from props or match objects
-    fetch(`https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=imperfect&id=${itemId}`)
+    fetch(`https://phoenixjaymes.com/api/language/verbs/${itemId}?lang=${lang}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        const data = responseData.data.item;
-        this.setState({
-          itemId: data.id,
-          itemTranslation: data.translation,
-          itemExample: data.example,
-          itemImperfect: data.imperfect,
-          itemType: data.type,
-        });
+        if (responseData.status === 'success') {
+          const data = responseData.data[0];
+          this.setState({
+            itemId: data.id,
+            itemTranslation: data.translation,
+            itemExample: data.example,
+            itemImperfect: data.imperfect,
+            itemType: data.type,
+          });
+        } else {
+          console.log(responseData);
+        }
       })
       .catch((error) => {
         console.log('Error fetching and parsing data', error);

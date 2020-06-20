@@ -64,24 +64,28 @@ class Noun extends Component {
     const { lang } = this.context;
     const { isUpdateDeleteListVisible } = this.state;
     const itemId = e.target.getAttribute('data-id');
-    fetch(`https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=noun&id=${itemId}`)
+    fetch(`https://phoenixjaymes.com/api/language/nouns/${itemId}?lang=${lang}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        const data = responseData.data.item;
-        this.setState({
-          itemId: data.id,
-          itemEnglish: data.english,
-          itemBase: data.base,
-          itemTranslation: data.translation,
-          itemExample: data.example,
-          itemGender: data.gender,
-          itemImage: data.image,
-          itemCategory: data.category,
-          itemCategory2: data.category2,
-          isUpdateDeleteListVisible: !isUpdateDeleteListVisible,
-          response: '',
-          status: '',
-        });
+        if (responseData.status === 'success') {
+          const data = responseData.data[0];
+          this.setState({
+            itemId: data.id,
+            itemEnglish: data.english,
+            itemBase: data.base,
+            itemTranslation: data.translation,
+            itemExample: data.example,
+            itemGender: data.gender,
+            itemImage: data.img,
+            itemCategory: data.category,
+            itemCategory2: data.category2,
+            isUpdateDeleteListVisible: !isUpdateDeleteListVisible,
+            response: '',
+            status: '',
+          });
+        } else {
+          console.log(responseData);
+        }
       })
       .catch((error) => {
         console.log('Error fetching and parsing data', error);

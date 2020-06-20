@@ -39,22 +39,24 @@ class VerbZA extends Component {
     const itemId = e.target.getAttribute('data-id');
     const { lang } = this.context;
 
-    fetch(`https://phoenixjaymes.com/assets/data/language/updates?lang=${lang}&pos=verb&id=${itemId}`)
+    fetch(`https://phoenixjaymes.com/api/language/verbs/${itemId}?lang=${lang}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        const data = responseData.data.item;
-        const isSeparableChecked = data.separable;
-        const isReflexiveChecked = data.reflexive;
-        this.setState({
-          itemId: data.id,
-          itemEnglish: data.english,
-          itemInfinitive: data.infinitive,
-          itemTranslation: data.translation,
-          itemExample: data.example,
-          itemType: data.type,
-          itemSeparable: isSeparableChecked,
-          itemReflexive: isReflexiveChecked,
-        });
+        if (responseData.status === 'success') {
+          const data = responseData.data[0];
+          this.setState({
+            itemId: data.id,
+            itemEnglish: data.english,
+            itemInfinitive: data.infinitive,
+            itemTranslation: data.translation,
+            itemExample: data.example,
+            itemType: data.type,
+            itemSeparable: data.separable,
+            itemReflexive: data.reflexive,
+          });
+        } else {
+          console.log(responseData);
+        }
       })
       .catch((error) => {
         console.log('Error fetching and parsing data', error);
