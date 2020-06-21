@@ -93,7 +93,10 @@ class Category extends Component {
     e.preventDefault();
 
     if (!this.isValid()) {
-      this.setState({ response: 'Please fill in all feilds' });
+      this.setState({
+        response: 'Please fill in all feilds',
+        status: 'fail',
+      });
       return;
     }
 
