@@ -226,16 +226,21 @@ class Noun extends Component {
     })
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        this.setState({
-          response: `${responseData.status}: ${responseData.data.message}`,
-          status: responseData.status,
-        });
         if (responseData.status === 'success') {
           this.clearForm();
+          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
+        } else if (responseData.status === 'fail') {
+          this.setState({ response: Object.values(responseData.data).join(', ') });
+        } else {
+          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
         }
+        this.setState({ status: responseData.status });
       })
       .catch((error) => {
-        console.log('Error fetching and parsing data', error);
+        this.setState({
+          response: `Error fetching and parsing data, ${error}`,
+          status: 'error',
+        });
       });
   };
 

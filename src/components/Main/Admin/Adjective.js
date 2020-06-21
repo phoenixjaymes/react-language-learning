@@ -187,16 +187,21 @@ class Adjective extends Component {
     })
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        this.setState({
-          response: `${responseData.status}: ${responseData.data.message}`,
-          status: responseData.status,
-        });
         if (responseData.status === 'success') {
           this.clearForm();
+          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
+        } else if (responseData.status === 'fail') {
+          this.setState({ response: Object.values(responseData.data).join(', ') });
+        } else {
+          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
         }
+        this.setState({ status: responseData.status });
       })
       .catch((error) => {
-        console.log('Error fetching and parsing data', error);
+        this.setState({
+          response: `Error fetching and parsing data, ${error}`,
+          status: 'error',
+        });
       });
   };
 
@@ -227,14 +232,14 @@ class Adjective extends Component {
   //   // });
   // }
 
-  handleUmlautClick = (umlautToAdd) => {
-    const { umlautItem } = this.props;
-    // const obj = {};
-    // obj[umlautItem] = umlautToAdd;
-    this.setState((prevState) => ({
-      [umlautItem]: prevState[umlautItem] + umlautToAdd,
-    }));
-  };
+  // handleUmlautClick = (umlautToAdd) => {
+  //   const { umlautItem } = this.props;
+  //   // const obj = {};
+  //   // obj[umlautItem] = umlautToAdd;
+  //   this.setState((prevState) => ({
+  //     [umlautItem]: prevState[umlautItem] + umlautToAdd,
+  //   }));
+  // };
 
   handleFocus = () => {
     this.setState({
