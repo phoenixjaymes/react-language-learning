@@ -172,11 +172,10 @@ class Adjective extends Component {
     formData.append('category2', itemCategory2);
 
     if (modifyType === 'add') {
-      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/add-item.php';
+      fetchUrl = `https://phoenixjaymes.com/api/language/adjectives?lang=${lang}`;
     } else {
-      formData.append('id', itemId);
-      fetchUrl =
-        'https://phoenixjaymes.com/assets/data/language/update-item.php';
+      // formData.append('id', itemId);
+      fetchUrl = `https://phoenixjaymes.com/api/language/adjectives/${itemId}?lang=${lang}`;
     }
 
     fetch(fetchUrl, {

@@ -133,14 +133,16 @@ class Blank extends Component {
     formData.append('words', itemWords.trim());
 
     if (modifyType === 'add') {
-      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/add-item.php';
+      fetchUrl = `https://phoenixjaymes.com/api/language/blanks?lang=${lang}`;
     } else {
-      formData.append('id', itemId);
-      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/update-item.php';
+      fetchUrl = `https://phoenixjaymes.com/api/language/blanks/${itemId}?lang=${lang}`;
     }
 
     fetch(fetchUrl, {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
+      },
       body: formData,
     })
       .then((reponse) => reponse.json())

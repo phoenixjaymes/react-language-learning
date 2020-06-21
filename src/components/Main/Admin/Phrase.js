@@ -109,14 +109,16 @@ class Phrase extends Component {
     formData.append('translation', itemTranslation.trim());
 
     if (modifyType === 'add') {
-      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/add-item.php';
+      fetchUrl = `https://phoenixjaymes.com/api/language/phrases?lang=${lang}`;
     } else {
-      formData.append('id', itemId);
-      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/update-item.php';
+      fetchUrl = `https://phoenixjaymes.com/api/language/phrases/${itemId}?lang=${lang}`;
     }
 
     fetch(fetchUrl, {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
+      },
       body: formData,
     })
       .then((reponse) => reponse.json())

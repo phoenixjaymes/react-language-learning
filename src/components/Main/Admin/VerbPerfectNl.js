@@ -127,7 +127,7 @@ class VerbPerfect extends Component {
       itemAuxiliary,
     } = this.state;
 
-    const fetchUrl = 'https://phoenixjaymes.com/assets/data/language/update-item.php';
+    const fetchUrl = `https://phoenixjaymes.com/api/language/verbs/${itemId}?lang=${lang}&tense=perfect`;
     const formData = new FormData();
     formData.append('lang', lang);
     formData.append('id', itemId);
@@ -139,6 +139,9 @@ class VerbPerfect extends Component {
 
     fetch(fetchUrl, {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
+      },
       body: formData,
     })
       .then((reponse) => reponse.json())
