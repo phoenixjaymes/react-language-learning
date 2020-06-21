@@ -23,6 +23,7 @@ class VerbZA extends Component {
       itemType: 'weak',
       itemSeparable: 'no',
       itemReflexive: 'no',
+      itemDative: 'no',
       response: '',
       status: '',
       isDialogShown: false,
@@ -86,6 +87,10 @@ class VerbZA extends Component {
     itemReflexive: prevState.itemReflexive === 'yes' ? 'no' : 'yes',
   }));
 
+  handleDative = () => this.setState((prevState) => ({
+    itemDative: prevState.itemDative === 'yes' ? 'no' : 'yes',
+  }));
+
   isValid = () => {
     const {
       itemEnglish,
@@ -146,6 +151,7 @@ class VerbZA extends Component {
       itemType,
       itemSeparable,
       itemReflexive,
+      itemDative,
     } = this.state;
     const { modifyType } = this.props;
 
@@ -159,16 +165,20 @@ class VerbZA extends Component {
     formData.append('type', itemType);
     formData.append('separable', itemSeparable);
     formData.append('reflexive', itemReflexive);
+    formData.append('dative', itemDative);
 
     if (modifyType === 'add') {
-      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/add-item.php';
+      fetchUrl = `https://phoenixjaymes.com/api/language/verbs?lang=${lang}`;
     } else {
       formData.append('id', itemId);
-      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/update-item.php';
+      fetchUrl = `https://phoenixjaymes.com/api/language/verbs/${itemId}?lang=${lang}`;
     }
 
     fetch(fetchUrl, {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
+      },
       body: formData,
     })
       .then((reponse) => reponse.json())
@@ -205,6 +215,7 @@ class VerbZA extends Component {
       itemType,
       itemSeparable,
       itemReflexive,
+      itemDative,
       response,
       status,
     } = this.state;
@@ -250,6 +261,17 @@ class VerbZA extends Component {
                 onChange={this.handleReflexive}
               />
               Reflexive
+            </label>
+
+            <label className="form__label--check" htmlFor="upVerbDative">
+              <input
+                id="upVerbDative"
+                className="form__check"
+                type="checkbox"
+                checked={itemDative === 'yes'}
+                onChange={this.handleDative}
+              />
+              Dative
             </label>
 
             <div>

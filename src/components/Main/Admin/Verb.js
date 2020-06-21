@@ -25,6 +25,7 @@ class Verb extends Component {
       itemType: '',
       itemSeparable: 'no',
       itemReflexive: 'no',
+      itemDative: 'no',
       itemIch: '',
       itemDu: '',
       itemEr: '',
@@ -115,6 +116,10 @@ class Verb extends Component {
     itemReflexive: prevState.itemReflexive === 'yes' ? 'no' : 'yes',
   }));
 
+  handleDative = () => this.setState((prevState) => ({
+    itemDative: prevState.itemDative === 'yes' ? 'no' : 'yes',
+  }));
+
   isValid = () => {
     const {
       itemEnglish,
@@ -187,6 +192,7 @@ class Verb extends Component {
       itemType,
       itemSeparable,
       itemReflexive,
+      itemDative,
       itemIch,
       itemDu,
       itemEr,
@@ -206,6 +212,7 @@ class Verb extends Component {
     formData.append('type', itemType);
     formData.append('separable', itemSeparable);
     formData.append('reflexive', itemReflexive);
+    formData.append('dative', itemDative);
     formData.append('ich', itemIch.trim());
     formData.append('du', itemDu.trim());
     formData.append('er_sie_es', itemEr.trim());
@@ -214,14 +221,17 @@ class Verb extends Component {
     formData.append('sie_sie', itemSie.trim());
 
     if (modifyType === 'add') {
-      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/add-item.php';
+      fetchUrl = `https://phoenixjaymes.com/api/language/verbs?lang=${lang}`;
     } else {
       formData.append('id', itemId);
-      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/update-item.php';
+      fetchUrl = `https://phoenixjaymes.com/api/language/verbs/${itemId}?lang=${lang}`;
     }
 
     fetch(fetchUrl, {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
+      },
       body: formData,
     })
       .then((reponse) => reponse.json())
@@ -258,6 +268,7 @@ class Verb extends Component {
       itemType,
       itemSeparable,
       itemReflexive,
+      itemDative,
       itemIch,
       itemDu,
       itemEr,
@@ -307,6 +318,17 @@ class Verb extends Component {
                 onChange={this.handleReflexive}
               />
               Reflexive
+            </label>
+
+            <label className="form__label--check" htmlFor="upVerbDative">
+              <input
+                id="upVerbDative"
+                className="form__check"
+                type="checkbox"
+                checked={itemDative === 'yes'}
+                onChange={this.handleDative}
+              />
+              Dative
             </label>
 
             <div>
