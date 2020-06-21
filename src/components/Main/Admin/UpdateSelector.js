@@ -35,14 +35,14 @@ const UpdateSelector = ({
               </span>
             </td>
             <td className={styles.itemSelectorEdit}>
-              <a
-                href="#null"
+              <button
+                type="button"
                 className="btn-edit"
                 data-id={item.id}
                 onClick={handleIconClick}
               >
                 -
-              </a>
+              </button>
             </td>
           </tr>
         ));
