@@ -190,11 +190,7 @@ class Category extends Component {
               handleChange={this.handleChange}
             />
 
-            <input
-              className="form__button"
-              type="submit"
-              value={`${btnValue}`}
-            />
+            <button className="form__button" type="submit">{`${btnValue}`}</button>
 
             <FormMessage response={response} status={status} />
           </form>
