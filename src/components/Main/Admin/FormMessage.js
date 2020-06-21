@@ -6,7 +6,7 @@ const FormMessage = ({ response, status }) => {
 
   if (status === 'success') {
     statusClass = 'messageSuccess';
-  } else if (status === 'fail') {
+  } else if (status === 'fail' || status === 'error') {
     statusClass = 'messageFail';
   } else {
     statusClass = '';
