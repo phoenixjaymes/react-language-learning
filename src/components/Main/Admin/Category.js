@@ -97,9 +97,9 @@ class Category extends Component {
     const { itemId, itemType, itemCategory } = this.state;
     let fetchUrl;
     const formData = new FormData();
-    formData.append('pos', 'category');
-    formData.append('categoryType', itemType);
-    formData.append('category', itemCategory.trim());
+    // formData.append('pos', 'category');
+    formData.append('type', itemType);
+    formData.append('name', itemCategory.trim().toLowerCase());
 
     if (modifyType === 'add') {
       fetchUrl = 'https://phoenixjaymes.com/api/language/categories';
