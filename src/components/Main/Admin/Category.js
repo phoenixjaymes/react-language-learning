@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-// import UpdateSelectorCategory from './UpdateSelectorCategory';
-import UpdateSelector from './UpdateSelector';
+import UpdateSelectorCategory from './UpdateSelectorCategory';
 import FormInput from './FormInput';
 import FormMessage from './FormMessage';
 import CategoryRadioButtons from './CategoryRadioButtons';
@@ -31,21 +30,8 @@ class Category extends Component {
 
   handleIconClick = (e) => {
     const itemId = e.target.getAttribute('data-id');
-    const itemType = e.target.getAttribute('data-type');
-    this.setState({ itemType });
-
-    fetch(`https://phoenixjaymes.com/assets/data/language/updates?pos=category&id=${itemId}&type=${itemType}`)
-      .then((reponse) => reponse.json())
-      .then((responseData) => {
-        const data = responseData.data.item;
-        this.setState({
-          itemId: data.id,
-          itemCategory: data.category,
-        });
-      })
-      .catch((error) => {
-        console.log('Error fetching and parsing data', error);
-      });
+    const itemCategory = e.target.getAttribute('data-category');
+    this.setState({ itemId, itemCategory });
   };
 
   handleChange = (e) => {
@@ -169,7 +155,6 @@ class Category extends Component {
 
     const heading = modifyType === 'update' ? 'Update Category' : 'Add Category';
     const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
-    const fetchUrl = `https://phoenixjaymes.com/api/language/categories?type=`;
 
     return (
       <div>
@@ -196,12 +181,9 @@ class Category extends Component {
           </form>
 
           {modifyType === 'update' && (
-            <UpdateSelector
+            <UpdateSelectorCategory
               categoryType={categoryType}
               handleIconClick={this.handleIconClick}
-              fetchUrl={fetchUrl}
-              propNameDisplay="name"
-              propNameToolTip="name"
             />
           )}
         </div>
