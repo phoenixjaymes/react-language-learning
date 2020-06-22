@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import styles from './formMessage.module.css';
+
 const FormMessage = ({ response, status }) => {
   let statusClass;
 
   if (status === 'success') {
-    statusClass = 'messageSuccess';
+    statusClass = styles.messageSuccess;
   } else if (status === 'fail' || status === 'error') {
-    statusClass = 'messageFail';
+    statusClass = styles.messageFail;
   } else {
     statusClass = '';
   }
 
   return (
-    <p className={`form-message__text ${statusClass}`}>
+    <p className={`${styles.messageText} ${statusClass}`}>
       {response}
     </p>
   );
