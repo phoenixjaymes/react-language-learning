@@ -14,7 +14,7 @@ class Category extends Component {
     super(props);
     this.state = {
       itemId: '',
-      itemType: 'word',
+      itemType: 'general',
       itemCategory: '',
       categoryType: 'general',
       response: '',
@@ -42,7 +42,7 @@ class Category extends Component {
   handleRadio = (itemType) => {
     let temp = 'general';
 
-    if (itemType !== 'word') {
+    if (itemType !== 'general') {
       temp = `general${itemType.charAt(0).toUpperCase()}${itemType.slice(1)}`;
     }
 
