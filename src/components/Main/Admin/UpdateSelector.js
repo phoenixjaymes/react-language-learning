@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { LearningContext } from '../../Context';
 
 import FormSelect from './FormSelect';
+import FormMessage from './FormMessage';
 import styles from './forms.module.css';
 
 const UpdateSelector = ({
@@ -12,6 +13,8 @@ const UpdateSelector = ({
   const { lang, categories } = value;
   const [modifyList, setModifyList] = useState([]);
   const [selectedOption, setSelectedOption] = useState('');
+  const [fetchStatus, setFetchStatus] = useState('');
+  const [fetchResponse, setFetchResponse] = useState('');
 
   const makeTableRows = (data) => (
     data.map((item) => (
@@ -49,11 +52,13 @@ const UpdateSelector = ({
           const wordList = makeTableRows(responseData.data);
           setModifyList(wordList);
         } else {
-          console.log('Unable to get list');
+          setFetchResponse('fail');
+          setFetchStatus('Unable to get list');
         }
       })
       .catch((error) => {
-        console.log('Error fetching and parsing data', error);
+        setFetchResponse('error');
+        setFetchStatus(`Error fetching and parsing data. ${error}`);
       });
   };
 
@@ -84,6 +89,7 @@ const UpdateSelector = ({
           </table>
         </div>
       </div>
+      <FormMessage response={fetchResponse} status={fetchStatus} />
     </form>
   );
 };
