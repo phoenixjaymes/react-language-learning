@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { LearningContext } from '../../Context';
 
 import FormSelect from './FormSelect';
-
 import styles from './forms.module.css';
 
 const UpdateSelector = ({
@@ -13,8 +12,27 @@ const UpdateSelector = ({
   const { lang, categories } = value;
   const [modifyList, setModifyList] = useState([]);
   const [selectedOption, setSelectedOption] = useState('');
-  const generalCatNames = ['general', 'generalSentence', 'generalPhrase'];
-  const categoriesLang = generalCatNames.includes(categoryType) ? 'all' : lang;
+
+  const makeTableRows = (data) => (
+    data.map((item) => (
+      <tr key={item.id}>
+        <td className={styles.itemSelectorTranslation}>
+          <span className="tool" data-tip={item[propNameToolTip]}>
+            {item[propNameDisplay]}
+          </span>
+        </td>
+        <td className={styles.itemSelectorEdit}>
+          <button
+            type="button"
+            className="btn-edit"
+            data-id={item.id}
+            onClick={handleIconClick}
+          >
+            -
+          </button>
+        </td>
+      </tr>
+    )));
 
   const handleSelect = (e) => {
     const categoryId = e.target.value;
@@ -27,27 +45,12 @@ const UpdateSelector = ({
     fetch(`${fetchUrl}${categoryId}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        const wordList = responseData.data.map((item) => (
-          <tr key={item.id}>
-            <td className={styles.itemSelectorTranslation}>
-              <span className="tool" data-tip={item[propNameToolTip]}>
-                {item[propNameDisplay]}
-              </span>
-            </td>
-            <td className={styles.itemSelectorEdit}>
-              <button
-                type="button"
-                className="btn-edit"
-                data-id={item.id}
-                onClick={handleIconClick}
-              >
-                -
-              </button>
-            </td>
-          </tr>
-        ));
-
-        setModifyList(wordList);
+        if (responseData.status === 'success') {
+          const wordList = makeTableRows(responseData.data);
+          setModifyList(wordList);
+        } else {
+          console.log('Unable to get list');
+        }
       })
       .catch((error) => {
         console.log('Error fetching and parsing data', error);
@@ -61,10 +64,11 @@ const UpdateSelector = ({
       <FormSelect
         name="selectedOption"
         label=""
-        categories={categories[categoriesLang][categoryType]}
+        categories={categories[lang][categoryType]}
         selected={selectedOption}
         handleCategory={handleSelect}
       />
+
 
       <div className={styles.itemSelector}>
         <div className={styles.itemSelectorWrap}>
