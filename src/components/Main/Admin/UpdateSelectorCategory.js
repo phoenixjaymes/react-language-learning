@@ -1,113 +1,68 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, {
+  useContext, useState, useEffect, useCallback,
+} from 'react';
+import PropTypes from 'prop-types';
+import { LearningContext } from '../../Context';
 
-import styles from "./forms.module.css";
+import styles from './forms.module.css';
 
-class UpdateSelectorCategory extends Component {
-  state = {
-    isVisible: true,
-    modifyList: [],
-  };
+const UpdateSelectorCategory = ({ categoryType, handleIconClick }) => {
+  const value = useContext(LearningContext);
+  const { categories } = value;
+  const [modifyList, setModifyList] = useState([]);
 
-  handleShowHideClick = () => {
-    const { isVisible } = this.state;
-    this.setState({ isVisible: !isVisible });
-  };
-
-  handleSelectOrButton = (type) => {
-    const { handleIconClick } = this.props;
-
-    fetch(
-      `https://phoenixjaymes.com/assets/data/language/updates?qnt=all&pos=category&type=${type}`
-    )
-      .then((reponse) => reponse.json())
-      .then((responseData) => {
-        const wordList = responseData.data.map((item) => (
-          <tr key={item.id}>
-            <td className={styles.itemSelectorTranslation}>
-              <span className="tool" data-tip={item.category}>
-                {item.category}
-              </span>
-            </td>
-            <td className={styles.itemSelectorEdit}>
-              <a
-                href="#null"
-                className="btn-edit"
-                data-id={item.id}
-                data-type={type}
-                onClick={handleIconClick}
-              >
-                -
-              </a>
-            </td>
-          </tr>
-        ));
-        this.setState({ modifyList: wordList });
-      })
-      .catch((error) => {
-        console.log("Error fetching and parsing data", error);
-      });
-  };
-
-  render() {
-    const { modifyList } = this.state;
-    return (
-      <div>
-        {/* <button type="button" style={{ height: '40px', lineHeight: '40px' }} onClick={this.handleShowHideClick}>
-          Update List
-          <span style={{
-            fontWeight: 'bold', fontSize: '30px', lineHeight: '40px', paddingLeft: '5px',
-          }}
-          >
-            {this.props.isVisible ? '-' : '+'}
+  const makeTableRows = (data) => (
+    data.map((item) => (
+      <tr key={item.id}>
+        <td className={styles.itemSelectorTranslation}>
+          <span className="tool" data-tip={item.name}>
+            {item.name}
           </span>
-        </button> */}
-
-        <form
-          className={styles.formItemSelector}
-          id="frmListWords"
-          style={
-            this.state.isVisible ? { display: "block" } : { display: "none" }
-          }
-        >
-          <h3 className={styles.header}>Word List</h3>
-
+        </td>
+        <td className={styles.itemSelectorEdit}>
           <button
             type="button"
-            onClick={() => this.handleSelectOrButton("word")}
+            className="btn-edit"
+            data-id={item.id}
+            data-category={item.name}
+            onClick={handleIconClick}
           >
-            Word Categories
+            -
           </button>
-          <button
-            type="button"
-            onClick={() => this.handleSelectOrButton("sentence")}
-          >
-            Sentence Categories
-          </button>
+        </td>
+      </tr>
+    )));
 
-          <div className={styles.itemSelector}>
-            <div className={styles.itemSelectorWrap}>
-              <table className={styles.itemSelectorTable}>
-                <tbody>
-                  <tr>
-                    <th className={styles.itemSelectorTranslation}>
-                      Translation
-                    </th>
-                    <th className={styles.itemSelectorEdit} />
-                  </tr>
+  const memoMakeTableRows = useCallback(makeTableRows, [categories.all, categoryType]);
 
-                  {modifyList}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </form>
+  useEffect(() => {
+    setModifyList(memoMakeTableRows(categories.all[categoryType]));
+  }, [memoMakeTableRows, categories.all, categoryType]);
+
+  return (
+    <form className={styles.formItemSelector} id="frmListWords">
+      <h3 className={styles.header}>Item Selector</h3>
+
+      <div className={styles.itemSelector}>
+        <div className={styles.itemSelectorWrap}>
+          <table className={styles.itemSelectorTable}>
+            <tbody>
+              <tr>
+                <th className={styles.itemSelectorTranslation}>Translation</th>
+                <th className={styles.itemSelectorEdit}> </th>
+              </tr>
+
+              {modifyList}
+            </tbody>
+          </table>
+        </div>
       </div>
-    );
-  }
-}
+    </form>
+  );
+};
 
 UpdateSelectorCategory.propTypes = {
+  categoryType: PropTypes.string.isRequired,
   handleIconClick: PropTypes.func.isRequired,
 };
 
