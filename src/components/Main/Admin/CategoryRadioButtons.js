@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './RadioButtons.module.css';
 
 const CategoryRadioButtons = ({ handleRadio }) => {
-  const [itemType, setItemType] = useState('word');
+  const [itemType, setItemType] = useState('general');
 
   const handleChange = (catType) => {
     handleRadio(catType);
@@ -14,6 +14,18 @@ const CategoryRadioButtons = ({ handleRadio }) => {
   return (
     <div className={styles.buttonWrap}>
       <p className={styles.pText}><span>Category Type</span></p>
+      <label className={styles.label} htmlFor="categoryGeneral">
+        <input
+          className={styles.radio}
+          type="radio"
+          id="categoryGeneral"
+          name="itemType"
+          value="general"
+          checked={itemType === 'general'}
+          onChange={() => handleChange('general')}
+        />
+        General
+      </label>
       <label
         className={styles.label}
         htmlFor="categoryPhrase"
@@ -44,19 +56,6 @@ const CategoryRadioButtons = ({ handleRadio }) => {
           onChange={() => handleChange('sentence')}
         />
         Sentence
-      </label>
-
-      <label className={styles.label} htmlFor="categoryWord">
-        <input
-          className={styles.radio}
-          type="radio"
-          id="categoryWord"
-          name="itemType"
-          value="word"
-          checked={itemType === 'word'}
-          onChange={() => handleChange('word')}
-        />
-        Word
       </label>
     </div>
   );
