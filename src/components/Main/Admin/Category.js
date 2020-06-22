@@ -102,10 +102,9 @@ class Category extends Component {
     formData.append('category', itemCategory.trim());
 
     if (modifyType === 'add') {
-      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/add-item.php';
+      fetchUrl = 'https://phoenixjaymes.com/api/language/categories';
     } else {
-      formData.append('id', itemId);
-      fetchUrl = 'https://phoenixjaymes.com/assets/data/language/update-item.php';
+      fetchUrl = `https://phoenixjaymes.com/api/language/categories/${itemId}`;
     }
 
     fetch(fetchUrl, {
