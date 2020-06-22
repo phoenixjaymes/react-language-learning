@@ -1,0 +1,13 @@
+.messageText {
+  border-radius: 4px;
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.messageSuccess {
+  background-color: #d4edda;
+}
+
+.messageFail {
+  background-color: #f06969 !important;
+}
