@@ -59,7 +59,7 @@ const CategoryRadioButtons = ({ handleRadio }) => {
         Word
       </label>
     </div>
-  )
+  );
 };
 
 CategoryRadioButtons.propTypes = {
