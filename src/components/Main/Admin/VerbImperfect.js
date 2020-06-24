@@ -56,10 +56,10 @@ class VerbImperfect extends Component {
             itemType: data.type,
             itemIch: imperfect.ich,
             itemDu: imperfect.du,
-            itemEr: imperfect.er_sie_es,
+            itemEr: imperfect.er,
             itemWir: imperfect.wir,
             itemIhr: imperfect.ihr,
-            itemSie: imperfect.sie_sie,
+            itemSie: imperfect.sie,
           });
 
         } else {
@@ -170,10 +170,10 @@ class VerbImperfect extends Component {
     formData.append('type', itemType);
     formData.append('ich', itemIch.trim());
     formData.append('du', itemDu.trim());
-    formData.append('er_sie_es', itemEr.trim());
+    formData.append('er', itemEr.trim());
     formData.append('wir', itemWir.trim());
     formData.append('ihr', itemIhr.trim());
-    formData.append('sie_sie', itemSie.trim());
+    formData.append('sie', itemSie.trim());
 
     fetch(fetchUrl, {
       method: 'POST',

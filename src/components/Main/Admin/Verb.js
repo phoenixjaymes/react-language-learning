@@ -66,10 +66,10 @@ class Verb extends Component {
             itemReflexive: data.reflexive,
             itemIch: present.ich,
             itemDu: present.du,
-            itemEr: present.er_sie_es,
+            itemEr: present.er,
             itemWir: present.wir,
             itemIhr: present.ihr,
-            itemSie: present.sie_sie,
+            itemSie: present.sie,
           });
         } else {
           console.log(responseData);
@@ -218,10 +218,10 @@ class Verb extends Component {
     formData.append('dative', itemDative);
     formData.append('ich', itemIch.trim());
     formData.append('du', itemDu.trim());
-    formData.append('er_sie_es', itemEr.trim());
+    formData.append('er', itemEr.trim());
     formData.append('wir', itemWir.trim());
     formData.append('ihr', itemIhr.trim());
-    formData.append('sie_sie', itemSie.trim());
+    formData.append('sie', itemSie.trim());
 
     if (modifyType === 'add') {
       fetchUrl = `https://phoenixjaymes.com/api/language/verbs?lang=${lang}`;
