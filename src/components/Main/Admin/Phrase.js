@@ -4,6 +4,7 @@ import { LearningContext } from '../../Context';
 
 import UpdateSelector from './UpdateSelector';
 import FormTextarea from './FormComponents/FormTextarea';
+import FormSelect from './FormSelect';
 import FormMessage from './FormMessage';
 import Umlauts from './Umlauts';
 import ConfirmDialog from './ConfirmDialog';
@@ -17,6 +18,7 @@ class Phrase extends Component {
       itemId: '',
       itemEnglish: '',
       itemTranslation: '',
+      itemCategory: '',
       response: '',
       status: '',
       isDialogShown: false,
@@ -40,6 +42,7 @@ class Phrase extends Component {
             itemId: data.id,
             itemEnglish: data.english,
             itemTranslation: data.translation,
+            itemCategory: data.category,
           });
         } else {
           console.log(responseData);
@@ -61,9 +64,9 @@ class Phrase extends Component {
   };
 
   isValid = () => {
-    const { itemEnglish, itemTranslation } = this.state;
+    const { itemEnglish, itemTranslation, itemCategory } = this.state;
 
-    if (itemEnglish === '' || itemTranslation === '') {
+    if (itemEnglish === '' || itemTranslation === '' || itemCategory === '') {
       return false;
     }
     return true;
@@ -102,7 +105,9 @@ class Phrase extends Component {
 
   submitForm = () => {
     const { lang } = this.context;
-    const { itemId, itemEnglish, itemTranslation } = this.state;
+    const {
+      itemId, itemEnglish, itemTranslation, itemCategory,
+    } = this.state;
     const { modifyType } = this.props;
     let fetchUrl;
     const formData = new FormData();
@@ -110,6 +115,7 @@ class Phrase extends Component {
     formData.append('pos', 'phrase');
     formData.append('english', itemEnglish.trim());
     formData.append('translation', itemTranslation.trim());
+    formData.append('category', itemCategory);
 
     if (modifyType === 'add') {
       fetchUrl = `https://phoenixjaymes.com/api/language/phrases?lang=${lang}`;
@@ -152,13 +158,14 @@ class Phrase extends Component {
   };
 
   render() {
-    const { lang, labels } = this.context;
+    const { categories, lang, labels } = this.context;
     const { us } = labels;
     const {
       isDialogShown,
       dialogMessage,
       itemEnglish,
       itemTranslation,
+      itemCategory,
       response,
       status,
     } = this.state;
@@ -184,6 +191,14 @@ class Phrase extends Component {
             onFocus={this.handleFocus}
           >
             <h3 className={styles.header}>{heading}</h3>
+
+            <FormSelect
+              name="itemCategory"
+              label="Category"
+              categories={categories.all.generalPhrase}
+              selected={itemCategory}
+              handleCategory={this.handleChange}
+            />
 
             <FormTextarea
               label="English"
