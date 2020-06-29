@@ -14,3 +14,7 @@
   padding: 0 5px;
   width: 100%;
 }
+
+.textarea:focus {
+  background: #a9a9dc;
+}
