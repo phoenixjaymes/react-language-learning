@@ -109,6 +109,9 @@ class Category extends Component {
 
     fetch(fetchUrl, {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
+      },
       body: formData,
     })
       .then((reponse) => reponse.json())
