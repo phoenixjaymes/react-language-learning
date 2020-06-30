@@ -68,7 +68,6 @@ class Adjective extends Component {
     fetch(`https://phoenixjaymes.com/api/language/adjectives/${itemId}?lang=${lang}`)
       .then((reponse) => reponse.json())
       .then((responseData) => {
-
         if (responseData.status === 'success') {
           const data = responseData.data[0];
           this.setState({
@@ -105,12 +104,12 @@ class Adjective extends Component {
     } = this.state;
 
     if (
-      itemEnglish === '' ||
-      itemTranslation === '' ||
-      itemExample === '' ||
-      itemImage === '' ||
-      itemCategory === '' ||
-      itemCategory2 === ''
+      itemEnglish === ''
+      || itemTranslation === ''
+      || itemExample === ''
+      || itemImage === ''
+      || itemCategory === ''
+      || itemCategory2 === ''
     ) {
       return false;
     }

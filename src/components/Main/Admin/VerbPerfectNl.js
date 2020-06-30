@@ -77,7 +77,9 @@ class VerbPerfect extends Component {
   };
 
   isValid = () => {
-    const { itemPerfect, itemExample, itemType, itemAuxiliary } = this.state;
+    const {
+      itemPerfect, itemExample, itemType, itemAuxiliary,
+    } = this.state;
 
     if (
       itemPerfect === ''

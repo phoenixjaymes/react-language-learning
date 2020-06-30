@@ -61,7 +61,6 @@ class VerbImperfect extends Component {
             itemIhr: imperfect.ihr,
             itemSie: imperfect.sie,
           });
-
         } else {
           console.log(responseData);
         }
