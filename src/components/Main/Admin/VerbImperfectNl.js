@@ -74,17 +74,18 @@ class VerbImperfect extends Component {
 
   handleConjugateClick = () => {
     const { itemTranslation, itemType } = this.state;
-    const [ich, du, er, wir, ihr, sie] = conjugateImperfect(
+    const [ik, jij, hij, u, wij, jullie, zij] = conjugateImperfect(
       itemTranslation,
       itemType,
     );
     this.setState({
-      itemIch: ich,
-      itemDu: du,
-      itemEr: er,
-      itemWir: wir,
-      itemIhr: ihr,
-      itemSie: sie,
+      itemIk: ik,
+      itemJij: jij,
+      itemHij: hij,
+      itemU: u,
+      itemWij: wij,
+      itemJullie: jullie,
+      itemZij: zij,
     });
   };
 
