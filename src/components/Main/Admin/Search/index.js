@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { LearningContext } from "../../../Context";
+import React, { Component } from 'react';
+import { LearningContext } from '../../../Context';
 
-import SearchResults from "./SearchResults";
+import SearchResults from './SearchResults';
 
-import svgSearch from "./search.svg";
-import styles from "./search.module.css";
+import svgSearch from './search.svg';
+import styles from './search.module.css';
 
 class Search extends Component {
   constructor(props) {
@@ -12,60 +12,80 @@ class Search extends Component {
     this.state = {
       jsonData: [],
       modifiedData: [],
-      itemType: "",
-      itemRange: "a-d",
+      itemSearchType: '',
+      itemRange: '',
       extraOptions: [],
     };
   }
 
-  getExtraOptions = (itemType) => {
+  handleType = (e) => {
     const value = this.context;
     const { lang, categories } = value;
-    // const options = categories[lang][itemType].map((item) => (
-    //   <option key={item.id} value={item.id}>{item.name}</option>
-    // ));
+    const eValue = e.target.value;
+    const catNames = {
+      adjectives: 'adjective',
+      categories: 'category',
+      nouns: 'noun',
+      phrases: 'phrase',
+      sentences: 'sentence',
+      verbs: 'verb',
+    };
 
-    this.setState({ extraOptions: categories[lang][itemType] });
-  };
-
-  handleType = (e) => {
-    if (
-      e.target.value === "adjective" ||
-      e.target.value === "noun" ||
-      e.target.value === "verb"
-    ) {
-      this.getExtraOptions(e.target.value);
-      this.setState({ itemType: e.target.value });
-    } else {
-      this.setState({
-        itemType: e.target.value,
-        extraOptions: [],
-      });
-    }
+    this.setState({
+      itemSearchType: eValue,
+      itemRange: '',
+      extraOptions: categories[lang][catNames[eValue]],
+    });
   };
 
   handleRange = (e) => this.setState({ itemRange: e.target.value });
 
   handleSearchClick = () => {
-    const { itemType, itemRange } = this.state;
-    const { lang } = this.context;
+    const { itemSearchType, itemRange } = this.state;
+    const { lang, categories } = this.context;
+    const verbCats = categories[lang].verb;
+    const categoryCats = categories[lang].category;
+    let fetchUrl = 'https://phoenixjaymes.com/api/language/';
 
-    if (itemType === "") {
+    if (itemSearchType === '' || itemRange === '') {
       return;
     }
 
-    fetch(
-      `https://phoenixjaymes.com/assets/data/language/get-search.php?lang=${lang}&type=${itemType}&range=${itemRange}`
-    )
-      .then((reponse) => reponse.json())
+    if (itemSearchType !== 'categories') {
+      const value = Number.parseInt(itemRange, 10);
+
+      if (Number.isInteger(value) && itemSearchType === 'verbs') {
+        const tempVerbRange = verbCats.filter((obj) => obj.id === itemRange);
+        fetchUrl += `${itemSearchType}?lang=${lang}&${tempVerbRange[0].name}=yes`;
+      } else if (Number.isInteger(value)) {
+        fetchUrl += `${itemSearchType}?lang=${lang}&cat=${itemRange}`;
+      } else {
+        fetchUrl += `${itemSearchType}?lang=${lang}&range=${itemRange}`;
+      }
+    } else if (itemSearchType === 'categories') {
+      const tempCatRange = categoryCats.filter((obj) => obj.id === itemRange);
+      fetchUrl += `${itemSearchType}?lang=${lang}&type=${tempCatRange[0].name}`;
+    }
+
+    fetch(fetchUrl)
+      .then((response) => response.json())
       .then((responseData) => {
         this.setState({
           jsonData: responseData.data,
           modifiedData: responseData.data,
         });
+        // if (responseData.status === 'success') {
+        //   this.clearForm();
+        //   this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
+        // } else if (responseData.status === 'fail') {
+        //   this.setState({ response: Object.values(responseData.data).join(', ') });
+        // } else {
+        //   this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
+        // }
+        // this.setState({ status: responseData.status });
       })
       .catch((error) => {
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
       });
   };
 
@@ -73,21 +93,21 @@ class Search extends Component {
     const {
       jsonData,
       modifiedData,
-      itemType,
+      itemSearchType,
       itemRange,
       extraOptions,
     } = this.state;
     const { lang } = this.context;
     let results;
 
-    if (jsonData.status === "fail") {
+    if (jsonData.status === 'fail') {
       results = <h3>No results were returned</h3>;
     } else {
       results = (
         <SearchResults
           data={modifiedData}
           sortTable={this.sortTable}
-          itemType={itemType}
+          itemSearchType={itemSearchType}
           lang={lang}
         />
       );
@@ -105,16 +125,16 @@ class Search extends Component {
             <select
               id="selType"
               name="selType"
-              value={itemType}
+              value={itemSearchType}
               onChange={this.handleType}
             >
               <option value="">Select Type</option>
-              <option value="adjective">Adjective</option>
-              <option value="category">Category</option>
-              <option value="noun">Noun</option>
-              <option value="phrase">Phrase</option>
-              <option value="sentence">Sentence</option>
-              <option value="verb">Verb</option>
+              <option value="adjectives">Adjective</option>
+              <option value="categories">Category</option>
+              <option value="nouns">Noun</option>
+              <option value="phrases">Phrase</option>
+              <option value="sentences">Sentence</option>
+              <option value="verbs">Verb</option>
             </select>
           </label>
 
@@ -126,15 +146,21 @@ class Search extends Component {
               value={itemRange}
               onChange={this.handleRange}
             >
-              <option value="a-d">A - D</option>
-              <option value="e-h">E - H</option>
-              <option value="i-l">I - L</option>
-              <option value="m-p">M - P</option>
-              <option value="q-t">Q - T</option>
-              <option value="u-z">U - Z</option>
-              <option value="umlauts">Umlauts</option>
-              {extraOptions.length > 0 &&
-                extraOptions.map((item) => (
+              <option value="">Select Range</option>
+              {itemSearchType !== 'categories' && (
+                <>
+                  <option value="a-d">A - D</option>
+                  <option value="e-h">E - H</option>
+                  <option value="i-l">I - L</option>
+                  <option value="m-p">M - P</option>
+                  <option value="q-t">Q - T</option>
+                  <option value="u-z">U - Z</option>
+                  <option value="umlauts">Umlauts</option>
+                </>
+              )}
+
+              {extraOptions.length > 0
+                && extraOptions.map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.name}
                   </option>
