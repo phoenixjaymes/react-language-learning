@@ -168,13 +168,13 @@ class Search extends Component {
             </select>
           </label>
           <div className={styles.searchFormBtnSearch}>
-            <span
+            <button
               onClick={this.handleSearchClick}
-              role="button"
+              type="button"
               onKeyPress={this.handleSearchClick}
             >
               <img src={svgSearch} alt="search" />
-            </span>
+            </button>
           </div>
         </form>
 
