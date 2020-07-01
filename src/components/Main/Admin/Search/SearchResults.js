@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 
 import SearchConjugation from './SearchConjugation';
 
@@ -13,6 +13,9 @@ const SearchResults = ({ data, itemType, lang }) => {
   const [sortDirection, setSortDirection] = useState('');
 
   const sortAscMemoizedCallback = useCallback((a, b, dataId) => {
+    if (a[dataId] === null || b[dataId] === null) {
+      return -1;
+    }
     const nameA = a[dataId].toUpperCase(); // ignore upper and lowercase
     const nameB = b[dataId].toUpperCase(); // ignore upper and lowercase
 
@@ -28,6 +31,9 @@ const SearchResults = ({ data, itemType, lang }) => {
   }, []);
 
   const sortDscMemoizedCallback = useCallback((a, b, dataId) => {
+    if (a[dataId] === null || b[dataId] === null) {
+      return -1;
+    }
     const nameA = a[dataId].toUpperCase(); // ignore upper and lowercase
     const nameB = b[dataId].toUpperCase(); // ignore upper and lowercase
 
@@ -84,7 +90,7 @@ const SearchResults = ({ data, itemType, lang }) => {
     const keys = Object.keys(data[0]);
 
     const headers = keys.map((header) => {
-      if (header === 'conjugation') {
+      if (header === 'present' || header === 'imperfect') {
         return <th key={header}>{header}</th>;
       }
 
@@ -107,9 +113,9 @@ const SearchResults = ({ data, itemType, lang }) => {
           );
         }
 
-        if (cell === 'conjugation') {
+        if (cell === 'present' || cell === 'imperfect') {
           return (
-            <td key="conjugation" className={styles.searchResultsConjugation}>
+            <td key={cell} className={styles.searchResultsConjugation}>
               View
               <SearchConjugation data={row[cell]} />
             </td>
@@ -129,7 +135,7 @@ const SearchResults = ({ data, itemType, lang }) => {
     });
 
     setSearchRows(rows);
-  }, [data, itemType,lang]);
+  }, [data, itemType, lang]);
 
   useEffect(() => {
     if (data[0] !== undefined) {
