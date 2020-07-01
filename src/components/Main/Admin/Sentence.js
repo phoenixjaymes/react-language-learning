@@ -308,7 +308,7 @@ class Sentence extends Component {
 
           {modifyType === 'update' && (
             <UpdateSelector
-              categoryType="sentence_cat"
+              categoryType="sentence"
               handleIconClick={this.handleIconClick}
               fetchUrl={fetchUrl}
               propNameDisplay="answer1"

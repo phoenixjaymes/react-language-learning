@@ -50,14 +50,14 @@ const Sentences = () => (
                 lang={lang}
                 activity="sentences"
                 category="categpry"
-                categoryList={categories[lang].sentence_cat}
+                categoryList={categories[lang].sentence}
               />
 
 
               {/* {categories.de !== undefined && (
                 <SentenceOptionsLinks
                   lang={lang}
-                  categories={categories[lang].sentence_cat}
+                  categories={categories[lang].sentence}
                 />
               )} */}
             </div>
