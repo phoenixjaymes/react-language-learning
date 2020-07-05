@@ -185,9 +185,20 @@
   text-align: left;
 }
 
-.subMenuItem a,
-.subMenuItem span {
+.subMenuItem a {
   text-align: left;
+}
+
+.subMenuItemButton {
+  background-color: transparent;
+  border: none;
+  color: #ffc519;
+  cursor: pointer;
+  line-height: 40px;
+}
+
+.subMenuItemButton:hover {
+  color: #fff;
 }
 
 .subMenu.jsShowMenu {
