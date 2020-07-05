@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { LearningContext } from '../../../Context';
+import { LearningContext } from '../../Context';
 
 import SearchResults from './SearchResults';
 

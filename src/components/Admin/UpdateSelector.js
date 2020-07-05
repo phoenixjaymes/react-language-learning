@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { LearningContext } from '../../Context';
+import { LearningContext } from '../Context';
 
 import FormSelect from './FormSelect';
 import FormMessage from './FormMessage';

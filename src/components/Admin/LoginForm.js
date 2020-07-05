@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { LearningContext } from '../../Context';
+import { LearningContext } from '../Context';
 
 import FormInput from './FormInput';
 

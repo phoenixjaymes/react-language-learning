@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LearningConsumer } from '../../Context';
+import { LearningConsumer } from '../Context';
 
 import Verb from './Verb';
 import VerbNl from './VerbNl';

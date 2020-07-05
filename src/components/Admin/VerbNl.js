@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { LearningContext } from '../../Context';
+import { LearningContext } from '../Context';
 
 import { conjugatePresent } from './conjugateVerbs';
 

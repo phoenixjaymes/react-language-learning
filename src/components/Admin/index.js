@@ -5,13 +5,13 @@ import {
   Link,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { LearningConsumer } from '../../Context';
+import { LearningConsumer } from '../Context';
 
 import AdminContent from './AdminContent';
 import Search from './Search';
 
-import '../../../css/admin.css';
-import '../../../css/forms.css';
+import '../../css/admin.css';
+import '../../css/forms.css';
 
 import svgAdd from './add-outline.svg';
 import svgUpdate from './edit-pencil.svg';
@@ -121,8 +121,8 @@ const Admin = () => {
                     !isLoggedIn ? (
                       <Redirect to={`/${lang}`} />
                     ) : (
-                      <Search match={match} />
-                    )
+                        <Search match={match} />
+                      )
                   )}
                 />
                 <Route
@@ -131,8 +131,8 @@ const Admin = () => {
                     !isLoggedIn ? (
                       <Redirect to={`/${lang}`} />
                     ) : (
-                      <AdminContent match={match} />
-                    )
+                        <AdminContent match={match} />
+                      )
                   )}
                 />
               </section>

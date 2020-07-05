@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HomeImage from './Home/HomeImage';
+import HomeImage from './Main/Home/HomeImage';
 
 const NotFound = () => (
   <section className="home">
