@@ -5,19 +5,19 @@ import {
   Redirect,
   Switch,
 } from 'react-router-dom';
-import { LearningConsumer } from '../Context';
+import { LearningConsumer } from './Context';
 
 // Components
-import Home from './Home';
-import Cards from './Cards';
-import CardsActivity from './Cards/CardsActivity';
-import Sentences from './Sentences';
-import SentencesActivity from './Sentences/SentencesActivity';
-import Words from './Words';
-import WordsActivity from './Words/WordsActivity';
-import Blanks from './Blanks';
-import BlanksActivity from './Blanks/BlanksActivity';
-import Grammar from './Grammar';
+import Home from './Main/Home';
+import Cards from './Main/Cards';
+import CardsActivity from './Main/Cards/CardsActivity';
+import Sentences from './Main/Sentences';
+import SentencesActivity from './Main/Sentences/SentencesActivity';
+import Words from './Main/Words';
+import WordsActivity from './Main/Words/WordsActivity';
+import Blanks from './Main/Blanks';
+import BlanksActivity from './Main/Blanks/BlanksActivity';
+import Grammar from './Main/Grammar';
 import Admin from './Admin';
 import NotFound from './NotFound';
 import LoginForm from './Admin/LoginForm';
