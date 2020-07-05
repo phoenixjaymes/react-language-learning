@@ -9,8 +9,7 @@ import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  // <BrowserRouter basename="/lab/language-learning/">
-  <BrowserRouter>
+  <BrowserRouter basename="/lab/language-learning/">
     <Provider>
       <App />
     </Provider>
