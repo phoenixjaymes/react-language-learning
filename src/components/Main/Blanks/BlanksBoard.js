@@ -37,20 +37,19 @@ class BlanksBoard extends Component {
     )
       .then((reponse) => reponse.json())
       .then((responseData) => {
-
         if (responseData.status === 'success') {
           const data = responseData.data[0];
 
           this.setState({
             blanks: responseData.data,
             sentenceArray: data.sentence.split(' '),
+            answer: data.answer,
             answerArray: data.answer.split(' '),
             blankIndex: data.sentence.split(' ').indexOf('_'),
             wordOptionsArray: this.makeWordObjects(data.words),
             totalSentences: responseData.data.length,
             isLoaded: true,
           });
-
         } else {
           console.log(responseData);
         }
@@ -63,7 +62,7 @@ class BlanksBoard extends Component {
   makeWordObjects = (words) => {
     const arrWords = [];
     words.split(',').forEach((item, i) => {
-      arrWords.push({ id: i, word: item });
+      arrWords.push({ id: i, word: item.trim() });
     });
     return arrWords;
   }
@@ -110,6 +109,7 @@ class BlanksBoard extends Component {
           isCorrect: undefined,
           sentenceArray: blanks[sentenceNum].sentence.split(' '),
           blankIndex: blanks[sentenceNum].sentence.split(' ').indexOf('_'),
+          answer: blanks[sentenceNum].answer,
           answerArray: blanks[sentenceNum].answer.split(' '),
           wordOptionsArray: this.makeWordObjects(blanks[sentenceNum].words),
         };
