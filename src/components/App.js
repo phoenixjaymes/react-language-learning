@@ -7,7 +7,7 @@ import '../css/styles.css';
 
 // Components
 import Header from './Header';
-import Main from './Main';
+import RoutesComponent from './RoutesComponent';
 import Footer from './Footer';
 import Loading from './Loading';
 import LoadingError from './Loading/LoadingError';
@@ -66,7 +66,7 @@ class App extends Component {
           isActivityMenuVisible={isActivityMenuVisible}
         />
         <ErrorBoundary>
-          <Main isGrammarMenuShown={isGrammarMenuShown} />
+          <RoutesComponent isGrammarMenuShown={isGrammarMenuShown} />
         </ErrorBoundary>
         <Footer />
       </div>
