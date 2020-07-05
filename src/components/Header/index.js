@@ -61,9 +61,33 @@ class Header extends Component {
               <li id="js-lang" className={styles.mainMenuItem}>
                 <span className={arrowLangClass}>Language</span>
                 <ul className={`${styles.subMenu} ${subLangClass}`}>
-                  <li className={styles.subMenuItem} onClick={() => this.handleLanguageClick('de')}><span>{deLabel}</span></li>
-                  <li className={styles.subMenuItem} onClick={() => this.handleLanguageClick('nl')}><span>{nlLabel}</span></li>
-                  <li className={styles.subMenuItem} onClick={() => this.handleLanguageClick('af')}><span>{afLabel}</span></li>
+                  <li className={styles.subMenuItem}>
+                    <button
+                      className={styles.subMenuItemButton}
+                      type="button"
+                      onClick={() => this.handleLanguageClick('de')}
+                    >
+                      {deLabel}
+                    </button>
+                  </li>
+                  <li className={styles.subMenuItem}>
+                    <button
+                      className={styles.subMenuItemButton}
+                      type="button"
+                      onClick={() => this.handleLanguageClick('nl')}
+                    >
+                      {nlLabel}
+                    </button>
+                  </li>
+                  <li className={styles.subMenuItem}>
+                    <button
+                      className={styles.subMenuItemButton}
+                      type="button"
+                      onClick={() => this.handleLanguageClick('af')}
+                    >
+                      {afLabel}
+                    </button>
+                  </li>
                 </ul>
               </li>
 
@@ -97,7 +121,6 @@ Header.contextType = LearningContext;
 Header.propTypes = {
   isLangMenuVisible: PropTypes.bool,
   isActivityMenuVisible: PropTypes.bool,
-  isGrammarMenuVisible: PropTypes.bool,
   location: PropTypes.shape(),
   history: PropTypes.shape(),
 };
