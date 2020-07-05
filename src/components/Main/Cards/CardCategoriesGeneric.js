@@ -22,7 +22,7 @@ const CardCategoriesGeneric = ({ lang, category, categoryList }) => {
 CardCategoriesGeneric.propTypes = {
   lang: PropTypes.string,
   category: PropTypes.string,
-  categoryList: PropTypes.arrayOf(),
+  categoryList: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default CardCategoriesGeneric;
