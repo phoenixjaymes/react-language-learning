@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Route,
   Redirect,
@@ -22,53 +21,49 @@ import Admin from './Admin';
 import NotFound from './NotFound';
 import LoginForm from './Admin/LoginForm';
 
-const Main = ({ isGrammarMenuShown }) => (
+const Main = () => (
   <main>
     <Switch>
       <Route exact path="/">
         <Home />
       </Route>
-      <Route exact path="/:lang">
-        <Home />
-      </Route>
 
-      <Route path="/:lang/cards/:category/:id?" render={({ match }) => <CardsActivity match={match} />} />
-      <Route path="/:lang/cards" render={({ match }) => <Cards match={match} />} />
+      <Route path="/cards/:category/:id?" render={({ match }) => <CardsActivity match={match} />} />
+      <Route path="/cards" render={({ match }) => <Cards match={match} />} />
 
-      <Route path="/:lang/words/:category/:id?" render={({ match }) => <WordsActivity match={match} />} />
-      <Route path="/:lang/words">
+      <Route path="/words/:category/:id?" render={({ match }) => <WordsActivity match={match} />} />
+      <Route path="/words">
         <Words />
       </Route>
 
-      <Route path="/:lang/sentences/:category/:id?" render={({ match }) => <SentencesActivity match={match} />} />
-      <Route path="/:lang/sentences">
+      <Route path="/sentences/:category/:id?" render={({ match }) => <SentencesActivity match={match} />} />
+      <Route path="/sentences">
         <Sentences />
       </Route>
 
-      <Route path="/:lang/blanks/:category/:id?" render={({ match }) => <BlanksActivity match={match} />} />
-      <Route path="/:lang/blanks">
+      <Route path="/blanks/:category/:id?" render={({ match }) => <BlanksActivity match={match} />} />
+      <Route path="/blanks">
         <Blanks />
       </Route>
 
       <Route
-        path="/:lang/grammar"
+        path="/grammar"
         render={({ match, location }) => (
           <Grammar
-            isGrammarMenuShown={isGrammarMenuShown}
             match={match}
             location={location}
           />
         )}
       />
 
-      <Route path="/:lang/login" render={() => <LoginForm />} />
+      <Route path="/login" render={() => <LoginForm />} />
       <LearningConsumer>
-        {context => (
+        {(context) => (
           <Route
-            path="/:lang/admin"
+            path="/admin"
             render={() => (
               !context.isLoggedIn ? (
-                <Redirect to="/de" />
+                <Redirect to="/" />
               ) : (
                   <Admin />
                 )
@@ -83,9 +78,5 @@ const Main = ({ isGrammarMenuShown }) => (
     </Switch>
   </main>
 );
-
-Main.propTypes = {
-  isGrammarMenuShown: PropTypes.bool,
-};
 
 export default Main;
