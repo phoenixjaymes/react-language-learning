@@ -25,7 +25,7 @@ class WordsActivity extends Component {
     return (
       <ActivityWrap
         heading={`Match the ${wordsCategory}`}
-        page={`${match.params.lang}/words`}
+        page={`words`}
       >
         <WordBoard
           lang={match.params.lang}

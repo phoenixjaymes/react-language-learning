@@ -14,7 +14,6 @@ const Blanks = ({ context }) => {
 
       <div className="activity-buttons activity-categories">
         <ActivityCategoriesGeneric
-          lang={lang}
           activity="blanks"
           category=""
           categoryList={categories[lang].blank}

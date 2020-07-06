@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import ActivityLink from '../ActivityComponents/ActivityLink';
 
-const CardCategoriesGeneric = ({ lang, category, categoryList }) => {
+const CardCategoriesGeneric = ({ category, categoryList }) => {
   const buttons = categoryList.map((option) => (
     <ActivityLink
       key={option.id}
-      toPath={`/${lang}/cards/${category}/${option.id}`}
+      toPath={`/cards/${category}/${option.id}`}
       text={option.name}
     />
   ));
@@ -20,7 +20,6 @@ const CardCategoriesGeneric = ({ lang, category, categoryList }) => {
 };
 
 CardCategoriesGeneric.propTypes = {
-  lang: PropTypes.string,
   category: PropTypes.string,
   categoryList: PropTypes.arrayOf(PropTypes.object),
 };

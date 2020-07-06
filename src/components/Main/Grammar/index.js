@@ -30,25 +30,25 @@ const Grammar = ({
   return (
     <div className="grammar">
       <nav className={`grammar__nav ${menuClass}`}>
-        <h3 id="js-grammar" className="grammar__nav-btn" ><span>{btnShowContent}</span></h3>
-        <Link to={`/${lang}/grammar/articles`}>Articles</Link>
-        <Link to={`/${lang}/grammar/pronouns`}>Pronouns</Link>
-        <Link to={`/${lang}/grammar/conjunctions`}>Conjunctions</Link>
-        <Link to={`/${lang}/grammar/prepositions`}>Prepositions</Link>
+        <h3 id="js-grammar" className="grammar__nav-btn"><span>{btnShowContent}</span></h3>
+        <Link to="/grammar/articles">Articles</Link>
+        <Link to="/grammar/pronouns">Pronouns</Link>
+        <Link to="/grammar/conjunctions">Conjunctions</Link>
+        <Link to="/grammar/prepositions">Prepositions</Link>
       </nav>
 
       <section className="grammar_section">
-        { pathname === url && (
+        {pathname === url && (
           <div>
             <h1 className="home__title">{`${languages[lang]} Grammar`}</h1>
             <HomeImage />
           </div>
         )}
 
-        <Route path="/:lang/grammar/articles" component={Articles} />
-        <Route path="/:lang/grammar/pronouns" component={Pronouns} />
-        <Route path="/:lang/grammar/conjunctions" component={Conjunctions} />
-        <Route path="/:lang/grammar/prepositions" component={Prepositions} />
+        <Route path="/grammar/articles" component={Articles} />
+        <Route path="/grammar/pronouns" component={Pronouns} />
+        <Route path="/grammar/conjunctions" component={Conjunctions} />
+        <Route path="/grammar/prepositions" component={Prepositions} />
       </section>
     </div>
   );

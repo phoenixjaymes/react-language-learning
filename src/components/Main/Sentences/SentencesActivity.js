@@ -24,7 +24,7 @@ class SentencesActivity extends Component {
     return (
       <ActivityWrap
         heading="Sentences"
-        page={`${lang}/sentences`}
+        page="sentences"
       >
         <SentenceBoard
           lang={lang}

@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import ActivityLink from './ActivityLink';
 
 const ActvityCategoriesGeneric = ({
-  lang, activity, category, categoryList,
+  activity, category, categoryList,
 }) => {
   const buttons = categoryList.map((option) => {
     if (category === '') {
       return (
         <ActivityLink
           key={option.id}
-          toPath={`/${lang}/${activity}/${option.id}`}
+          toPath={`/${activity}/${option.id}`}
           text={option.name}
         />
       );
@@ -19,7 +19,7 @@ const ActvityCategoriesGeneric = ({
     return (
       <ActivityLink
         key={option.id}
-        toPath={`/${lang}/${activity}/${category}/${option.id}`}
+        toPath={`/${activity}/${category}/${option.id}`}
         text={option.name}
       />
     );
@@ -33,7 +33,6 @@ const ActvityCategoriesGeneric = ({
 };
 
 ActvityCategoriesGeneric.propTypes = {
-  lang: PropTypes.string,
   activity: PropTypes.string,
   category: PropTypes.string,
   categoryList: PropTypes.arrayOf(PropTypes.object),

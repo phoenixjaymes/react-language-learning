@@ -33,7 +33,7 @@ ListItem.propTypes = {
 };
 
 const Admin = () => {
-  const getLinks = (lang, category) => {
+  const getLinks = (category) => {
     const functions = [
       { type: 'add', img: svgAdd },
       { type: 'update', img: svgUpdate },
@@ -43,7 +43,7 @@ const Admin = () => {
     const links = functions.map((func) => {
       const funcName = func.type.charAt(0).toUpperCase() + func.type.slice(1);
       return (
-        <Link key={func.type} to={`/${lang}/admin/${category}/${func.type}`}>
+        <Link key={func.type} to={`/admin/${category}/${func.type}`}>
           <img src={func.img} alt={funcName} />
         </Link>
       );
@@ -56,14 +56,14 @@ const Admin = () => {
     <LearningConsumer>
       {
         (context) => {
-          const { lang, isLoggedIn, actions } = context;
-          const adjectiveLinks = getLinks(lang, 'adjective');
-          const blankLinks = getLinks(lang, 'blank');
-          const categoryLinks = getLinks(lang, 'category');
-          const nounLinks = getLinks(lang, 'noun');
-          const phraseLinks = getLinks(lang, 'phrase');
-          const sentenceLinks = getLinks(lang, 'sentence');
-          const verbLinks = getLinks(lang, 'verb');
+          const { isLoggedIn, actions } = context;
+          const adjectiveLinks = getLinks('adjective');
+          const blankLinks = getLinks('blank');
+          const categoryLinks = getLinks('category');
+          const nounLinks = getLinks('noun');
+          const phraseLinks = getLinks('phrase');
+          const sentenceLinks = getLinks('sentence');
+          const verbLinks = getLinks('verb');
 
           return (
             <div className="admin">
@@ -81,7 +81,7 @@ const Admin = () => {
                     >
                       <img src={svgRefresh} alt="Refresh Categories" />
                     </span>
-                    <Link to={`/${lang}/admin/search`}>
+                    <Link to="/admin/search">
                       <img src={svgSearch} alt="search" />
                     </Link>
                   </li>
@@ -95,41 +95,47 @@ const Admin = () => {
                   <ListItem heading="Verbs" links={verbLinks} />
 
                   <li className="options-menu__item">
-                    <h3>Verbs <span>(perfect)</span></h3>
-                    <Link to={`/${lang}/admin/perfect/update`}>
+                    <h3>
+                      Verbs
+                      <span>(perfect)</span>
+                    </h3>
+                    <Link to="/admin/perfect/update">
                       <img src={svgUpdate} alt="update icon" />
                     </Link>
                   </li>
 
                   <li className="options-menu__item">
-                    <h3>Verbs <span>(imperfect)</span></h3>
-                    <Link to={`/${lang}/admin/imperfect/update`}>
+                    <h3>
+                      Verbs
+                      <span>(imperfect)</span>
+                    </h3>
+                    <Link to="/admin/imperfect/update">
                       <img src={svgUpdate} alt="update icon" />
                     </Link>
                   </li>
 
                   <hr />
 
-                  <li className="options-menu__item"><Link to={`/${lang}`} onClick={() => actions.setLogin(false)}>Logout</Link></li>
+                  <li className="options-menu__item"><Link to="/" onClick={() => actions.setLogin(false)}>Logout</Link></li>
                 </ul>
               </nav>
 
               <section>
                 <Route
-                  path="/:lang/admin/search"
+                  path="/admin/search"
                   render={({ match }) => (
                     !isLoggedIn ? (
-                      <Redirect to={`/${lang}`} />
+                      <Redirect to="/" />
                     ) : (
                         <Search match={match} />
                       )
                   )}
                 />
                 <Route
-                  path="/:lang/admin/:category/:modifyType"
+                  path="/admin/:category/:modifyType"
                   render={({ match }) => (
                     !isLoggedIn ? (
-                      <Redirect to={`/${lang}`} />
+                      <Redirect to="/" />
                     ) : (
                         <AdminContent match={match} />
                       )

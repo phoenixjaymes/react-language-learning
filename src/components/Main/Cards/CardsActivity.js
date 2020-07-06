@@ -30,7 +30,7 @@ const CardsActivity = ({ match }) => {
   return (
     <ActivityWrap
       heading={`${heading} Cards`}
-      page={`${lang}/cards`}
+      page="cards"
     >
       {card}
     </ActivityWrap>

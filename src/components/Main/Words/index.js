@@ -14,30 +14,23 @@ const Words = ({ context }) => {
 
       <div className="activity-buttons">
         <ActivityLink
-          toPath={`/${lang}/words/adjective`}
+          toPath="/words/adjective"
           text="Adjectives"
         />
         <ActivityLink
-          toPath={`/${lang}/words/noun`}
+          toPath="/words/noun"
           text="Nouns"
         />
         <ActivityLink
-          toPath={`/${lang}/words/verb`}
+          toPath="/words/verb"
           text="Verbs"
         />
       </div>
-
     </section>
   );
 };
 
 Words.propTypes = {
-  match: PropTypes.shape({
-    isExact: PropTypes.bool,
-    params: PropTypes.object,
-    path: PropTypes.string,
-    url: PropTypes.string,
-  }),
   context: PropTypes.shape(),
 };
 

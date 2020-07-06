@@ -24,7 +24,7 @@ class BlanksActivity extends Component {
     return (
       <ActivityWrap
         heading="Blanks"
-        page={`${lang}/blanks`}
+        page="blanks"
       >
         <BlanksBoard
           lang={lang}
