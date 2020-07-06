@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { LearningContext } from '../../Context';
 
-import ActivityLink from '../ActivityComponents/ActivityLink';
 import CardCategoriesGeneric from './CardCategoriesGeneric';
 import CardCategoriesVerb from './CardCategoriesVerb';
 
@@ -25,7 +24,6 @@ class Cards extends Component {
         <div className="activity-buttons activity-categories">
           <h2>Adjectives</h2>
           <CardCategoriesGeneric
-            lang={lang}
             category="adjective"
             categoryList={categories[lang].adjective}
           />
@@ -40,7 +38,6 @@ class Cards extends Component {
           )}
 
           <CardCategoriesGeneric
-            lang={lang}
             category="noun"
             categoryList={categories[lang].noun}
           />
@@ -49,9 +46,9 @@ class Cards extends Component {
           <CardCategoriesVerb lang={lang} />
 
           <h2>Phrases</h2>
-          <ActivityLink
-            toPath={`/${lang}/cards/phrase`}
-            text="Phrases"
+          <CardCategoriesGeneric
+            category="phrase"
+            categoryList={categories[lang].phrase}
           />
         </div>
       </section>
