@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import labels from "./labelTranslations";
+import labels from './labelTranslations';
 
 export const LearningContext = React.createContext();
-LearningContext.displayName = "LearningContext";
+LearningContext.displayName = 'LearningContext';
 const { Consumer } = LearningContext;
 export const LearningConsumer = Consumer;
 
@@ -12,7 +12,7 @@ export class Provider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lang: "de",
+      lang: 'de',
       loading: true,
       error: false,
       jsonCategories: {},
@@ -21,8 +21,8 @@ export class Provider extends Component {
   }
 
   componentDidMount() {
-    const categories = sessionStorage.getItem("categories");
-    const loggedIn = sessionStorage.getItem("isLoggedIn");
+    const categories = sessionStorage.getItem('categories');
+    const loggedIn = sessionStorage.getItem('isLoggedIn');
 
     if (loggedIn) {
       this.setState({ isLoggedIn: true });
@@ -34,12 +34,12 @@ export class Provider extends Component {
         loading: false,
       });
     } else {
-      fetch("https://phoenixjaymes.com/api/language/categories/app")
+      fetch('https://phoenixjaymes.com/api/language/categories/app')
         .then((reponse) => reponse.json())
         .then((responseData) => {
           sessionStorage.setItem(
-            "categories",
-            JSON.stringify(responseData.data)
+            'categories',
+            JSON.stringify(responseData.data),
           );
           this.setState({
             jsonCategories: responseData.data,
@@ -47,7 +47,7 @@ export class Provider extends Component {
           });
         })
         .catch((error) => {
-          console.log("Error fetching and parsing data", error);
+          console.log('Error fetching and parsing data', error);
 
           this.setState({
             loading: false,
@@ -60,17 +60,17 @@ export class Provider extends Component {
   refreshCategories = () => {
     this.setState({ loading: true });
 
-    fetch("https://phoenixjaymes.com/api/language/categories/app")
+    fetch('https://phoenixjaymes.com/api/language/categories/app')
       .then((reponse) => reponse.json())
       .then((responseData) => {
-        sessionStorage.setItem("categories", JSON.stringify(responseData.data));
+        sessionStorage.setItem('categories', JSON.stringify(responseData.data));
         this.setState({
           jsonCategories: responseData.data,
           loading: false,
         });
       })
       .catch((error) => {
-        console.log("Error fetching and parsing data", error);
+        console.log('Error fetching and parsing data', error);
 
         this.setState({
           loading: false,
@@ -84,7 +84,7 @@ export class Provider extends Component {
       this.setState({ isLoggedIn: true });
     } else {
       this.setState({ isLoggedIn: false });
-      sessionStorage.removeItem("isLoggedIn");
+      sessionStorage.removeItem('isLoggedIn');
     }
   };
 
@@ -95,16 +95,18 @@ export class Provider extends Component {
   setDocumentTitle = (title) => {
     const { lang } = this.state;
     const languageNames = {
-      de: "German",
-      nl: "Dutch",
-      af: "Afrikaans",
+      de: 'German',
+      nl: 'Dutch',
+      af: 'Afrikaans',
     };
 
     document.title = `${languageNames[lang]} ${title} | Language Learning`;
   };
 
   render() {
-    const { isLoggedIn, lang, jsonCategories, loading, error } = this.state;
+    const {
+      isLoggedIn, lang, jsonCategories, loading, error,
+    } = this.state;
     const { children } = this.props;
     const value = {
       categories: jsonCategories,
