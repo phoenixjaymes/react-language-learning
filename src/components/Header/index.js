@@ -16,16 +16,7 @@ import imgNl from '../home-img-nl.svg';
 class Header extends Component {
   handleLanguageClick = (lang) => {
     const { actions } = this.context;
-    const { location, history } = this.props;
     actions.setLanguage(lang);
-
-    const currentPath = location.pathname;
-    const currentLang = currentPath.substr(1, 2);
-
-    if (currentLang !== lang) {
-      const newPath = currentPath.replace(currentLang, lang);
-      history.push(newPath);
-    }
   };
 
   render() {
@@ -41,7 +32,7 @@ class Header extends Component {
     const sentencesLabel = labels[lang].activities.sentences;
     const blanksLabel = labels[lang].activities.blanks;
 
-    const toPathAdmin = (isLoggedIn) ? `/${lang}/admin` : `/${lang}/login`;
+    const toPathAdmin = (isLoggedIn) ? '/admin' : '/login';
     const img = lang === 'de' ? imgDe : imgNl;
     const subLangClass = isLangMenuVisible ? styles.jsShowMenu : '';
     const arrowLangClass = isLangMenuVisible ? styles.arrowUp : styles.arrowDown;
@@ -51,7 +42,7 @@ class Header extends Component {
     return (
       <header className={styles.mainHeader}>
         <div className={`${styles.mainHeaderWrap} contentWrap`}>
-          <Link to={`/${lang}`}>
+          <Link to="/">
             <img className={styles.mainHeaderLogo} src={img} alt="language learning logo" />
           </Link>
           <p className={styles.mainHeaderName}>Language</p>
@@ -94,14 +85,14 @@ class Header extends Component {
               <li id="js-activity" className={styles.mainMenuItem}>
                 <span className={arrowActivityClass}>Activities</span>
                 <ul className={`${styles.subMenu} ${subActivityClass}`}>
-                  <li className={styles.subMenuItem}><NavLink to={`/${lang}/cards`}>{cardsLabel}</NavLink></li>
-                  <li className={styles.subMenuItem}><NavLink to={`/${lang}/words`}>{wordsLabel}</NavLink></li>
-                  <li className={styles.subMenuItem}><NavLink to={`/${lang}/sentences`}>{sentencesLabel}</NavLink></li>
-                  <li className={styles.subMenuItem}><NavLink to={`/${lang}/blanks`}>{blanksLabel}</NavLink></li>
+                  <li className={styles.subMenuItem}><NavLink to="/cards">{cardsLabel}</NavLink></li>
+                  <li className={styles.subMenuItem}><NavLink to="/words">{wordsLabel}</NavLink></li>
+                  <li className={styles.subMenuItem}><NavLink to="/sentences">{sentencesLabel}</NavLink></li>
+                  <li className={styles.subMenuItem}><NavLink to="/blanks">{blanksLabel}</NavLink></li>
                 </ul>
               </li>
 
-              <li className={styles.mainMenuItem}><NavLink to={`/${lang}/grammar`}>Grammar</NavLink></li>
+              <li className={styles.mainMenuItem}><NavLink to="/grammar">Grammar</NavLink></li>
             </ul>
           </nav>
 
@@ -121,8 +112,6 @@ Header.contextType = LearningContext;
 Header.propTypes = {
   isLangMenuVisible: PropTypes.bool,
   isActivityMenuVisible: PropTypes.bool,
-  location: PropTypes.shape(),
-  history: PropTypes.shape(),
 };
 
 export default withRouter(Header);
