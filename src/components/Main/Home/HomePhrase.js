@@ -14,6 +14,6 @@ const HomePhrase = () => {
       <h3 className={styles.phraseTranslation}>{phrase.translation}</h3>
     </div>
   );
-}
+};
 
 export default HomePhrase;

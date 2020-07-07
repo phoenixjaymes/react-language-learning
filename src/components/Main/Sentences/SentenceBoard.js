@@ -34,14 +34,14 @@ class SentenceBoard extends Component {
     const sentenceList = (list) => {
       let newHeading;
 
-      if (list[0].type === "1") {
-        newHeading = "Create the Sentence";
-      } else if (list[0].type === "2") {
-        newHeading = "Create the Question";
-      } else if (list[0].type === "3") {
-        newHeading = "Answer the Question";
+      if (list[0].type === '1') {
+        newHeading = 'Create the Sentence';
+      } else if (list[0].type === '2') {
+        newHeading = 'Create the Question';
+      } else if (list[0].type === '3') {
+        newHeading = 'Answer the Question';
       } else {
-        newHeading = "Make something sensible";
+        newHeading = 'Make something sensible';
       }
 
       this.setState({

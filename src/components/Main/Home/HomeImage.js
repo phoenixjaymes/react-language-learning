@@ -30,7 +30,7 @@ const HomeImage = () => {
     <div className={styles.imgWrap}>
       <img className="home__image" src={img} alt="flashcard logo" />
     </div>
-  )
+  );
 };
 
 export default HomeImage;

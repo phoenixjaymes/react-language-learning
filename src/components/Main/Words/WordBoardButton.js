@@ -15,7 +15,7 @@ const WordBoardButton = ({ word, handleWordClick }) => {
   }
 
   return (
-    <button className={`${styles.button} ${buttonState}`} type="button" onClick={() => handleWordClick(word)} >
+    <button className={`${styles.button} ${buttonState}`} type="button" onClick={() => handleWordClick(word)}>
       {word.word}
     </button>
   );

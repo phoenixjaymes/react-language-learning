@@ -11,7 +11,11 @@ const LoadingError = () => (
       </div>
       <div className="home-loader__spin1" />
       <div className="home-loader__spin2" />
-      <p className="home-loader__msg">Sorry, unable to load Resources<br />Try again later</p>
+      <p className="home-loader__msg">
+        Sorry, unable to load Resources
+        <br />
+        Try again later
+      </p>
     </div>
   </div>
 );
