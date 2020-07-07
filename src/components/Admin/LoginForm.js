@@ -23,7 +23,7 @@ class LoginForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { actions, lang } = this.context;
+    const { actions } = this.context;
     const { itemUser, itemPass } = this.state;
     const { history } = this.props;
     const formData = new FormData();
@@ -42,7 +42,7 @@ class LoginForm extends Component {
           // Set session storage
           sessionStorage.setItem('isLoggedIn', true);
           sessionStorage.setItem('jwt', responseData.data.jwt);
-          const newPath = `/${lang}/admin`;
+          const newPath = '/admin';
           history.push(newPath);
         } else {
           actions.setLogin(false);
