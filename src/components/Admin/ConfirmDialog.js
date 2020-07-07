@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './confirm-dialog.css';
+import styles from './confirmDialog.module.css';
 
 const ConfirmDialog = ({ dialogMessage, handleYesClick, handleCancelClick }) => (
   <div className="confirm-dialog">
