@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import { LearningContext } from '../../Context';
 
 import ActivityWrap from '../ActivityComponents/ActivityWrap';
 import WordBoard from './WordBoard';
@@ -7,42 +8,32 @@ import FinalMessage from '../FinalMessage';
 
 import './words.css';
 
-class WordsActivity extends Component {
-  state = {
-    isShownMessage: false,
-  }
+const WordsActivity = ({ match }) => {
+  const { lang } = useContext(LearningContext);
+  const [isShownMessage, setIsShownMessage] = useState(false);
+  const { category } = match.params;
+  const wordsCategory = category.charAt(0).toUpperCase() + category.slice(1);
 
-  showMessage = (isShownMessage) => {
-    this.setState({ isShownMessage });
-  }
+  return (
+    <ActivityWrap
+      heading={`Match the ${wordsCategory}`}
+      page="words"
+    >
+      <WordBoard
+        lang={match.params.lang}
+        category={match.params.category}
+        showMessage={setIsShownMessage}
+      />
 
-  render() {
-    const { isShownMessage } = this.state;
-    const { match } = this.props;
-    const { lang, category } = match.params;
-    const wordsCategory = category.charAt(0).toUpperCase() + category.slice(1);
-
-    return (
-      <ActivityWrap
-        heading={`Match the ${wordsCategory}`}
-        page={`words`}
-      >
-        <WordBoard
-          lang={match.params.lang}
-          category={match.params.category}
-          showMessage={this.showMessage}
+      {isShownMessage && (
+        <FinalMessage
+          type="words"
+          lang={lang}
         />
-
-        {isShownMessage && (
-          <FinalMessage
-            type="words"
-            lang={lang}
-          />
-        )}
-      </ActivityWrap>
-    );
-  }
-}
+      )}
+    </ActivityWrap>
+  );
+};
 
 WordsActivity.propTypes = {
   match: PropTypes.shape({

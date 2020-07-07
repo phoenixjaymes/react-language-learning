@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import { LearningContext } from '../../Context';
 
 import ActivityWrap from '../ActivityComponents/ActivityWrap';
 import BlanksBoard from './BlanksBoard';
 import FinalMessage from '../FinalMessage';
 
 const BlanksActivity = ({ match }) => {
+  const { lang } = useContext(LearningContext);
   const [isShownMessage, setIsShownMessage] = useState(false);
-  const { lang, category, id } = match.params;
+  const { category, id } = match.params;
 
   return (
     <ActivityWrap
