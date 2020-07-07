@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import UpdateSelectorCategory from './UpdateSelectorCategory';
-import FormInput from './FormInput';
-import FormMessage from './FormMessage';
-import CategoryRadioButtons from './CategoryRadioButtons';
+import FormInput from './FormComponents/FormInput';
+import FormMessage from './FormComponents/FormMessage';
+import CategoryRadioButtons from './FormComponents/CategoryRadioButtons';
 import ConfirmDialog from './ConfirmDialog';
 
 import styles from './forms.module.css';
