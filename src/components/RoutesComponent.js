@@ -4,7 +4,7 @@ import {
   Redirect,
   Switch,
 } from 'react-router-dom';
-import { LearningConsumer } from './Context';
+import { LearningContext } from './Context';
 
 // Components
 import Home from './Main/Home';
@@ -22,7 +22,7 @@ import NotFound from './NotFound';
 import LoginForm from './Admin/LoginForm';
 
 const Main = () => {
-  const { isLoggedIn } = useContext(LearningConsumer);
+  const { isLoggedIn } = useContext(LearningContext);
 
   return (
     <main>
