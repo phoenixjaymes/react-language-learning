@@ -1,11 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import { LearningContext } from '../../Context';
 
-import withContext from '../../Context';
 import ActivityCategoriesGeneric from '../ActivityComponents/ActivityCategoriesGeneric';
 
-const Blanks = ({ context }) => {
-  const { categories, lang, labels } = context;
+const Blanks = () => {
+  const { categories, lang, labels } = useContext(LearningContext);
   const headingLabel = labels.us.languages[lang];
 
   return (
@@ -23,8 +22,4 @@ const Blanks = ({ context }) => {
   );
 };
 
-Blanks.propTypes = {
-  context: PropTypes.shape(),
-};
-
-export default withContext(Blanks);
+export default Blanks;
