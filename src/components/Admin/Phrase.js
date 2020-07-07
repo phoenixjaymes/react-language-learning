@@ -4,8 +4,8 @@ import { LearningContext } from '../Context';
 
 import UpdateSelector from './UpdateSelector';
 import FormTextarea from './FormComponents/FormTextarea';
-import FormSelect from './FormSelect';
-import FormMessage from './FormMessage';
+import FormSelect from './FormComponents/FormSelect';
+import FormMessage from './FormComponents/FormMessage';
 import Umlauts from './Umlauts';
 import ConfirmDialog from './ConfirmDialog';
 

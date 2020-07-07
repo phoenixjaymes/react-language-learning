@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { LearningContext } from '../Context';
 
-import FormInput from './FormInput';
+import FormInput from './FormComponents/FormInput';
 
 import styles from './forms.module.css';
 

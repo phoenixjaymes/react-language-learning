@@ -6,8 +6,8 @@ import { conjugatePerfect } from './conjugateVerbs';
 
 // Components
 import UpdateSelector from './UpdateSelector';
-import FormInput from './FormInput';
-import FormMessage from './FormMessage';
+import FormInput from './FormComponents/FormInput';
+import FormMessage from './FormComponents/FormMessage';
 import Umlauts from './Umlauts';
 import ConfirmDialog from './ConfirmDialog';
 

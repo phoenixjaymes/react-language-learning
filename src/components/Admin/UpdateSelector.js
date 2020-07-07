@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { LearningContext } from '../Context';
 
-import FormSelect from './FormSelect';
-import FormMessage from './FormMessage';
+import FormSelect from './FormComponents/FormSelect';
+import FormMessage from './FormComponents/FormMessage';
 import styles from './forms.module.css';
 
 const UpdateSelector = ({
