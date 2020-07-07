@@ -1,11 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import { LearningContext } from '../../Context';
 
-import withContext from '../../Context';
 import ActivityLink from '../ActivityComponents/ActivityLink';
 
-const Words = ({ context }) => {
-  const { lang, labels } = context;
+const Words = () => {
+  const { lang, labels } = useContext(LearningContext);
   const headingLabel = labels.us.languages[lang];
 
   return (
@@ -30,8 +29,4 @@ const Words = ({ context }) => {
   );
 };
 
-Words.propTypes = {
-  context: PropTypes.shape(),
-};
-
-export default withContext(Words);
+export default Words;

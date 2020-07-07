@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import {
   Route,
   Link,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { LearningContext } from '../../Context';
 
 import HomeImage from '../Home/HomeImage';
-import withContext from '../../Context';
 import Articles from './Articles';
 import Pronouns from './Pronouns';
 import Conjunctions from './Conjunctions';
@@ -15,9 +15,9 @@ import Prepositions from './Prepositions';
 import '../../../css/grammar.css';
 
 const Grammar = ({
-  context, location, match, isGrammarMenuShown,
+  location, match, isGrammarMenuShown,
 }) => {
-  const { lang, labels, actions } = context;
+  const { lang, labels, actions } = useContext(LearningContext);
   const { setDocumentTitle } = actions;
   const { pathname } = location;
   const { url } = match;
@@ -55,10 +55,9 @@ const Grammar = ({
 };
 
 Grammar.propTypes = {
-  context: PropTypes.shape(),
   match: PropTypes.shape(),
   location: PropTypes.shape(),
   isGrammarMenuShown: PropTypes.bool,
 };
 
-export default withContext(Grammar);
+export default Grammar;
