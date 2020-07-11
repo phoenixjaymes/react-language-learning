@@ -1,0 +1,38 @@
+.wrap {
+  display: block;
+}
+
+.wrap.show {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 500;
+
+  background: rgba(50, 50, 50, .9);
+  display: block;
+  height: 100vh;
+  width: 100vw;
+}
+
+.wrap div {
+  position: absolute;
+  left: 0;
+  top: -75px;
+
+  background: #3131D2;
+  border: solid #ffc519;
+  border-width: 0 0 2px 0;
+  height: 75px;
+  padding: 10px;
+  transition: top 1s ease-out;
+  width: 100%;
+}
+
+.wrap.show div {
+ top: 0;
+}
+
+.wrap p {
+  color: #fff;
+  text-align: center;
+}
