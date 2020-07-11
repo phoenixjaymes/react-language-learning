@@ -13,8 +13,7 @@ const UpdateSelector = ({
   const { lang, categories } = value;
   const [modifyList, setModifyList] = useState([]);
   const [selectedOption, setSelectedOption] = useState('');
-  const [fetchStatus, setFetchStatus] = useState('');
-  const [fetchResponse, setFetchResponse] = useState('');
+  const [messageValues, setMessageValues] = useState({ message: '', status: '' });
 
   const makeTableRows = (data) => (
     data.map((item) => (
@@ -52,13 +51,11 @@ const UpdateSelector = ({
           const wordList = makeTableRows(responseData.data);
           setModifyList(wordList);
         } else {
-          setFetchResponse('fail');
-          setFetchStatus('Unable to get list');
+          setMessageValues({ message: 'Unable to get list', status: 'fail' });
         }
       })
       .catch((error) => {
-        setFetchResponse('error');
-        setFetchStatus(`Error fetching and parsing data. ${error}`);
+        setMessageValues({ message: `Error fetching and parsing data. ${error}`, status: 'error' });
       });
   };
 
@@ -74,7 +71,6 @@ const UpdateSelector = ({
         handleCategory={handleSelect}
       />
 
-
       <div className={styles.itemSelector}>
         <div className={styles.itemSelectorWrap}>
           <table className={styles.itemSelectorTable}>
@@ -89,7 +85,7 @@ const UpdateSelector = ({
           </table>
         </div>
       </div>
-      <FormMessage response={fetchResponse} status={fetchStatus} />
+      <FormMessage messageValues={messageValues} />
     </form>
   );
 };
