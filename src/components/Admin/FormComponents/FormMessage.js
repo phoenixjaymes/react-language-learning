@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 import styles from './formMessage.module.css';
 
-const FormMessage = ({ response, status }) => {
+const FormMessage = ({ messageValues }) => {
   let statusClass;
 
-  if (status === 'success') {
+  if (messageValues.status === 'success') {
     statusClass = styles.messageSuccess;
-  } else if (status === 'fail' || status === 'error') {
+  } else if (messageValues.status === 'fail' || messageValues.status === 'error') {
     statusClass = styles.messageFail;
   } else {
     statusClass = '';
@@ -16,14 +16,13 @@ const FormMessage = ({ response, status }) => {
 
   return (
     <p className={`${styles.messageText} ${statusClass}`}>
-      {response}
+      {messageValues.message}
     </p>
   );
 };
 
 FormMessage.propTypes = {
-  response: PropTypes.string,
-  status: PropTypes.string,
+  messageValues: PropTypes.objectOf(PropTypes.string),
 };
 
 export default FormMessage;
