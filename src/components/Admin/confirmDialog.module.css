@@ -1,4 +1,4 @@
-.confirm-dialog {
+.confirmDialog {
   position: fixed;
   top: 0;
   left: 0;
@@ -9,7 +9,7 @@
   width: 100vw;
 }
 
-.confirm-dialog div {
+.confirmDialog div {
   position: absolute;
   left: calc(50% - 150px);
   top: calc(50% - 80px);
@@ -22,16 +22,16 @@
   width: 300px;
 }
 
-.confirm-dialog p {
+.confirmDialog p {
   color: #fff;
   text-align: center;
 }
 
-.confirm-dialog p:nth-child(1) {
+.confirmDialog p:nth-child(1) {
   margin-bottom: 10px;
 }
 
-.confirm-dialog button {
+.confirmDialog button {
   display: inline-block;
   margin: 0 5px;
   width: 80px;

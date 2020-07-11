@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './confirmDialog.module.css';
 
 const ConfirmDialog = ({ dialogMessage, handleYesClick, handleCancelClick }) => (
-  <div className="confirm-dialog">
+  <div className={styles.confirmDialog}>
     <div>
       <p>{dialogMessage}</p>
       <p>
