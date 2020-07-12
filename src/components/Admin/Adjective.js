@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, {
+  useState, useContext, useReducer, useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { LearningContext } from '../Context';
 
@@ -7,362 +9,199 @@ import UpdateSelector from './UpdateSelector';
 import FormSelect from './FormComponents/FormSelect';
 import FormInput from './FormComponents/FormInput';
 import FormMessage from './FormComponents/FormMessage';
-// import Umlauts from './Umlauts';
-import ConfirmDialog from './ConfirmDialog';
-// import withUtilities from './withUtilities';
+import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
 
-class Adjective extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      itemId: '',
-      itemEnglish: '',
-      itemTranslation: '',
-      itemExample: '',
-      itemImage: 'none',
-      itemCategory: '',
-      itemCategory2: '5',
-      response: '',
-      status: '',
-      isDialogShown: false,
-      dialogMessage: 'Are you sure you want to make this change?',
-      umlauts: ['itemTranslation', 'itemExample'],
-      umlautItem: '',
-      umlautStyles: {},
-    };
-  }
+const Adjective = ({
+  handleSubmit,
+  categoryName,
+  modifyType,
+  fetchUpdatedData,
+  updateData,
+}) => {
+  const initialFormState = {
+    id: '',
+    english: '',
+    translation: '',
+    example: '',
+    img: 'none',
+    category: '',
+    category2: '5',
+  };
+  const reducer = (state, newState) => ({ ...state, ...newState });
+  const { categories, lang, labels } = useContext(LearningContext);
+  const { us } = labels;
+  const [formState, setFormState] = useReducer(reducer, initialFormState);
+  const [messageValues, setMessageValues] = useState({ message: '', status: '' });
 
-  clearForm = () => {
-    const { modifyType } = this.props;
+  useEffect(() => {
+    setFormState(updateData);
+  }, [updateData]);
 
+  const clearForm = () => {
     if (modifyType === 'update') {
-      this.setState({
-        itemId: '',
-        itemEnglish: '',
-        itemTranslation: '',
-        itemExample: '',
-        itemImage: 'none',
-        itemCategory: '',
-        itemCategory2: '',
+      setFormState({
+        id: '',
+        english: '',
+        translation: '',
+        example: '',
+        image: 'none',
+        category: '',
+        category2: '5',
       });
     } else {
-      this.setState({
-        itemId: '',
-        itemEnglish: '',
-        itemTranslation: '',
-        itemExample: '',
-        itemImage: 'none',
+      setFormState({
+        id: '',
+        english: '',
+        translation: '',
+        example: '',
+        image: 'none',
       });
     }
   };
 
-  clearMessage = () => {
-    console.log('clearing message');
-  };
-
-  handleIconClick = (e) => {
+  const handleIconClick = (e) => {
     const itemId = e.target.getAttribute('data-id');
-    const { lang } = this.context;
-    fetch(`https://phoenixjaymes.com/api/language/adjectives/${itemId}?lang=${lang}`)
-      .then((reponse) => reponse.json())
-      .then((responseData) => {
-        if (responseData.status === 'success') {
-          const data = responseData.data[0];
-          this.setState({
-            itemId: data.id,
-            itemEnglish: data.english,
-            itemTranslation: data.translation,
-            itemExample: data.example,
-            itemImage: data.img,
-            itemCategory: data.category,
-            itemCategory2: data.category2,
-          });
-        } else {
-          console.log(responseData);
-        }
-      })
-      .catch((error) => {
-        console.log('Error fetching and parsing data', error);
-      });
+    fetchUpdatedData(`https://phoenixjaymes.com/api/language/adjectives/${itemId}?lang=${lang}`);
   };
 
-  handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    setFormState({ [name]: value });
   };
 
-  isValid = () => {
-    const {
-      itemEnglish,
-      itemTranslation,
-      itemExample,
-      itemImage,
-      itemCategory,
-      itemCategory2,
-    } = this.state;
-
+  const isValid = () => {
     if (
-      itemEnglish === ''
-      || itemTranslation === ''
-      || itemExample === ''
-      || itemImage === ''
-      || itemCategory === ''
-      || itemCategory2 === ''
+      formState.english === ''
+      || formState.translation === ''
+      || formState.example === ''
+      || formState.img === ''
+      || formState.category === ''
+      || formState.category2 === ''
     ) {
       return false;
     }
     return true;
   };
 
-  handleYesClick = () => {
-    this.setState({
-      isDialogShown: false,
-    });
-
-    this.submitForm();
+  const handleFocus = () => {
+    setMessageValues({ message: '', status: '' });
   };
 
-  handleCancelClick = () => {
-    this.setState({
-      isDialogShown: false,
-    });
-  };
-
-  handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
+    let fetchUrl = '';
 
-    if (!this.isValid()) {
-      this.setState({
-        response: 'Please fill in all feilds',
+    if (!isValid()) {
+      setMessageValues({
+        message: 'Please fill in all feilds',
         status: 'fail',
       });
       return;
     }
 
-    this.setState({
-      isDialogShown: true,
-      response: '',
-    });
-  };
-
-  submitForm = () => {
-    const { lang } = this.context;
-    const {
-      itemId,
-      itemEnglish,
-      itemTranslation,
-      itemExample,
-      itemImage,
-      itemCategory,
-      itemCategory2,
-    } = this.state;
-    const { modifyType } = this.props;
-    let fetchUrl;
-    const formData = new FormData();
-    formData.append('lang', lang);
-    formData.append('pos', 'adjective');
-    formData.append('english', itemEnglish.trim());
-    formData.append('translation', itemTranslation.trim());
-    formData.append('example', itemExample.trim());
-    formData.append('img', itemImage.trim());
-    formData.append('category', itemCategory);
-    formData.append('category2', itemCategory2);
+    setMessageValues({ message: '', status: '' });
 
     if (modifyType === 'add') {
       fetchUrl = `https://phoenixjaymes.com/api/language/adjectives?lang=${lang}`;
     } else {
-      // formData.append('id', itemId);
-      fetchUrl = `https://phoenixjaymes.com/api/language/adjectives/${itemId}?lang=${lang}`;
+      fetchUrl = `https://phoenixjaymes.com/api/language/adjectives/${formState.id}?lang=${lang}`;
     }
 
-    fetch(fetchUrl, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
-      },
-      body: formData,
-    })
-      .then((reponse) => reponse.json())
-      .then((responseData) => {
-        if (responseData.status === 'success') {
-          this.clearForm();
-          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
-        } else if (responseData.status === 'fail') {
-          this.setState({ response: Object.values(responseData.data).join(', ') });
-        } else {
-          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
-        }
-        this.setState({ status: responseData.status });
-      })
-      .catch((error) => {
-        this.setState({
-          response: `Error fetching and parsing data, ${error}`,
-          status: 'error',
-        });
-      });
+    handleSubmit(modifyType, fetchUrl, formState);
   };
 
-  // handleFocus = (e) => {
-  //   const { umlauts } = this.state;
-  //   const umlautItem = e.target.getAttribute('id');
-
-  //   if (e.target.type === 'text' && umlauts.includes(umlautItem)) {
-  //     const yPos = e.target.offsetTop + e.target.offsetHeight;
-  //     this.setState({
-  //       umlautStyles: {
-  //         right: `${e.target.offsetLeft}px`,
-  //         top: `${yPos}px`,
-  //         visibility: 'visible',
-  //       },
-  //       umlautItem,
-  //     });
-  //   }
-  // }
-
-  // handleBlur = () => {
-  //   // this.setState({
-  //   //   umlautStyles: {
-  //   //     left: '0px',
-  //   //     top: '0px',
-  //   //     visibility: 'hidden',
-  //   //   },
-  //   // });
-  // }
-
-  // handleUmlautClick = (umlautToAdd) => {
-  //   const { umlautItem } = this.props;
-  //   // const obj = {};
-  //   // obj[umlautItem] = umlautToAdd;
-  //   this.setState((prevState) => ({
-  //     [umlautItem]: prevState[umlautItem] + umlautToAdd,
-  //   }));
-  // };
-
-  handleFocus = () => {
-    this.setState({
-      response: '',
-      status: '',
-    });
-  };
-
-  render() {
-    const { categories, lang, labels } = this.context;
-    const { us } = labels;
-    const {
-      itemCategory,
-      itemCategory2,
-      itemEnglish,
-      itemTranslation,
-      itemExample,
-      itemImage,
-      response,
-      isDialogShown,
-      dialogMessage,
-      status,
-    } = this.state;
-    const { modifyType, categoryName } = this.props;
-
-    const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
+  const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
       ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
 
-    const langName = us.languages[lang];
-    const heading = modifyType === 'update'
-      ? `Update ${langName} Adjectives`
-      : `Add ${langName} Adjectives`;
-    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
+  const langName = us.languages[lang];
+  const heading = modifyType === 'update'
+    ? `Update ${langName} Adjectives`
+    : `Add ${langName} Adjectives`;
+  const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
 
-    const fetchUrl = `https://phoenixjaymes.com/api/language/adjectives?lang=${lang}&cat=`;
+  const fetchUrl = `https://phoenixjaymes.com/api/language/adjectives?lang=${lang}&cat=`;
 
-    return (
-      <div>
-        <div className={gridClass}>
-          <form
-            className={styles.form}
-            onSubmit={this.handleSubmit}
-            onFocus={this.handleFocus}
-          >
-            <h3 className={styles.header}>{heading}</h3>
+  return (
 
-            <div className="form__grid-2">
-              <FormSelect
-                name="itemCategory"
-                label="Category 1"
-                categories={categories.all.general}
-                selected={itemCategory}
-                handleCategory={this.handleChange}
-              />
-              <FormSelect
-                name="itemCategory2"
-                label="Category 2"
-                categories={categories.all.general}
-                selected={itemCategory2}
-                handleCategory={this.handleChange}
-              />
-            </div>
+    <div className={gridClass}>
+      <form
+        className={styles.form}
+        onSubmit={handleFormSubmit}
+        onFocus={handleFocus}
+      >
+        <h3 className={styles.header}>{heading}</h3>
 
-            <FormInput
-              label="English"
-              name="itemEnglish"
-              value={itemEnglish}
-              handleChange={this.handleChange}
-            />
-
-            <FormInput
-              label="Translation"
-              name="itemTranslation"
-              value={itemTranslation}
-              handleChange={this.handleChange}
-            />
-
-            <FormInput
-              label="Example"
-              name="itemExample"
-              value={itemExample}
-              handleChange={this.handleChange}
-            />
-
-            <FormInput
-              label="Image"
-              name="itemImage"
-              value={itemImage}
-              handleChange={this.handleChange}
-            />
-
-            <button className="form__button" type="submit">{`${btnValue}`}</button>
-
-            <FormMessage response={response} status={status} />
-          </form>
-
-          {modifyType === 'update' && (
-            <UpdateSelector
-              categoryType="adjective"
-              handleIconClick={this.handleIconClick}
-              fetchUrl={fetchUrl}
-              propNameDisplay="translation"
-              propNameToolTip="english"
-            />
-          )}
+        <div className="form__grid-2">
+          <FormSelect
+            name="category"
+            label="Category 1"
+            categories={categories.all.general}
+            selected={formState.category}
+            handleCategory={handleChange}
+          />
+          <FormSelect
+            name="category2"
+            label="Category 2"
+            categories={categories.all.general}
+            selected={formState.category2}
+            handleCategory={handleChange}
+          />
         </div>
 
-        {isDialogShown === true && (
-          <ConfirmDialog
-            dialogMessage={dialogMessage}
-            handleYesClick={this.handleYesClick}
-            handleCancelClick={this.handleCancelClick}
-          />
-        )}
-      </div>
-    );
-  }
-}
+        <FormInput
+          label="English"
+          name="english"
+          value={formState.english}
+          handleChange={handleChange}
+        />
 
-Adjective.contextType = LearningContext;
+        <FormInput
+          label="Translation"
+          name="translation"
+          value={formState.translation}
+          handleChange={handleChange}
+        />
 
-Adjective.propTypes = {
-  categoryName: PropTypes.string,
-  modifyType: PropTypes.string,
+        <FormInput
+          label="Example"
+          name="example"
+          value={formState.example}
+          handleChange={handleChange}
+        />
+
+        <FormInput
+          label="Image"
+          name="img"
+          value={formState.img}
+          handleChange={handleChange}
+        />
+
+        <button className="form__button" type="submit">{`${btnValue}`}</button>
+
+        <FormMessage messageValues={messageValues} />
+      </form>
+
+      {modifyType === 'update' && (
+        <UpdateSelector
+          categoryType="adjective"
+          handleIconClick={handleIconClick}
+          fetchUrl={fetchUrl}
+          propNameDisplay="translation"
+          propNameToolTip="english"
+        />
+      )}
+    </div>
+  );
 };
 
-export default Adjective;
+Adjective.propTypes = {
+  handleSubmit: PropTypes.func,
+  categoryName: PropTypes.string,
+  modifyType: PropTypes.string,
+  updateData: PropTypes.objectOf(PropTypes.string),
+  fetchUpdatedData: PropTypes.func,
+};
+
+export default withFormWrap(Adjective);

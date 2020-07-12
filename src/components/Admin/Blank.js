@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, {
+  useState, useContext, useReducer, useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { LearningContext } from '../Context';
 
@@ -9,7 +11,8 @@ import FormInput from './FormComponents/FormInput';
 import FormTextarea from './FormComponents/FormTextarea';
 import FormMessage from './FormComponents/FormMessage';
 import Umlauts from './Umlauts';
-import ConfirmDialog from './ConfirmDialog';
+
+import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
 
@@ -83,20 +86,6 @@ class Blank extends Component {
       return false;
     }
     return true;
-  };
-
-  handleYesClick = () => {
-    this.setState({
-      isDialogShown: false,
-    });
-
-    this.submitForm();
-  };
-
-  handleCancelClick = () => {
-    this.setState({
-      isDialogShown: false,
-    });
   };
 
   handleSubmit = (e) => {
@@ -265,14 +254,6 @@ class Blank extends Component {
             />
           )}
         </div>
-
-        {isDialogShown === true && (
-          <ConfirmDialog
-            dialogMessage={dialogMessage}
-            handleYesClick={this.handleYesClick}
-            handleCancelClick={this.handleCancelClick}
-          />
-        )}
       </div>
     );
   }
@@ -281,8 +262,11 @@ class Blank extends Component {
 Blank.contextType = LearningContext;
 
 Blank.propTypes = {
-  modifyType: PropTypes.string,
+  handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
+  modifyType: PropTypes.string,
+  updateData: PropTypes.objectOf(PropTypes.string),
+  fetchUpdatedData: PropTypes.func,
 };
 
-export default Blank;
+export default withFormWrap(Blank);

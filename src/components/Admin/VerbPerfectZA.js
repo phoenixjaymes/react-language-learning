@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, {
+  useState, useContext, useReducer, useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { LearningContext } from '../Context';
 
@@ -7,7 +9,8 @@ import UpdateSelector from './UpdateSelector';
 import FormInput from './FormComponents/FormInput';
 import FormMessage from './FormComponents/FormMessage';
 import Umlauts from './Umlauts';
-import ConfirmDialog from './ConfirmDialog';
+
+import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
 
@@ -80,19 +83,6 @@ class VerbPerfectZA extends Component {
       return false;
     }
     return true;
-  };
-
-  handleYesClick = () => {
-    this.setState({
-      isDialogShown: false,
-    });
-    this.submitForm();
-  };
-
-  handleCancelClick = () => {
-    this.setState({
-      isDialogShown: false,
-    });
   };
 
   handleSubmit = (e) => {
@@ -281,14 +271,6 @@ class VerbPerfectZA extends Component {
             />
           )}
         </div>
-
-        {isDialogShown === true && (
-          <ConfirmDialog
-            dialogMessage={dialogMessage}
-            handleYesClick={this.handleYesClick}
-            handleCancelClick={this.handleCancelClick}
-          />
-        )}
       </div>
     );
   }
@@ -297,8 +279,11 @@ class VerbPerfectZA extends Component {
 VerbPerfectZA.contextType = LearningContext;
 
 VerbPerfectZA.propTypes = {
-  modifyType: PropTypes.string,
+  handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
+  modifyType: PropTypes.string,
+  updateData: PropTypes.objectOf(PropTypes.string),
+  fetchUpdatedData: PropTypes.func,
 };
 
-export default VerbPerfectZA;
+export default withFormWrap(VerbPerfectZA);
