@@ -16,23 +16,31 @@ import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
 
-class Blank extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      itemId: '',
-      itemCategory: '',
-      itemSentence: '',
-      itemAnswer: '',
-      itemWords: '',
-      response: '',
-      status: '',
-      isDialogShown: false,
-      dialogMessage: 'Are you sure you want to make this change?',
-    };
-  }
+const Blank = ({
+  handleSubmit,
+  categoryName,
+  modifyType,
+  fetchUpdatedData,
+  updateData,
+}) => {
+  const initialFormState = {
+    itemId: '',
+    itemCategory: '',
+    itemSentence: '',
+    itemAnswer: '',
+    itemWords: '',
+  };
+  const reducer = (state, newState) => ({ ...state, ...newState });
+  const { categories, lang, labels } = useContext(LearningContext);
+  const { us } = labels;
+  const [formState, setFormState] = useReducer(reducer, initialFormState);
+  const [messageValues, setMessageValues] = useState({ message: '', status: '' });
 
-  clearForm = () => {
+  useEffect(() => {
+    setFormState(updateData);
+  }, [updateData]);
+
+  const clearForm = () => {
     this.setState({
       itemId: '',
       itemSentence: '',
@@ -41,38 +49,17 @@ class Blank extends Component {
     });
   };
 
-  handleIconClick = (e) => {
+  const handleIconClick = (e) => {
     const itemId = e.target.getAttribute('data-id');
-    const { lang } = this.context;
-
-    fetch(`https://phoenixjaymes.com/api/language/blanks/${itemId}?lang=${lang}`)
-      .then((reponse) => reponse.json())
-      .then((responseData) => {
-        if (responseData.status === 'success') {
-          const data = responseData.data[0];
-
-          this.setState({
-            itemId: data.id,
-            itemSentence: data.sentence,
-            itemCategory: data.category,
-            itemAnswer: data.answer,
-            itemWords: data.words,
-          });
-        } else {
-          console.log(responseData);
-        }
-      })
-      .catch((error) => {
-        console.log('Error fetching and parsing data', error);
-      });
+    fetchUpdatedData(`https://phoenixjaymes.com/api/language/blanks/${itemId}?lang=${lang}`);
   };
 
-  handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
-  isValid = () => {
+  const isValid = () => {
     const {
       itemSentence, itemAnswer, itemWords, itemCategory,
     } = this.state;
@@ -88,7 +75,11 @@ class Blank extends Component {
     return true;
   };
 
-  handleSubmit = (e) => {
+  const handleFocus = () => {
+    setMessageValues({ message: '', status: '' });
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!this.isValid()) {
@@ -105,7 +96,7 @@ class Blank extends Component {
     });
   };
 
-  submitForm = () => {
+  const submitForm = () => {
     const { lang } = this.context;
     const {
       itemId,
@@ -157,109 +148,82 @@ class Blank extends Component {
       });
   };
 
-  handleFocus = () => {
-    this.setState({
-      response: '',
-      status: '',
-    });
-  };
-
-  render() {
-    const { categories, lang, labels } = this.context;
-    const { us } = labels;
-    const {
-      isDialogShown,
-      dialogMessage,
-      itemSentence,
-      itemAnswer,
-      itemWords,
-      itemCategory,
-      response,
-      status,
-    } = this.state;
-    const { modifyType, categoryName } = this.props;
-
-    const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)}
+  const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)}
        ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
 
-    const langName = us.languages[lang];
-    const heading = modifyType === 'update'
-      ? `Update ${langName} Blanks`
-      : `Add ${langName} Blanks`;
-    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
-    const fetchUrl = `https://phoenixjaymes.com/api/language/blanks?lang=${lang}&cat=`;
+  const langName = us.languages[lang];
+  const heading = modifyType === 'update'
+    ? `Update ${langName} Blanks`
+    : `Add ${langName} Blanks`;
+  const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
+  const fetchUrl = `https://phoenixjaymes.com/api/language/blanks?lang=${lang}&cat=`;
 
-    return (
-      <div>
-        <div className={gridClass}>
-          <form
-            className={styles.form}
-            onSubmit={this.handleSubmit}
-            onFocus={this.handleFocus}
-          >
-            <h3 className={styles.header}>{heading}</h3>
+  return (
+    <div className={gridClass}>
+      <form
+        className={styles.form}
+        onSubmit={this.handleSubmit}
+        onFocus={this.handleFocus}
+      >
+        <h3 className={styles.header}>{heading}</h3>
 
-            <FormSelect
-              name="itemCategory"
-              label="Category"
-              categories={categories.all.generalSentence}
-              selected={itemCategory}
-              handleCategory={this.handleChange}
-            />
+        <FormSelect
+          name="itemCategory"
+          label="Category"
+          categories={categories.all.generalSentence}
+          selected={itemCategory}
+          handleCategory={this.handleChange}
+        />
 
-            <FormTextarea
-              label="Sentence"
-              name="itemSentence"
-              value={itemSentence}
-              handleChange={this.handleChange}
-            />
+        <FormTextarea
+          label="Sentence"
+          name="itemSentence"
+          value={itemSentence}
+          handleChange={this.handleChange}
+        />
 
-            <FormTextarea
-              label="Answer"
-              name="itemAnswer"
-              value={itemAnswer}
-              handleChange={this.handleChange}
-            />
+        <FormTextarea
+          label="Answer"
+          name="itemAnswer"
+          value={itemAnswer}
+          handleChange={this.handleChange}
+        />
 
-            <Umlauts
-              className="form-umlauts"
-              input-type="word"
-              input-field="translation"
-            />
+        <Umlauts
+          className="form-umlauts"
+          input-type="word"
+          input-field="translation"
+        />
 
-            <FormInput
-              label="Words"
-              name="itemWords"
-              value={itemWords}
-              handleChange={this.handleChange}
-            />
+        <FormInput
+          label="Words"
+          name="itemWords"
+          value={itemWords}
+          handleChange={this.handleChange}
+        />
 
-            <button className="form__button" type="submit">{`${btnValue}`}</button>
+        <button className="form__button" type="submit">{`${btnValue}`}</button>
 
-            <FormMessage response={response} status={status} />
+        <FormMessage messageValues={messageValues} />
 
-            {/* <Umlauts
+        {/* <Umlauts
               umlautStyles={umlautStyles}
               handleUmlautClick={this.handleUmlautClick}
             /> */}
-          </form>
+      </form>
 
-          {modifyType === 'update' && (
-            <UpdateSelector
-              categoryType="blank"
-              handleIconClick={this.handleIconClick}
-              fetchUrl={fetchUrl}
-              propNameDisplay="sentence"
-              propNameToolTip="answer"
-            />
-          )}
-        </div>
-      </div>
-    );
-  }
-}
-
-Blank.contextType = LearningContext;
+      {modifyType === 'update' && (
+        <UpdateSelector
+          categoryType="blank"
+          handleIconClick={this.handleIconClick}
+          fetchUrl={fetchUrl}
+          propNameDisplay="sentence"
+          propNameToolTip="answer"
+        />
+      )}
+    </div>
+  );
+};
 
 Blank.propTypes = {
   handleSubmit: PropTypes.func,

@@ -13,37 +13,46 @@ import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
 
-class Category extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      itemId: '',
-      itemType: 'general',
-      itemCategory: '',
-      categoryType: 'general',
-      response: '',
-      status: '',
-      isDialogShown: false,
-      dialogMessage: 'Are you sure you want to make this change?',
-    };
-  }
+const Category = ({
+  handleSubmit,
+  categoryName,
+  modifyType,
+  fetchUpdatedData,
+  updateData,
+}) => {
+  const initialFormState = {
+    itemId: '',
+    itemType: 'general',
+    itemCategory: '',
+    categoryType: 'general',
+  };
+  const reducer = (state, newState) => ({ ...state, ...newState });
+  const { categories, lang, labels } = useContext(LearningContext);
+  const { us } = labels;
+  const [formState, setFormState] = useReducer(reducer, initialFormState);
+  const [messageValues, setMessageValues] = useState({ message: '', status: '' });
 
-  clearForm = () => {
+  // useEffect(() => {
+  //   setFormState(updateData);
+  // }, [updateData]);
+
+  const clearForm = () => {
     this.setState({ itemCategory: '' });
   };
 
-  handleIconClick = (e) => {
+
+  const handleIconClick = (e) => {
     const itemId = e.target.getAttribute('data-id');
     const itemCategory = e.target.getAttribute('data-category');
     this.setState({ itemId, itemCategory });
   };
 
-  handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
-  handleRadio = (itemType) => {
+  const handleRadio = (itemType) => {
     let temp = 'general';
 
     if (itemType !== 'general') {
@@ -56,7 +65,7 @@ class Category extends Component {
     });
   };
 
-  isValid = () => {
+  const isValid = () => {
     const { itemType, itemCategory } = this.state;
 
     if (itemCategory === '' || itemType === '') {
@@ -65,7 +74,11 @@ class Category extends Component {
     return true;
   };
 
-  handleSubmit = (e) => {
+  const handleFocus = () => {
+    setMessageValues({ message: '', status: '' });
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!this.isValid()) {
@@ -82,7 +95,7 @@ class Category extends Component {
     });
   };
 
-  submitForm = () => {
+  const submitForm = () => {
     const { modifyType } = this.props;
     const { itemId, itemType, itemCategory } = this.state;
     let fetchUrl;
@@ -124,65 +137,45 @@ class Category extends Component {
       });
   };
 
-  handleFocus = () => {
-    this.setState({
-      response: '',
-      status: '',
-    });
-  };
 
-  render() {
-    const {
-      isDialogShown,
-      dialogMessage,
-      categoryType,
-      itemCategory,
-      response,
-      status,
-    } = this.state;
-    const { modifyType, categoryName } = this.props;
-
-    const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
+  const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
       ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
 
-    const heading = modifyType === 'update' ? 'Update Category' : 'Add Category';
-    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
+  const heading = modifyType === 'update' ? 'Update Category' : 'Add Category';
+  const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
 
-    return (
-      <div>
-        <div className={gridClass}>
-          <form
-            className={styles.form}
-            onSubmit={this.handleSubmit}
-            onFocus={this.handleFocus}
-          >
-            <h3 className={styles.header}>{heading}</h3>
+  return (
+    <div className={gridClass}>
+      <form
+        className={styles.form}
+        onSubmit={this.handleSubmit}
+        onFocus={this.handleFocus}
+      >
+        <h3 className={styles.header}>{heading}</h3>
 
-            <CategoryRadioButtons handleRadio={this.handleRadio} />
+        <CategoryRadioButtons handleRadio={this.handleRadio} />
 
-            <FormInput
-              label="Name"
-              name="itemCategory"
-              value={itemCategory}
-              handleChange={this.handleChange}
-            />
+        <FormInput
+          label="Name"
+          name="itemCategory"
+          value={itemCategory}
+          handleChange={this.handleChange}
+        />
 
-            <button className="form__button" type="submit">{`${btnValue}`}</button>
+        <button className="form__button" type="submit">{`${btnValue}`}</button>
 
-            <FormMessage response={response} status={status} />
-          </form>
+        <FormMessage messageValues={messageValues} />
+      </form>
 
-          {modifyType === 'update' && (
-            <UpdateSelectorCategory
-              categoryType={categoryType}
-              handleIconClick={this.handleIconClick}
-            />
-          )}
-        </div>
-      </div>
-    );
-  }
-}
+      {modifyType === 'update' && (
+        <UpdateSelectorCategory
+          categoryType={categoryType}
+          handleIconClick={this.handleIconClick}
+        />
+      )}
+    </div>
+  );
+};
 
 Category.propTypes = {
   handleSubmit: PropTypes.func,

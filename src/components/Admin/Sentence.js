@@ -16,26 +16,32 @@ import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
 
-class Sentence extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      itemId: '',
-      itemSentence: '',
-      itemType: '',
-      itemCategory: '',
-      itemAnswer1: '',
-      itemExtraWords: '',
-      response: '',
-      status: '',
-      labelStatement: 'Statement',
-      labelTranslation: 'Translation',
-      isDialogShown: false,
-      dialogMessage: 'Are you sure you want to make this change?',
-    };
-  }
+const Sentence = ({
+  handleSubmit,
+  categoryName,
+  modifyType,
+  fetchUpdatedData,
+  updateData,
+}) => {
+  const initialFormState = {
+    itemId: '',
+    itemSentence: '',
+    itemType: '',
+    itemCategory: '',
+    itemAnswer1: '',
+    itemExtraWords: '',
+  };
+  const reducer = (state, newState) => ({ ...state, ...newState });
+  const { categories, lang, labels } = useContext(LearningContext);
+  const { us } = labels;
+  const [formState, setFormState] = useReducer(reducer, initialFormState);
+  const [messageValues, setMessageValues] = useState({ message: '', status: '' });
 
-  clearForm = () => {
+  useEffect(() => {
+    setFormState(updateData);
+  }, [updateData]);
+
+  const clearForm = () => {
     const { modifyType } = this.props;
 
     if (modifyType === 'update') {
@@ -55,7 +61,7 @@ class Sentence extends Component {
     }
   };
 
-  setLabels = (id) => {
+  const setLabels = (id) => {
     if (id === '1') {
       this.setState({
         labelStatement: 'Statement - english',
@@ -74,45 +80,23 @@ class Sentence extends Component {
     }
   };
 
-  handleIconClick = (e) => {
+  const handleIconClick = (e) => {
     const itemId = e.target.getAttribute('data-id');
-    const { lang } = this.context;
-
-    fetch(`https://phoenixjaymes.com/api/language/sentences/${itemId}?lang=${lang}`)
-      .then((reponse) => reponse.json())
-      .then((responseData) => {
-        if (responseData.status === 'success') {
-          const data = responseData.data[0];
-          this.setLabels(data.type);
-          this.setState({
-            itemId: data.id,
-            itemSentence: data.sentence,
-            itemType: data.type,
-            itemCategory: data.category,
-            itemAnswer1: data.answer1,
-            itemExtraWords: data.extra,
-          });
-        } else {
-          console.log(responseData);
-        }
-      })
-      .catch((error) => {
-        console.log('Error fetching and parsing data', error);
-      });
+    fetchUpdatedData(`https://phoenixjaymes.com/api/language/sentences/${itemId}?lang=${lang}`);
   };
 
-  handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
-  handleType = (e) => {
+  const handleType = (e) => {
     const { value } = e.target;
     this.setLabels(value);
     this.setState({ itemType: value });
   };
 
-  isValid = () => {
+  const isValid = () => {
     const {
       itemSentence, itemType, itemCategory, itemAnswer1,
     } = this.state;
@@ -128,7 +112,11 @@ class Sentence extends Component {
     return true;
   };
 
-  handleSubmit = (e) => {
+  const handleFocus = () => {
+    setMessageValues({ message: '', status: '' });
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!this.isValid()) {
@@ -145,7 +133,7 @@ class Sentence extends Component {
     });
   };
 
-  submitForm = () => {
+  const submitForm = () => {
     const { lang } = this.context;
     const {
       itemId,
@@ -199,118 +187,88 @@ class Sentence extends Component {
       });
   };
 
-  handleFocus = () => {
-    this.setState({
-      response: '',
-      status: '',
-    });
-  };
+  const btnValue = `${modifyType
+    .charAt(0)
+    .toUpperCase()}${modifyType.substring(1)} ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
 
-  render() {
-    const { categories, lang, labels } = this.context;
-    const { us } = labels;
-    const {
-      isDialogShown,
-      dialogMessage,
-      itemType,
-      itemSentence,
-      itemAnswer1,
-      itemExtraWords,
-      itemCategory,
-      response,
-      labelStatement,
-      labelTranslation,
-      status,
-    } = this.state;
-    const { modifyType, categoryName } = this.props;
+  const langName = us.languages[lang];
+  const heading = modifyType === 'update'
+    ? `Update ${langName} Sentences`
+    : `Add ${langName} Sentences`;
+  const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
 
-    const btnValue = `${modifyType
-      .charAt(0)
-      .toUpperCase()}${modifyType.substring(1)} ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
+  const fetchUrl = `https://phoenixjaymes.com/api/language/sentences?lang=${lang}&cat=`;
 
-    const langName = us.languages[lang];
-    const heading = modifyType === 'update'
-      ? `Update ${langName} Sentences`
-      : `Add ${langName} Sentences`;
-    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
+  return (
+    <div className={gridClass}>
+      <form
+        className={styles.form}
+        onSubmit={this.handleSubmit}
+        onFocus={this.handleFocus}
+      >
+        <h3 className={styles.header}>{heading}</h3>
+        <div className="form__grid-2">
+          <FormSelect
+            name="itemType"
+            label="Type"
+            categories={categories[lang].sentence_type}
+            selected={itemType}
+            handleCategory={this.handleType}
+          />
 
-    const fetchUrl = `https://phoenixjaymes.com/api/language/sentences?lang=${lang}&cat=`;
-
-    return (
-      <div>
-        <div className={gridClass}>
-          <form
-            className={styles.form}
-            onSubmit={this.handleSubmit}
-            onFocus={this.handleFocus}
-          >
-            <h3 className={styles.header}>{heading}</h3>
-            <div className="form__grid-2">
-              <FormSelect
-                name="itemType"
-                label="Type"
-                categories={categories[lang].sentence_type}
-                selected={itemType}
-                handleCategory={this.handleType}
-              />
-
-              <FormSelect
-                name="itemCategory"
-                label="Category"
-                categories={categories.all.generalSentence}
-                selected={itemCategory}
-                handleCategory={this.handleChange}
-              />
-            </div>
-
-            <FormTextarea
-              label={labelStatement}
-              name="itemSentence"
-              value={itemSentence}
-              handleChange={this.handleChange}
-            />
-
-            <FormTextarea
-              label={labelTranslation}
-              name="itemAnswer1"
-              value={itemAnswer1}
-              handleChange={this.handleChange}
-            />
-
-            <Umlauts
-              className="form-umlauts"
-              input-type="word"
-              input-field="translation"
-            />
-
-            <FormInput
-              label="Extra Words"
-              name="itemExtraWords"
-              value={itemExtraWords}
-              handleChange={this.handleChange}
-            />
-
-            <button className="form__button" type="submit">{`${btnValue}`}</button>
-
-            <FormMessage response={response} status={status} />
-          </form>
-
-          {modifyType === 'update' && (
-            <UpdateSelector
-              categoryType="sentence"
-              handleIconClick={this.handleIconClick}
-              fetchUrl={fetchUrl}
-              propNameDisplay="answer1"
-              propNameToolTip="sentence"
-            />
-          )}
+          <FormSelect
+            name="itemCategory"
+            label="Category"
+            categories={categories.all.generalSentence}
+            selected={itemCategory}
+            handleCategory={this.handleChange}
+          />
         </div>
-      </div>
-    );
-  }
-}
 
-Sentence.contextType = LearningContext;
+        <FormTextarea
+          label={labelStatement}
+          name="itemSentence"
+          value={itemSentence}
+          handleChange={this.handleChange}
+        />
+
+        <FormTextarea
+          label={labelTranslation}
+          name="itemAnswer1"
+          value={itemAnswer1}
+          handleChange={this.handleChange}
+        />
+
+        <Umlauts
+          className="form-umlauts"
+          input-type="word"
+          input-field="translation"
+        />
+
+        <FormInput
+          label="Extra Words"
+          name="itemExtraWords"
+          value={itemExtraWords}
+          handleChange={this.handleChange}
+        />
+
+        <button className="form__button" type="submit">{`${btnValue}`}</button>
+
+        <FormMessage messageValues={messageValues} />
+      </form>
+
+      {modifyType === 'update' && (
+        <UpdateSelector
+          categoryType="sentence"
+          handleIconClick={this.handleIconClick}
+          fetchUrl={fetchUrl}
+          propNameDisplay="answer1"
+          propNameToolTip="sentence"
+        />
+      )}
+    </div>
+  );
+};
 
 Sentence.propTypes = {
   handleSubmit: PropTypes.func,

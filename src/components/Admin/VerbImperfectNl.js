@@ -16,66 +16,46 @@ import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
 
-class VerbImperfect extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      itemId: '',
-      itemTranslation: '-',
-      itemExample: '',
-      itemType: '',
-      itemIk: '',
-      itemJij: '',
-      itemHij: '',
-      itemU: '',
-      itemWij: '',
-      itemJullie: '',
-      itemZij: '',
-      response: '',
-      status: '',
-      isDialogShown: false,
-      dialogMessage: 'Are you sure you want to make this change?',
-    };
-  }
+const VerbImperfect = ({
+  handleSubmit,
+  categoryName,
+  modifyType,
+  fetchUpdatedData,
+  updateData,
+}) => {
+  const initialFormState = {
+    itemId: '',
+    itemTranslation: '-',
+    itemExample: '',
+    itemType: '',
+    itemIk: '',
+    itemJij: '',
+    itemHij: '',
+    itemU: '',
+    itemWij: '',
+    itemJullie: '',
+    itemZij: '',
+  };
+  const reducer = (state, newState) => ({ ...state, ...newState });
+  const { categories, lang, labels } = useContext(LearningContext);
+  const { us } = labels;
+  const [formState, setFormState] = useReducer(reducer, initialFormState);
+  const [messageValues, setMessageValues] = useState({ message: '', status: '' });
 
-  clearForm = () => {
+  useEffect(() => {
+    setFormState(updateData);
+  }, [updateData]);
+
+  const clearForm = () => {
     console.log('clearing form');
   };
 
-  // Icon click in UpdateSelector
-  handleIconClick = (e) => {
+  const handleIconClick = (e) => {
     const itemId = e.target.getAttribute('data-id');
-    const { lang } = this.context;
-
-    fetch(`https://phoenixjaymes.com/api/language/verbs/${itemId}?lang=${lang}`)
-      .then((reponse) => reponse.json())
-      .then((responseData) => {
-        if (responseData.status === 'success') {
-          const data = responseData.data[0];
-          const { imperfect } = data;
-          this.setState({
-            itemId: data.id,
-            itemTranslation: data.translation,
-            itemExample: data.example,
-            itemType: data.type,
-            itemIk: imperfect.ik,
-            itemJij: imperfect.jij,
-            itemHij: imperfect.hij,
-            itemU: imperfect.u,
-            itemWij: imperfect.wij,
-            itemJullie: imperfect.jullie,
-            itemZij: imperfect.zij,
-          });
-        } else {
-          console.log(responseData);
-        }
-      })
-      .catch((error) => {
-        console.log('Error fetching and parsing data', error);
-      });
+    fetchUpdatedData(`https://phoenixjaymes.com/api/language/verbs/${itemId}?lang=${lang}`);
   };
 
-  handleConjugateClick = () => {
+  const handleConjugateClick = () => {
     const { itemTranslation, itemType } = this.state;
     const [ik, jij, hij, u, wij, jullie, zij] = conjugateImperfect(
       itemTranslation,
@@ -92,12 +72,12 @@ class VerbImperfect extends Component {
     });
   };
 
-  handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
-  isValid = () => {
+  const isValid = () => {
     const {
       itemExample,
       itemIk,
@@ -124,7 +104,11 @@ class VerbImperfect extends Component {
     return true;
   };
 
-  handleSubmit = (e) => {
+  const handleFocus = () => {
+    setMessageValues({ message: '', status: '' });
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!this.isValid()) {
@@ -141,7 +125,7 @@ class VerbImperfect extends Component {
     });
   };
 
-  submitForm = () => {
+  const submitForm = () => {
     const { lang } = this.context;
     const {
       itemId,
@@ -198,188 +182,156 @@ class VerbImperfect extends Component {
       });
   };
 
-  handleFocus = () => {
-    this.setState({
-      response: '',
-      status: '',
-    });
-  };
-
-  render() {
-    const { lang } = this.context;
-    const {
-      isDialogShown,
-      dialogMessage,
-      itemTranslation,
-      itemExample,
-      itemType,
-      itemIk,
-      itemJij,
-      itemHij,
-      itemU,
-      itemWij,
-      itemJullie,
-      itemZij,
-      response,
-      status,
-    } = this.state;
-    const { modifyType, categoryName } = this.props;
-
-    const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
+  const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
       ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
-    const fetchUrl = `https://phoenixjaymes.com/api/language/verbs?lang=${lang}&range=`;
+  const fetchUrl = `https://phoenixjaymes.com/api/language/verbs?lang=${lang}&range=`;
 
-    return (
-      <div>
-        <div className={styles.formLayoutGrid}>
-          <form
-            className={styles.form}
-            autoComplete="off"
-            onSubmit={this.handleSubmit}
-            onFocus={this.handleFocus}
-          >
-            <h3 className={styles.header}>Update Dutch Imperfect</h3>
+  return (
+    <div className={styles.formLayoutGrid}>
+      <form
+        className={styles.form}
+        autoComplete="off"
+        onSubmit={this.handleSubmit}
+        onFocus={this.handleFocus}
+      >
+        <h3 className={styles.header}>Update Dutch Imperfect</h3>
 
-            <h3>{itemTranslation}</h3>
+        <h3>{itemTranslation}</h3>
 
-            <div>
-              <label className="form__label--check" htmlFor="upVerbTypeMixed">
-                <input
-                  id="upVerbTypeMixed"
-                  name="itemType"
-                  className="form__check"
-                  type="radio"
-                  value="mixed"
-                  checked={itemType === 'mixed'}
-                  onChange={this.handleChange}
-                />
+        <div>
+          <label className="form__label--check" htmlFor="upVerbTypeMixed">
+            <input
+              id="upVerbTypeMixed"
+              name="itemType"
+              className="form__check"
+              type="radio"
+              value="mixed"
+              checked={itemType === 'mixed'}
+              onChange={this.handleChange}
+            />
                 Mixed
               </label>
 
-              <label className="form__label--check" htmlFor="upVerbTypeStrong">
-                <input
-                  id="upVerbTypeStrong"
-                  name="itemType"
-                  className="form__check"
-                  type="radio"
-                  value="strong"
-                  checked={itemType === 'strong'}
-                  onChange={this.handleChange}
-                />
+          <label className="form__label--check" htmlFor="upVerbTypeStrong">
+            <input
+              id="upVerbTypeStrong"
+              name="itemType"
+              className="form__check"
+              type="radio"
+              value="strong"
+              checked={itemType === 'strong'}
+              onChange={this.handleChange}
+            />
                 Strong
               </label>
 
-              <label className="form__label--check" htmlFor="upVerbTypeWeak">
-                <input
-                  id="upVerbTypeWeak"
-                  name="itemType"
-                  className="form__check"
-                  type="radio"
-                  value="weak"
-                  checked={itemType === 'weak'}
-                  onChange={this.handleChange}
-                />
+          <label className="form__label--check" htmlFor="upVerbTypeWeak">
+            <input
+              id="upVerbTypeWeak"
+              name="itemType"
+              className="form__check"
+              type="radio"
+              value="weak"
+              checked={itemType === 'weak'}
+              onChange={this.handleChange}
+            />
                 Weak
               </label>
-            </div>
-            <Umlauts
-              className="form-umlauts"
-              input-type="verb"
-              input-field="translation"
-            />
+        </div>
+        <Umlauts
+          className="form-umlauts"
+          input-type="verb"
+          input-field="translation"
+        />
 
-            <FormInput
-              label="Example"
-              name="itemExample"
-              value={itemExample}
-              handleChange={this.handleChange}
-            />
+        <FormInput
+          label="Example"
+          name="itemExample"
+          value={itemExample}
+          handleChange={this.handleChange}
+        />
 
-            <button
-              type="button"
-              className="form__conjugate__button"
-              onClick={this.handleConjugateClick}
-            >
-              Conjugate
+        <button
+          type="button"
+          className="form__conjugate__button"
+          onClick={this.handleConjugateClick}
+        >
+          Conjugate
             </button>
 
-            <FormInput
-              label="ik"
-              name="itemIk"
-              value={itemIk}
-              handleChange={this.handleChange}
-              pos="verb"
-            />
+        <FormInput
+          label="ik"
+          name="itemIk"
+          value={itemIk}
+          handleChange={this.handleChange}
+          pos="verb"
+        />
 
-            <FormInput
-              label="jij"
-              name="itemJij"
-              value={itemJij}
-              handleChange={this.handleChange}
-              pos="verb"
-            />
+        <FormInput
+          label="jij"
+          name="itemJij"
+          value={itemJij}
+          handleChange={this.handleChange}
+          pos="verb"
+        />
 
-            <FormInput
-              label="hij"
-              name="itemHij"
-              value={itemHij}
-              handleChange={this.handleChange}
-              pos="verb"
-            />
+        <FormInput
+          label="hij"
+          name="itemHij"
+          value={itemHij}
+          handleChange={this.handleChange}
+          pos="verb"
+        />
 
-            <FormInput
-              label="u"
-              name="itemU"
-              value={itemU}
-              handleChange={this.handleChange}
-              pos="verb"
-            />
+        <FormInput
+          label="u"
+          name="itemU"
+          value={itemU}
+          handleChange={this.handleChange}
+          pos="verb"
+        />
 
-            <FormInput
-              label="wij"
-              name="itemWij"
-              value={itemWij}
-              handleChange={this.handleChange}
-              pos="verb"
-            />
+        <FormInput
+          label="wij"
+          name="itemWij"
+          value={itemWij}
+          handleChange={this.handleChange}
+          pos="verb"
+        />
 
-            <FormInput
-              label="jullie"
-              name="itemJullie"
-              value={itemJullie}
-              handleChange={this.handleChange}
-              pos="verb"
-            />
+        <FormInput
+          label="jullie"
+          name="itemJullie"
+          value={itemJullie}
+          handleChange={this.handleChange}
+          pos="verb"
+        />
 
-            <FormInput
-              label="zij"
-              name="itemZij"
-              value={itemZij}
-              handleChange={this.handleChange}
-              pos="verb"
-            />
+        <FormInput
+          label="zij"
+          name="itemZij"
+          value={itemZij}
+          handleChange={this.handleChange}
+          pos="verb"
+        />
 
-            <button className="form__button" type="submit">{`${btnValue}`}</button>
+        <button className="form__button" type="submit">{`${btnValue}`}</button>
 
-            <FormMessage response={response} status={status} />
-          </form>
+        <FormMessage messageValues={messageValues} />
+      </form>
 
-          {modifyType === 'update' && (
-            <UpdateSelector
-              categoryType="range"
-              handleIconClick={this.handleIconClick}
-              fetchUrl={fetchUrl}
-              propNameDisplay="translation"
-              propNameToolTip="english"
-            />
-          )}
-        </div>
-      </div>
-    );
-  }
-}
-
-VerbImperfect.contextType = LearningContext;
+      {modifyType === 'update' && (
+        <UpdateSelector
+          categoryType="range"
+          handleIconClick={this.handleIconClick}
+          fetchUrl={fetchUrl}
+          propNameDisplay="translation"
+          propNameToolTip="english"
+        />
+      )}
+    </div>
+  );
+};
 
 VerbImperfect.propTypes = {
   handleSubmit: PropTypes.func,

@@ -15,27 +15,35 @@ import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
 
-class Noun extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      itemId: '',
-      itemEnglish: '',
-      itemBase: '',
-      itemTranslation: '',
-      itemExample: '',
-      itemGender: '',
-      itemImage: 'none',
-      itemCategory: '',
-      itemCategory2: '5',
-      response: '',
-      status: '',
-      isDialogShown: false,
-      dialogMessage: 'Are you sure you want to make this change?',
-    };
-  }
+const Noun = ({
+  handleSubmit,
+  categoryName,
+  modifyType,
+  fetchUpdatedData,
+  updateData,
+}) => {
+  const initialFormState = {
+    itemId: '',
+    itemEnglish: '',
+    itemBase: '',
+    itemTranslation: '',
+    itemExample: '',
+    itemGender: '',
+    itemImage: 'none',
+    itemCategory: '',
+    itemCategory2: '5',
+  };
+  const reducer = (state, newState) => ({ ...state, ...newState });
+  const { categories, lang, labels } = useContext(LearningContext);
+  const { us } = labels;
+  const [formState, setFormState] = useReducer(reducer, initialFormState);
+  const [messageValues, setMessageValues] = useState({ message: '', status: '' });
 
-  clearForm = () => {
+  useEffect(() => {
+    setFormState(updateData);
+  }, [updateData]);
+
+  const clearForm = () => {
     const { modifyType } = this.props;
 
     if (modifyType === 'update') {
@@ -63,49 +71,22 @@ class Noun extends Component {
     }
   };
 
-  handleIconClick = (e) => {
-    const { lang } = this.context;
-    const { isUpdateDeleteListVisible } = this.state;
+  const handleIconClick = (e) => {
     const itemId = e.target.getAttribute('data-id');
-    fetch(`https://phoenixjaymes.com/api/language/nouns/${itemId}?lang=${lang}`)
-      .then((reponse) => reponse.json())
-      .then((responseData) => {
-        if (responseData.status === 'success') {
-          const data = responseData.data[0];
-          this.setState({
-            itemId: data.id,
-            itemEnglish: data.english,
-            itemBase: data.base,
-            itemTranslation: data.translation,
-            itemExample: data.example,
-            itemGender: data.gender,
-            itemImage: data.img,
-            itemCategory: data.category,
-            itemCategory2: data.category2,
-            isUpdateDeleteListVisible: !isUpdateDeleteListVisible,
-            response: '',
-            status: '',
-          });
-        } else {
-          console.log(responseData);
-        }
-      })
-      .catch((error) => {
-        console.log('Error fetching and parsing data', error);
-      });
+    fetchUpdatedData(`https://phoenixjaymes.com/api/language/nouns/${itemId}?lang=${lang}`);
   };
 
-  handleVisibility = () => {
+  const handleVisibility = () => {
     const { isUpdateDeleteListVisible } = this.state;
     this.setState({ isUpdateDeleteListVisible: !isUpdateDeleteListVisible });
   };
 
-  handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
-  handleTranslation = (e) => {
+  const handleTranslation = (e) => {
     const rExpDer = /\bder\s/i;
     const rExpDie = /\bdie\s/i;
     const rExpDas = /\bdas\s/i;
@@ -132,7 +113,7 @@ class Noun extends Component {
     });
   };
 
-  isValid = () => {
+  const isValid = () => {
     const {
       itemEnglish,
       itemBase,
@@ -159,7 +140,11 @@ class Noun extends Component {
     return true;
   };
 
-  handleSubmit = (e) => {
+  const handleFocus = () => {
+    setMessageValues({ message: '', status: '' });
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!this.isValid()) {
@@ -176,7 +161,7 @@ class Noun extends Component {
     });
   };
 
-  submitForm = () => {
+  const submitForm = () => {
     const { lang } = this.context;
     const {
       itemId,
@@ -236,132 +221,100 @@ class Noun extends Component {
       });
   };
 
-  handleFocus = () => {
-    this.setState({
-      response: '',
-      status: '',
-    });
-  };
-
-  render() {
-    const { categories, lang, labels } = this.context;
-    const { us } = labels;
-    const {
-      isDialogShown,
-      dialogMessage,
-      itemEnglish,
-      itemBase,
-      itemTranslation,
-      itemExample,
-      itemGender,
-      itemImage,
-      itemCategory,
-      itemCategory2,
-      response,
-      status,
-    } = this.state;
-    const { modifyType, categoryName } = this.props;
-
-    const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
+  const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
       ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
 
-    const langName = us.languages[lang];
-    const heading = modifyType === 'update'
-      ? `Update ${langName} Nouns`
-      : `Add ${langName} Nouns`;
-    const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
-    const fetchUrl = `https://phoenixjaymes.com/api/language/nouns?lang=${lang}&cat=`;
+  const langName = us.languages[lang];
+  const heading = modifyType === 'update'
+    ? `Update ${langName} Nouns`
+    : `Add ${langName} Nouns`;
+  const gridClass = modifyType === 'update' ? styles.formLayoutGrid : '';
+  const fetchUrl = `https://phoenixjaymes.com/api/language/nouns?lang=${lang}&cat=`;
 
-
-    return (
-      <div>
-        <div className={gridClass}>
-          <form
-            className={styles.form}
-            onSubmit={this.handleSubmit}
-            onFocus={this.handleFocus}
-          >
-            <h3 className={styles.header}>{heading}</h3>
-            <div className="form__grid-2">
-              <FormSelect
-                name="itemCategory"
-                label="Category 1"
-                categories={categories.all.general}
-                selected={itemCategory}
-                handleCategory={this.handleChange}
-              />
-              <FormSelect
-                name="itemCategory2"
-                label="Category 2"
-                categories={categories.all.general}
-                selected={itemCategory2}
-                handleCategory={this.handleChange}
-              />
-            </div>
-
-            <FormInput
-              label="English"
-              name="itemEnglish"
-              value={itemEnglish}
-              handleChange={this.handleChange}
-            />
-
-            <FormInput
-              label={`Translation - ${itemBase}`}
-              name="itemTranslation"
-              value={itemTranslation}
-              handleChange={this.handleTranslation}
-            />
-
-            <Umlauts
-              className="form-umlauts"
-              input-type="word"
-              input-field="translation"
-            />
-
-            <FormInput
-              label="Example"
-              name="itemExample"
-              value={itemExample}
-              handleChange={this.handleChange}
-            />
-
-            <FormInput
-              label="Image"
-              name="itemImage"
-              value={itemImage}
-              handleChange={this.handleChange}
-            />
-
-            <FormSelect
-              label="Gender"
-              name="itemGender"
-              categories={categories[lang].gender}
-              selected={itemGender}
-              handleCategory={this.handleChange}
-            />
-
-            <button className="form__button" type="submit">{`${btnValue}`}</button>
-
-            <FormMessage response={response} status={status} />
-          </form>
-
-          {modifyType === 'update' && (
-            <UpdateSelector
-              categoryType="noun"
-              handleIconClick={this.handleIconClick}
-              fetchUrl={fetchUrl}
-              propNameDisplay="translation"
-              propNameToolTip="english"
-            />
-          )}
+  return (
+    <div className={gridClass}>
+      <form
+        className={styles.form}
+        onSubmit={this.handleSubmit}
+        onFocus={this.handleFocus}
+      >
+        <h3 className={styles.header}>{heading}</h3>
+        <div className="form__grid-2">
+          <FormSelect
+            name="itemCategory"
+            label="Category 1"
+            categories={categories.all.general}
+            selected={itemCategory}
+            handleCategory={this.handleChange}
+          />
+          <FormSelect
+            name="itemCategory2"
+            label="Category 2"
+            categories={categories.all.general}
+            selected={itemCategory2}
+            handleCategory={this.handleChange}
+          />
         </div>
-      </div>
-    );
-  }
-}
 
-Noun.contextType = LearningContext;
+        <FormInput
+          label="English"
+          name="itemEnglish"
+          value={itemEnglish}
+          handleChange={this.handleChange}
+        />
+
+        <FormInput
+          label={`Translation - ${itemBase}`}
+          name="itemTranslation"
+          value={itemTranslation}
+          handleChange={this.handleTranslation}
+        />
+
+        <Umlauts
+          className="form-umlauts"
+          input-type="word"
+          input-field="translation"
+        />
+
+        <FormInput
+          label="Example"
+          name="itemExample"
+          value={itemExample}
+          handleChange={this.handleChange}
+        />
+
+        <FormInput
+          label="Image"
+          name="itemImage"
+          value={itemImage}
+          handleChange={this.handleChange}
+        />
+
+        <FormSelect
+          label="Gender"
+          name="itemGender"
+          categories={categories[lang].gender}
+          selected={itemGender}
+          handleCategory={this.handleChange}
+        />
+
+        <button className="form__button" type="submit">{`${btnValue}`}</button>
+
+        <FormMessage messageValues={messageValues} />
+      </form>
+
+      {modifyType === 'update' && (
+        <UpdateSelector
+          categoryType="noun"
+          handleIconClick={this.handleIconClick}
+          fetchUrl={fetchUrl}
+          propNameDisplay="translation"
+          propNameToolTip="english"
+        />
+      )}
+    </div>
+  );
+};
 
 Noun.propTypes = {
   handleSubmit: PropTypes.func,
