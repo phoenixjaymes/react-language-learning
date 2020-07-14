@@ -34,6 +34,10 @@ const Sentence = ({
   const { us } = labels;
   const [formState, setFormState] = useReducer(reducer, initialFormState);
   const [messageValues, setMessageValues] = useState({ message: '', status: '' });
+  const [labelValues, setLabelValues] = useState({
+    statement: 'Statement (english)',
+    translation: 'Translation',
+  });
 
   useEffect(() => {
     setFormState(updateData);
@@ -59,19 +63,19 @@ const Sentence = ({
 
   const setLabels = (id) => {
     if (id === '1') {
-      setState({
-        labelStatement: 'Statement - english',
-        labelTranslation: 'Translation',
+      setLabelValues({
+        statement: 'Statement (english)',
+        translation: 'Translation',
       });
     } else if (id === '2') {
-      setState({
-        labelStatement: 'Question - english',
-        labelTranslation: 'Translation',
+      setLabelValues({
+        statement: 'Question (english)',
+        translation: 'Translation',
       });
     } else if (id === '3') {
-      setState({
-        labelStatement: 'Question - foreign',
-        labelTranslation: 'Answer - foreign',
+      setLabelValues({
+        statement: 'Question (foreign)',
+        translation: 'Answer (foreign)',
       });
     }
   };
@@ -170,14 +174,14 @@ const Sentence = ({
         </div>
 
         <FormTextarea
-          label={labelStatement}
+          label={labelValues.statement}
           name="sentence"
           value={formState.sentence}
           handleChange={handleChange}
         />
 
         <FormTextarea
-          label={labelTranslation}
+          label={labelValues.translation}
           name="answer1"
           value={formState.answer1}
           handleChange={handleChange}
