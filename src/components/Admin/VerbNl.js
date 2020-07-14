@@ -108,18 +108,6 @@ const VerbNl = ({
     setFormState({ [name]: newValue });
   };
 
-  // const handleSeparable = () => setState((prevState) => ({
-  //   itemSeparable: prevState.itemSeparable === 'yes' ? 'no' : 'yes',
-  // }));
-
-  // const handleReflexive = () => setState((prevState) => ({
-  //   itemReflexive: prevState.itemReflexive === 'yes' ? 'no' : 'yes',
-  // }));
-
-  // const handleDative = () => setState((prevState) => ({
-  //   itemDative: prevState.itemDative === 'yes' ? 'no' : 'yes',
-  // }));
-
   const isValid = () => {
     if (
       formState.english === ''
@@ -184,9 +172,9 @@ const VerbNl = ({
       >
         <h3 className={styles.header}>{heading}</h3>
 
-        <label className="form__label--check" htmlFor="upVerbSeparable">
+        <label className="form__label--check" htmlFor="separable">
           <input
-            id="upVerbSeparable"
+            id="separable"
             name="separable"
             className="form__check"
             type="checkbox"
@@ -196,9 +184,9 @@ const VerbNl = ({
           Separable
         </label>
 
-        <label className="form__label--check" htmlFor="upVerbReflexive">
+        <label className="form__label--check" htmlFor="reflexive">
           <input
-            id="upVerbReflexive"
+            id="reflexive"
             name="reflexive"
             className="form__check"
             type="checkbox"
@@ -208,9 +196,9 @@ const VerbNl = ({
           Reflexive
         </label>
 
-        <label className="form__label--check" htmlFor="upVerbDative">
+        <label className="form__label--check" htmlFor="dative">
           <input
-            id="upVerbDative"
+            id="dative"
             name="dative"
             className="form__check"
             type="checkbox"

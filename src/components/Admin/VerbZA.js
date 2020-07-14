@@ -80,18 +80,6 @@ const VerbZA = ({
     setFormState({ [name]: newValue });
   };
 
-  // const handleSeparable = () => setState((prevState) => ({
-  //   itemSeparable: prevState.itemSeparable === 'yes' ? 'no' : 'yes',
-  // }));
-
-  // const handleReflexive = () => setState((prevState) => ({
-  //   itemReflexive: prevState.itemReflexive === 'yes' ? 'no' : 'yes',
-  // }));
-
-  // const handleDative = () => setState((prevState) => ({
-  //   itemDative: prevState.itemDative === 'yes' ? 'no' : 'yes',
-  // }));
-
   const isValid = () => {
     if (
       formState.english === ''
@@ -151,9 +139,9 @@ const VerbZA = ({
       >
         <h3 className={styles.header}>{heading}</h3>
 
-        <label className="form__label--check" htmlFor="upVerbSeparable">
+        <label className="form__label--check" htmlFor="separable">
           <input
-            id="upVerbSeparable"
+            id="separable"
             name="separable"
             className="form__check"
             type="checkbox"
@@ -163,9 +151,9 @@ const VerbZA = ({
           Separable
         </label>
 
-        <label className="form__label--check" htmlFor="upVerbReflexive">
+        <label className="form__label--check" htmlFor="reflexive">
           <input
-            id="upVerbReflexive"
+            id="reflexive"
             name="reflexive"
             className="form__check"
             type="checkbox"
@@ -175,9 +163,9 @@ const VerbZA = ({
           Reflexive
         </label>
 
-        <label className="form__label--check" htmlFor="upVerbDative">
+        <label className="form__label--check" htmlFor="dative">
           <input
-            id="upVerbDative"
+            id="dative"
             name="dative"
             className="form__check"
             type="checkbox"
@@ -191,7 +179,7 @@ const VerbZA = ({
           <label className="form__label--check" htmlFor="upVerbTypeMixed">
             <input
               id="upVerbTypeMixed"
-              name="itemtype"
+              name="type"
               className="form__check"
               type="radio"
               value="mixed"
@@ -204,7 +192,7 @@ const VerbZA = ({
           <label className="form__label--check" htmlFor="upVerbTypeStrong">
             <input
               id="upVerbTypeStrong"
-              name="itemtype"
+              name="type"
               className="form__check"
               type="radio"
               value="strong"
@@ -217,7 +205,7 @@ const VerbZA = ({
           <label className="form__label--check" htmlFor="upVerbTypeWeak">
             <input
               id="upVerbTypeWeak"
-              name="itemtype"
+              name="type"
               className="form__check"
               type="radio"
               value="weak"
