@@ -10,8 +10,6 @@ import FormSelect from './FormComponents/FormSelect';
 import FormInput from './FormComponents/FormInput';
 import FormTextarea from './FormComponents/FormTextarea';
 import FormMessage from './FormComponents/FormMessage';
-import Umlauts from './Umlauts';
-
 import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
@@ -24,11 +22,11 @@ const Blank = ({
   updateData,
 }) => {
   const initialFormState = {
-    itemId: '',
-    itemCategory: '',
-    itemSentence: '',
-    itemAnswer: '',
-    itemWords: '',
+    id: '',
+    category: '',
+    sentence: '',
+    answer: '',
+    words: '',
   };
   const reducer = (state, newState) => ({ ...state, ...newState });
   const { categories, lang, labels } = useContext(LearningContext);
@@ -41,11 +39,10 @@ const Blank = ({
   }, [updateData]);
 
   const clearForm = () => {
-    this.setState({
-      itemId: '',
-      itemSentence: '',
-      itemAnswer: '',
-      // itemWords: '',
+    setFormState({
+      id: '',
+      category: '',
+      sentence: '',
     });
   };
 
@@ -56,19 +53,15 @@ const Blank = ({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    setFormState({ [name]: value });
   };
 
   const isValid = () => {
-    const {
-      itemSentence, itemAnswer, itemWords, itemCategory,
-    } = this.state;
-
     if (
-      itemSentence === ''
-      || itemAnswer === ''
-      || itemWords === ''
-      || itemCategory === ''
+      formState.sentence === ''
+      || formState.answer === ''
+      || formState.words === ''
+      || formState.category === ''
     ) {
       return false;
     }
@@ -79,73 +72,27 @@ const Blank = ({
     setMessageValues({ message: '', status: '' });
   };
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
+    let fetchUrl = '';
 
-    if (!this.isValid()) {
-      this.setState({
-        response: 'Please fill in all feilds',
+    if (!isValid()) {
+      setMessageValues({
+        message: 'Please fill in all feilds',
         status: 'fail',
       });
       return;
     }
 
-    this.setState({
-      isDialogShown: true,
-      response: '',
-    });
-  };
-
-  const submitForm = () => {
-    const { lang } = this.context;
-    const {
-      itemId,
-      itemSentence,
-      itemCategory,
-      itemAnswer,
-      itemWords,
-    } = this.state;
-    const { modifyType } = this.props;
-    let fetchUrl;
-    const formData = new FormData();
-    formData.append('lang', lang);
-    formData.append('pos', 'blank');
-    formData.append('category', itemCategory);
-    formData.append('sentence', itemSentence.trim());
-    formData.append('answer', itemAnswer.trim());
-    formData.append('words', itemWords.trim());
+    setMessageValues({ message: '', status: '' });
 
     if (modifyType === 'add') {
       fetchUrl = `https://phoenixjaymes.com/api/language/blanks?lang=${lang}`;
     } else {
-      fetchUrl = `https://phoenixjaymes.com/api/language/blanks/${itemId}?lang=${lang}`;
+      fetchUrl = `https://phoenixjaymes.com/api/language/blanks/${formState.Id}?lang=${lang}`;
     }
 
-    fetch(fetchUrl, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
-      },
-      body: formData,
-    })
-      .then((reponse) => reponse.json())
-      .then((responseData) => {
-        if (responseData.status === 'success') {
-          this.clearForm();
-          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
-        } else if (responseData.status === 'fail') {
-          this.setState({ response: Object.values(responseData.data).join(', ') });
-        } else {
-          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
-        }
-        this.setState({ status: responseData.status });
-      })
-      .catch((error) => {
-        this.setState({
-          response: `Error fetching and parsing data, ${error}`,
-          status: 'error',
-        });
-      });
+    handleSubmit(modifyType, fetchUrl, formState);
   };
 
   const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)}
@@ -162,60 +109,49 @@ const Blank = ({
     <div className={gridClass}>
       <form
         className={styles.form}
-        onSubmit={this.handleSubmit}
-        onFocus={this.handleFocus}
+        onSubmit={handleFormSubmit}
+        onFocus={handleFocus}
       >
         <h3 className={styles.header}>{heading}</h3>
 
         <FormSelect
-          name="itemCategory"
+          name="category"
           label="Category"
           categories={categories.all.generalSentence}
-          selected={itemCategory}
-          handleCategory={this.handleChange}
+          selected={formState.category}
+          handleCategory={handleChange}
         />
 
         <FormTextarea
           label="Sentence"
-          name="itemSentence"
-          value={itemSentence}
-          handleChange={this.handleChange}
+          name="sentence"
+          value={formState.sentence}
+          handleChange={handleChange}
         />
 
         <FormTextarea
           label="Answer"
-          name="itemAnswer"
-          value={itemAnswer}
-          handleChange={this.handleChange}
-        />
-
-        <Umlauts
-          className="form-umlauts"
-          input-type="word"
-          input-field="translation"
+          name="answer"
+          value={formState.answer}
+          handleChange={handleChange}
         />
 
         <FormInput
           label="Words"
-          name="itemWords"
-          value={itemWords}
-          handleChange={this.handleChange}
+          name="words"
+          value={formState.words}
+          handleChange={handleChange}
         />
 
         <button className="form__button" type="submit">{`${btnValue}`}</button>
 
         <FormMessage messageValues={messageValues} />
-
-        {/* <Umlauts
-              umlautStyles={umlautStyles}
-              handleUmlautClick={this.handleUmlautClick}
-            /> */}
       </form>
 
       {modifyType === 'update' && (
         <UpdateSelector
           categoryType="blank"
-          handleIconClick={this.handleIconClick}
+          handleIconClick={handleIconClick}
           fetchUrl={fetchUrl}
           propNameDisplay="sentence"
           propNameToolTip="answer"

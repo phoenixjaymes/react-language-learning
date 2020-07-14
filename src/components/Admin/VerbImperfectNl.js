@@ -10,8 +10,6 @@ import { conjugateImperfect } from './conjugateVerbs';
 import UpdateSelector from './UpdateSelector';
 import FormInput from './FormComponents/FormInput';
 import FormMessage from './FormComponents/FormMessage';
-import Umlauts from './Umlauts';
-
 import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
@@ -24,17 +22,15 @@ const VerbImperfect = ({
   updateData,
 }) => {
   const initialFormState = {
-    itemId: '',
-    itemTranslation: '-',
-    itemExample: '',
-    itemType: '',
-    itemIk: '',
-    itemJij: '',
-    itemHij: '',
-    itemU: '',
-    itemWij: '',
-    itemJullie: '',
-    itemZij: '',
+    id: '',
+    example: '',
+    ik: '',
+    jij: '',
+    hij: '',
+    u: '',
+    wij: '',
+    jullie: '',
+    zij: '',
   };
   const reducer = (state, newState) => ({ ...state, ...newState });
   const { categories, lang, labels } = useContext(LearningContext);
@@ -47,7 +43,17 @@ const VerbImperfect = ({
   }, [updateData]);
 
   const clearForm = () => {
-    console.log('clearing form');
+    setFormState({
+      id: '',
+      example: '',
+      ik: '',
+      jij: '',
+      hij: '',
+      u: '',
+      wij: '',
+      jullie: '',
+      zij: '',
+    });
   };
 
   const handleIconClick = (e) => {
@@ -56,48 +62,36 @@ const VerbImperfect = ({
   };
 
   const handleConjugateClick = () => {
-    const { itemTranslation, itemType } = this.state;
     const [ik, jij, hij, u, wij, jullie, zij] = conjugateImperfect(
-      itemTranslation,
-      itemType,
+      formState.translation,
+      formState.type,
     );
-    this.setState({
-      itemIk: ik,
-      itemJij: jij,
-      itemHij: hij,
-      itemU: u,
-      itemWij: wij,
-      itemJullie: jullie,
-      itemZij: zij,
+    setFormState({
+      ik,
+      jij,
+      hij,
+      u,
+      wij,
+      jullie,
+      zij,
     });
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    setFormState({ [name]: value });
   };
 
   const isValid = () => {
-    const {
-      itemExample,
-      itemIk,
-      itemJij,
-      itemHij,
-      itemU,
-      itemWij,
-      itemJullie,
-      itemZij,
-    } = this.state;
-
     if (
-      itemExample === ''
-      || itemIk === ''
-      || itemJij === ''
-      || itemHij === ''
-      || itemU === ''
-      || itemWij === ''
-      || itemJullie === ''
-      || itemZij === ''
+      formState.example === ''
+      || formState.ik === ''
+      || formState.jij === ''
+      || formState.hij === ''
+      || formState.u === ''
+      || formState.wij === ''
+      || formState.jullie === ''
+      || formState.zij === ''
     ) {
       return false;
     }
@@ -108,78 +102,22 @@ const VerbImperfect = ({
     setMessageValues({ message: '', status: '' });
   };
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    if (!this.isValid()) {
-      this.setState({
-        response: 'Please fill in all feilds',
+    if (!isValid()) {
+      setMessageValues({
+        message: 'Please fill in all feilds',
         status: 'fail',
       });
       return;
     }
 
-    this.setState({
-      isDialogShown: true,
-      response: '',
-    });
-  };
+    setMessageValues({ message: '', status: '' });
 
-  const submitForm = () => {
-    const { lang } = this.context;
-    const {
-      itemId,
-      itemExample,
-      itemType,
-      itemIk,
-      itemJij,
-      itemHij,
-      itemU,
-      itemWij,
-      itemJullie,
-      itemZij,
-    } = this.state;
-    const fetchUrl = `https://phoenixjaymes.com/api/language/verbs/${itemId}?lang=${lang}&tense=imperfect`;
+    const fetchUrl = `https://phoenixjaymes.com/api/language/verbs/${formState.id}?lang=${lang}&tense=imperfect`;
 
-    const formData = new FormData();
-    formData.append('lang', lang);
-    formData.append('id', itemId);
-    formData.append('pos', 'imperfect');
-    formData.append('example', itemExample.trim());
-    formData.append('type', itemType);
-    formData.append('ik', itemIk.trim());
-    formData.append('jij', itemJij.trim());
-    formData.append('hij', itemHij.trim());
-    formData.append('u', itemU.trim());
-    formData.append('wij', itemWij.trim());
-    formData.append('jullie', itemJullie.trim());
-    formData.append('zij', itemZij.trim());
-
-    fetch(fetchUrl, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
-      },
-      body: formData,
-    })
-      .then((reponse) => reponse.json())
-      .then((responseData) => {
-        if (responseData.status === 'success') {
-          this.clearForm();
-          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
-        } else if (responseData.status === 'fail') {
-          this.setState({ response: Object.values(responseData.data).join(', ') });
-        } else {
-          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
-        }
-        this.setState({ status: responseData.status });
-      })
-      .catch((error) => {
-        this.setState({
-          response: `Error fetching and parsing data, ${error}`,
-          status: 'error',
-        });
-      });
+    handleSubmit(modifyType, fetchUrl, formState);
   };
 
   const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
@@ -191,127 +129,122 @@ const VerbImperfect = ({
       <form
         className={styles.form}
         autoComplete="off"
-        onSubmit={this.handleSubmit}
-        onFocus={this.handleFocus}
+        onSubmit={handleFormSubmit}
+        onFocus={handleFocus}
       >
         <h3 className={styles.header}>Update Dutch Imperfect</h3>
 
-        <h3>{itemTranslation}</h3>
+        <h3>{formState.translation}</h3>
 
         <div>
           <label className="form__label--check" htmlFor="upVerbTypeMixed">
             <input
               id="upVerbTypeMixed"
-              name="itemType"
+              name="type"
               className="form__check"
               type="radio"
               value="mixed"
-              checked={itemType === 'mixed'}
-              onChange={this.handleChange}
+              checked={formState.type === 'mixed'}
+              onChange={handleChange}
             />
-                Mixed
-              </label>
+            Mixed
+          </label>
 
           <label className="form__label--check" htmlFor="upVerbTypeStrong">
             <input
               id="upVerbTypeStrong"
-              name="itemType"
+              name="type"
               className="form__check"
               type="radio"
               value="strong"
-              checked={itemType === 'strong'}
-              onChange={this.handleChange}
+              checked={formState.type === 'strong'}
+              onChange={handleChange}
             />
-                Strong
-              </label>
+            Strong
+          </label>
 
           <label className="form__label--check" htmlFor="upVerbTypeWeak">
             <input
               id="upVerbTypeWeak"
-              name="itemType"
+              name="type"
               className="form__check"
               type="radio"
               value="weak"
-              checked={itemType === 'weak'}
-              onChange={this.handleChange}
+              checked={formState.type === 'weak'}
+              onChange={handleChange}
             />
-                Weak
-              </label>
+            Weak
+          </label>
         </div>
-        <Umlauts
-          className="form-umlauts"
-          input-type="verb"
-          input-field="translation"
-        />
 
         <FormInput
           label="Example"
-          name="itemExample"
-          value={itemExample}
-          handleChange={this.handleChange}
+          name="example"
+          value={formState.example}
+          handleChange={handleChange}
         />
 
         <button
           type="button"
           className="form__conjugate__button"
-          onClick={this.handleConjugateClick}
+          onClick={handleConjugateClick}
         >
           Conjugate
-            </button>
+        </button>
 
         <FormInput
           label="ik"
-          name="itemIk"
-          value={itemIk}
-          handleChange={this.handleChange}
+          name="ik"
+          value={formState.ik}
+          handleChange={handleChange}
           pos="verb"
         />
 
         <FormInput
           label="jij"
-          name="itemJij"
-          value={itemJij}
-          handleChange={this.handleChange}
+          name="jij"
+          value={formState.jij}
+          handleChange={handleChange}
           pos="verb"
         />
 
         <FormInput
           label="hij"
-          name="itemHij"
-          value={itemHij}
-          handleChange={this.handleChange}
+          name="hij"
+          value={formState.hij}
+          handleChange={handleChange}
           pos="verb"
         />
 
         <FormInput
           label="u"
-          name="itemU"
-          value={itemU}
-          handleChange={this.handleChange}
+          name="u"
+          value={formState.u}
+          handleChange={handleChange}
           pos="verb"
         />
 
         <FormInput
           label="wij"
-          name="itemWij"
-          value={itemWij}
-          handleChange={this.handleChange}
+          name="wij"
+          value={formState.wij}
+          handleChange={handleChange}
           pos="verb"
         />
 
         <FormInput
           label="jullie"
-          name="itemJullie"
-          value={itemJullie}
-          handleChange={this.handleChange}
+          name="jullie"
+          value={formState.jullie}
+          handleChange={handleChange}
           pos="verb"
         />
 
         <FormInput
           label="zij"
-          name="itemZij"
-          value={itemZij}
-          handleChange={this.handleChange}
+          name="zij"
+          value={formState.zij}
+          handleChange={handleChange}
           pos="verb"
         />
 
@@ -323,7 +256,7 @@ const VerbImperfect = ({
       {modifyType === 'update' && (
         <UpdateSelector
           categoryType="range"
-          handleIconClick={this.handleIconClick}
+          handleIconClick={handleIconClick}
           fetchUrl={fetchUrl}
           propNameDisplay="translation"
           propNameToolTip="english"

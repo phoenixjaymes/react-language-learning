@@ -10,8 +10,6 @@ import { conjugatePresent } from './conjugateVerbs';
 import UpdateSelector from './UpdateSelector';
 import FormInput from './FormComponents/FormInput';
 import FormMessage from './FormComponents/FormMessage';
-import Umlauts from './Umlauts';
-
 import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
@@ -24,22 +22,22 @@ const VerbNl = ({
   updateData,
 }) => {
   const initialFormState = {
-    itemId: '',
-    itemEnglish: '',
-    itemInfinitive: '',
-    itemTranslation: '',
-    itemExample: '',
-    itemType: '',
-    itemSeparable: 'no',
-    itemReflexive: 'no',
-    itemDative: 'no',
-    itemIk: '',
-    itemJij: '',
-    itemHij: '',
-    itemU: '',
-    itemWij: '',
-    itemJullie: '',
-    itemZij: '',
+    id: '',
+    english: '',
+    infinitive: '',
+    translation: '',
+    example: '',
+    type: '',
+    separable: 'no',
+    reflexive: 'no',
+    dative: 'no',
+    ik: '',
+    jij: '',
+    hij: '',
+    u: '',
+    wij: '',
+    jullie: '',
+    zij: '',
   };
   const reducer = (state, newState) => ({ ...state, ...newState });
   const { categories, lang, labels } = useContext(LearningContext);
@@ -52,7 +50,24 @@ const VerbNl = ({
   }, [updateData]);
 
   const clearForm = () => {
-    console.log('clearing form');
+    setFormState({
+      id: '',
+      english: '',
+      infinitive: '',
+      translation: '',
+      example: '',
+      type: '',
+      separable: 'no',
+      reflexive: 'no',
+      dative: 'no',
+      ik: '',
+      jij: '',
+      hij: '',
+      u: '',
+      wij: '',
+      jullie: '',
+      zij: '',
+    });
   };
 
   const handleIconClick = (e) => {
@@ -61,74 +76,64 @@ const VerbNl = ({
   };
 
   const handleConjugateClick = () => {
-    const { itemTranslation } = this.state;
-    const [ich, du, er, wir, ihr, sie] = conjugatePresent(itemTranslation);
-    this.setState({
-      itemIch: ich,
-      itemDu: du,
-      itemEr: er,
-      itemWir: wir,
-      itemIhr: ihr,
-      itemSie: sie,
+    const [ich, du, er, wir, ihr, sie] = conjugatePresent(formState.Translation);
+    setFormState({
+      ich,
+      du,
+      er,
+      wir,
+      ihr,
+      sie,
     });
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    setFormState({ [name]: value });
   };
 
   const handleTranslation = (e) => {
-    this.setState({
-      itemTranslation: e.target.value,
-      itemInfinitive: e.target.value
+    setFormState({
+      translation: e.target.value,
+      infinitive: e.target.value
         .replace(/·/g, '')
         .replace(/\([\wÄÖÜäöü¨ß·-]*\)/i, '')
         .trim(),
     });
   };
 
-  const handleSeparable = () => this.setState((prevState) => ({
-    itemSeparable: prevState.itemSeparable === 'yes' ? 'no' : 'yes',
-  }));
+  const handleChangeCheck = (e) => {
+    const { name } = e.target;
+    const newValue = formState[name] === 'yes' ? 'no' : 'yes';
+    setFormState({ [name]: newValue });
+  };
 
-  const handleReflexive = () => this.setState((prevState) => ({
-    itemReflexive: prevState.itemReflexive === 'yes' ? 'no' : 'yes',
-  }));
+  // const handleSeparable = () => setState((prevState) => ({
+  //   itemSeparable: prevState.itemSeparable === 'yes' ? 'no' : 'yes',
+  // }));
 
-  const handleDative = () => this.setState((prevState) => ({
-    itemDative: prevState.itemDative === 'yes' ? 'no' : 'yes',
-  }));
+  // const handleReflexive = () => setState((prevState) => ({
+  //   itemReflexive: prevState.itemReflexive === 'yes' ? 'no' : 'yes',
+  // }));
+
+  // const handleDative = () => setState((prevState) => ({
+  //   itemDative: prevState.itemDative === 'yes' ? 'no' : 'yes',
+  // }));
 
   const isValid = () => {
-    const {
-      itemEnglish,
-      itemInfinitive,
-      itemTranslation,
-      itemExample,
-      itemType,
-      itemIk,
-      itemJij,
-      itemHij,
-      itemU,
-      itemWij,
-      itemJullie,
-      itemZij,
-    } = this.state;
-
     if (
-      itemEnglish === ''
-      || itemInfinitive === ''
-      || itemTranslation === ''
-      || itemExample === ''
-      || itemType === ''
-      || itemIk === ''
-      || itemJij === ''
-      || itemHij === ''
-      || itemU === ''
-      || itemWij === ''
-      || itemJullie === ''
-      || itemZij === ''
+      formState.english === ''
+      || formState.infinitive === ''
+      || formState.translation === ''
+      || formState.example === ''
+      || formState.type === ''
+      || formState.ik === ''
+      || formState.jij === ''
+      || formState.hij === ''
+      || formState.u === ''
+      || formState.wij === ''
+      || formState.jullie === ''
+      || formState.zij === ''
     ) {
       return false;
     }
@@ -139,97 +144,27 @@ const VerbNl = ({
     setMessageValues({ message: '', status: '' });
   };
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
+    let fetchUrl = '';
 
-    if (!this.isValid()) {
-      this.setState({
-        response: 'Please fill in all feilds',
+    if (!isValid()) {
+      setMessageValues({
+        message: 'Please fill in all feilds',
         status: 'fail',
       });
       return;
     }
 
-    this.setState({
-      isDialogShown: true,
-      response: '',
-    });
-  };
-
-  const submitForm = () => {
-    const { lang } = this.context;
-    let fetchUrl;
-    const {
-      itemId,
-      itemEnglish,
-      itemInfinitive,
-      itemTranslation,
-      itemExample,
-      itemType,
-      itemSeparable,
-      itemReflexive,
-      itemDative,
-      itemIk,
-      itemJij,
-      itemHij,
-      itemU,
-      itemWij,
-      itemJullie,
-      itemZij,
-    } = this.state;
-    const { modifyType } = this.props;
-
-    const formData = new FormData();
-    formData.append('lang', lang);
-    formData.append('pos', 'verb');
-    formData.append('english', itemEnglish.trim());
-    formData.append('infinitive', itemInfinitive.trim());
-    formData.append('translation', itemTranslation.trim());
-    formData.append('example', itemExample.trim());
-    formData.append('type', itemType);
-    formData.append('separable', itemSeparable);
-    formData.append('reflexive', itemReflexive);
-    formData.append('dative', itemDative);
-    formData.append('ik', itemIk.trim());
-    formData.append('jij', itemJij.trim());
-    formData.append('hij', itemHij.trim());
-    formData.append('u', itemU.trim());
-    formData.append('wij', itemWij.trim());
-    formData.append('jullie', itemJullie.trim());
-    formData.append('zij', itemZij.trim());
+    setMessageValues({ message: '', status: '' });
 
     if (modifyType === 'add') {
       fetchUrl = `https://phoenixjaymes.com/api/language/verbs?lang=${lang}`;
     } else {
-      formData.append('id', itemId);
-      fetchUrl = `https://phoenixjaymes.com/api/language/verbs/${itemId}?lang=${lang}`;
+      fetchUrl = `https://phoenixjaymes.com/api/language/verbs/${formState.id}?lang=${lang}`;
     }
 
-    fetch(fetchUrl, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
-      },
-      body: formData,
-    })
-      .then((reponse) => reponse.json())
-      .then((responseData) => {
-        if (responseData.status === 'success') {
-          this.clearForm();
-          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
-        } else if (responseData.status === 'fail') {
-          this.setState({ response: Object.values(responseData.data).join(', ') });
-        } else {
-          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
-        }
-        this.setState({ status: responseData.status });
-      })
-      .catch((error) => {
-        this.setState({
-          response: `Error fetching and parsing data, ${error}`,
-          status: 'error',
-        });
-      });
+    handleSubmit(modifyType, fetchUrl, formState);
   };
 
   const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
@@ -244,175 +179,170 @@ const VerbNl = ({
       <form
         className={styles.form}
         autoComplete="off"
-        onSubmit={this.handleSubmit}
-        onFocus={this.handleFocus}
+        onSubmit={handleFormSubmit}
+        onFocus={handleFocus}
       >
         <h3 className={styles.header}>{heading}</h3>
 
         <label className="form__label--check" htmlFor="upVerbSeparable">
           <input
             id="upVerbSeparable"
-            name="itemSeparable"
+            name="separable"
             className="form__check"
             type="checkbox"
-            checked={itemSeparable === 'yes'}
-            onChange={this.handleSeparable}
+            checked={formState.separable === 'yes'}
+            onChange={handleChangeCheck}
           />
-              Separable
-            </label>
+          Separable
+        </label>
 
         <label className="form__label--check" htmlFor="upVerbReflexive">
           <input
             id="upVerbReflexive"
-            name="itemReflexive"
+            name="reflexive"
             className="form__check"
             type="checkbox"
-            checked={itemReflexive === 'yes'}
-            onChange={this.handleReflexive}
+            checked={formState.reflexive === 'yes'}
+            onChange={handleChangeCheck}
           />
-              Reflexive
-            </label>
+          Reflexive
+        </label>
 
         <label className="form__label--check" htmlFor="upVerbDative">
           <input
             id="upVerbDative"
+            name="dative"
             className="form__check"
             type="checkbox"
-            checked={itemDative === 'yes'}
-            onChange={this.handleDative}
+            checked={formState.dative === 'yes'}
+            onChange={handleChangeCheck}
           />
-              Dative
-            </label>
+          Dative
+        </label>
 
         <div>
           <label className="form__label--check" htmlFor="upVerbTypeMixed">
             <input
               id="upVerbTypeMixed"
-              name="itemType"
+              name="type"
               className="form__check"
               type="radio"
               value="mixed"
-              checked={itemType === 'mixed'}
-              onChange={this.handleChange}
+              checked={formState.type === 'mixed'}
+              onChange={handleChange}
             />
-                Mixed
-              </label>
+            Mixed
+          </label>
 
           <label className="form__label--check" htmlFor="upVerbTypeStrong">
             <input
               id="upVerbTypeStrong"
-              name="itemType"
+              name="type"
               className="form__check"
               type="radio"
               value="strong"
-              checked={itemType === 'strong'}
-              onChange={this.handleChange}
+              checked={formState.type === 'strong'}
+              onChange={handleChange}
             />
-                Strong
-              </label>
+            Strong
+          </label>
 
           <label className="form__label--check" htmlFor="upVerbTypeWeak">
             <input
               id="upVerbTypeWeak"
-              name="itemType"
+              name="type"
               className="form__check"
               type="radio"
               value="weak"
-              checked={itemType === 'weak'}
-              onChange={this.handleChange}
+              checked={formState.type === 'weak'}
+              onChange={handleChange}
             />
-                Weak
-              </label>
+            Weak
+          </label>
         </div>
 
         <FormInput
           label="English"
-          name="itemEnglish"
-          value={itemEnglish}
-          handleChange={this.handleChange}
+          name="english"
+          value={formState.english}
+          handleChange={handleChange}
         />
 
         <FormInput
-          label={`Translation - ${itemInfinitive}`}
-          name="itemTranslation"
-          value={itemTranslation}
-          handleChange={this.handleTranslation}
-        />
-
-        <Umlauts
-          className="form-umlauts"
-          input-type="verb"
-          input-field="translation"
+          label={`Translation - ${formState.infinitive}`}
+          name="translation"
+          value={formState.translation}
+          handleChange={handleTranslation}
         />
 
         <FormInput
           label="Example"
-          name="itemExample"
-          value={itemExample}
-          handleChange={this.handleChange}
+          name="example"
+          value={formState.example}
+          handleChange={handleChange}
         />
 
         <button
           type="button"
           className="form__conjugate__button"
-          onClick={this.handleConjugateClick}
+          onClick={handleConjugateClick}
         >
           Conjugate
-            </button>
+        </button>
 
         <FormInput
           label="ik"
-          name="itemIk"
-          value={itemIk}
-          handleChange={this.handleChange}
+          name="ik"
+          value={formState.ik}
+          handleChange={handleChange}
           pos="verb"
         />
 
         <FormInput
           label="jij"
-          name="itemJij"
-          value={itemJij}
-          handleChange={this.handleChange}
+          name="jij"
+          value={formState.jij}
+          handleChange={handleChange}
           pos="verb"
         />
 
         <FormInput
-          label="hij/het"
-          name="itemHij"
-          value={itemHij}
-          handleChange={this.handleChange}
+          label="hij"
+          name="hij"
+          value={formState.hij}
+          handleChange={handleChange}
           pos="verb"
         />
 
         <FormInput
           label="u"
-          name="itemU"
-          value={itemU}
-          handleChange={this.handleChange}
+          name="u"
+          value={formState.u}
+          handleChange={handleChange}
           pos="verb"
         />
 
         <FormInput
           label="wij"
-          name="itemWij"
-          value={itemWij}
-          handleChange={this.handleChange}
+          name="wij"
+          value={formState.wij}
+          handleChange={handleChange}
           pos="verb"
         />
 
         <FormInput
           label="jullie"
-          name="itemJullie"
-          value={itemJullie}
-          handleChange={this.handleChange}
+          name="jullie"
+          value={formState.jullie}
+          handleChange={handleChange}
           pos="verb"
         />
 
         <FormInput
           label="zij"
-          name="itemZij"
-          value={itemZij}
-          handleChange={this.handleChange}
+          name="zij"
+          value={formState.zij}
+          handleChange={handleChange}
           pos="verb"
         />
 
@@ -424,7 +354,7 @@ const VerbNl = ({
       {modifyType === 'update' && (
         <UpdateSelector
           categoryType="range"
-          handleIconClick={this.handleIconClick}
+          handleIconClick={handleIconClick}
           fetchUrl={fetchUrl}
           propNameDisplay="translation"
           propNameToolTip="english"

@@ -10,8 +10,6 @@ import FormSelect from './FormComponents/FormSelect';
 import FormInput from './FormComponents/FormInput';
 import FormTextarea from './FormComponents/FormTextarea';
 import FormMessage from './FormComponents/FormMessage';
-import Umlauts from './Umlauts';
-
 import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
@@ -24,12 +22,12 @@ const Sentence = ({
   updateData,
 }) => {
   const initialFormState = {
-    itemId: '',
-    itemSentence: '',
-    itemType: '',
-    itemCategory: '',
-    itemAnswer1: '',
-    itemExtraWords: '',
+    id: '',
+    sentence: '',
+    type: '',
+    category: '',
+    answer1: '',
+    extra: '',
   };
   const reducer = (state, newState) => ({ ...state, ...newState });
   const { categories, lang, labels } = useContext(LearningContext);
@@ -42,38 +40,36 @@ const Sentence = ({
   }, [updateData]);
 
   const clearForm = () => {
-    const { modifyType } = this.props;
-
     if (modifyType === 'update') {
-      this.setState({
-        itemId: '',
-        itemSentence: '',
-        itemAnswer1: '',
-        itemType: '',
-        itemCategory: '',
+      setFormState({
+        id: '',
+        sentence: '',
+        type: '',
+        category: '',
+        answer1: '',
       });
     } else {
-      this.setState({
-        itemId: '',
-        itemSentence: '',
-        itemAnswer1: '',
+      setFormState({
+        id: '',
+        sentence: '',
+        answer1: '',
       });
     }
   };
 
   const setLabels = (id) => {
     if (id === '1') {
-      this.setState({
+      setState({
         labelStatement: 'Statement - english',
         labelTranslation: 'Translation',
       });
     } else if (id === '2') {
-      this.setState({
+      setState({
         labelStatement: 'Question - english',
         labelTranslation: 'Translation',
       });
     } else if (id === '3') {
-      this.setState({
+      setState({
         labelStatement: 'Question - foreign',
         labelTranslation: 'Answer - foreign',
       });
@@ -87,25 +83,21 @@ const Sentence = ({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    setFormState({ [name]: value });
   };
 
   const handleType = (e) => {
     const { value } = e.target;
-    this.setLabels(value);
-    this.setState({ itemType: value });
+    setLabels(value);
+    setFormState({ itemType: value });
   };
 
   const isValid = () => {
-    const {
-      itemSentence, itemType, itemCategory, itemAnswer1,
-    } = this.state;
-
     if (
-      itemSentence === ''
-      || itemType === ''
-      || itemCategory === ''
-      || itemAnswer1 === ''
+      formState.sentence === ''
+      || formState.type === ''
+      || formState.category === ''
+      || formState.answer1 === ''
     ) {
       return false;
     }
@@ -116,75 +108,27 @@ const Sentence = ({
     setMessageValues({ message: '', status: '' });
   };
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
+    let fetchUrl = '';
 
-    if (!this.isValid()) {
-      this.setState({
-        response: 'Please fill in all feilds',
+    if (!isValid()) {
+      setMessageValues({
+        message: 'Please fill in all feilds',
         status: 'fail',
       });
       return;
     }
 
-    this.setState({
-      isDialogShown: true,
-      response: '',
-    });
-  };
-
-  const submitForm = () => {
-    const { lang } = this.context;
-    const {
-      itemId,
-      itemSentence,
-      itemType,
-      itemCategory,
-      itemAnswer1,
-      itemExtraWords,
-    } = this.state;
-    const { modifyType } = this.props;
-    let fetchUrl;
-    const formData = new FormData();
-    formData.append('lang', lang);
-    formData.append('pos', 'sentence');
-    formData.append('sentence', itemSentence.trim());
-    formData.append('type', itemType);
-    formData.append('category', itemCategory);
-    formData.append('answer1', itemAnswer1.trim());
-    formData.append('extra', itemExtraWords.trim());
+    setMessageValues({ message: '', status: '' });
 
     if (modifyType === 'add') {
       fetchUrl = `https://phoenixjaymes.com/api/language/sentences?lang=${lang}`;
     } else {
-      fetchUrl = `https://phoenixjaymes.com/api/language/sentences/${itemId}?lang=${lang}`;
+      fetchUrl = `https://phoenixjaymes.com/api/language/sentences/${formState.id}?lang=${lang}`;
     }
 
-    fetch(fetchUrl, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
-      },
-      body: formData,
-    })
-      .then((reponse) => reponse.json())
-      .then((responseData) => {
-        if (responseData.status === 'success') {
-          this.clearForm();
-          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
-        } else if (responseData.status === 'fail') {
-          this.setState({ response: Object.values(responseData.data).join(', ') });
-        } else {
-          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
-        }
-        this.setState({ status: responseData.status });
-      })
-      .catch((error) => {
-        this.setState({
-          response: `Error fetching and parsing data, ${error}`,
-          status: 'error',
-        });
-      });
+    handleSubmit(modifyType, fetchUrl, formState);
   };
 
   const btnValue = `${modifyType
@@ -203,53 +147,47 @@ const Sentence = ({
     <div className={gridClass}>
       <form
         className={styles.form}
-        onSubmit={this.handleSubmit}
-        onFocus={this.handleFocus}
+        onSubmit={handleFormSubmit}
+        onFocus={handleFocus}
       >
         <h3 className={styles.header}>{heading}</h3>
         <div className="form__grid-2">
           <FormSelect
-            name="itemType"
+            name="type"
             label="Type"
             categories={categories[lang].sentence_type}
-            selected={itemType}
-            handleCategory={this.handleType}
+            selected={formState.type}
+            handleCategory={handleType}
           />
 
           <FormSelect
-            name="itemCategory"
+            name="category"
             label="Category"
             categories={categories.all.generalSentence}
-            selected={itemCategory}
-            handleCategory={this.handleChange}
+            selected={formState.category}
+            handleCategory={handleChange}
           />
         </div>
 
         <FormTextarea
           label={labelStatement}
-          name="itemSentence"
-          value={itemSentence}
-          handleChange={this.handleChange}
+          name="sentence"
+          value={formState.sentence}
+          handleChange={handleChange}
         />
 
         <FormTextarea
           label={labelTranslation}
-          name="itemAnswer1"
-          value={itemAnswer1}
-          handleChange={this.handleChange}
-        />
-
-        <Umlauts
-          className="form-umlauts"
-          input-type="word"
-          input-field="translation"
+          name="answer1"
+          value={formState.answer1}
+          handleChange={handleChange}
         />
 
         <FormInput
           label="Extra Words"
-          name="itemExtraWords"
-          value={itemExtraWords}
-          handleChange={this.handleChange}
+          name="extra"
+          value={formState.extra}
+          handleChange={handleChange}
         />
 
         <button className="form__button" type="submit">{`${btnValue}`}</button>
@@ -260,7 +198,7 @@ const Sentence = ({
       {modifyType === 'update' && (
         <UpdateSelector
           categoryType="sentence"
-          handleIconClick={this.handleIconClick}
+          handleIconClick={handleIconClick}
           fetchUrl={fetchUrl}
           propNameDisplay="answer1"
           propNameToolTip="sentence"

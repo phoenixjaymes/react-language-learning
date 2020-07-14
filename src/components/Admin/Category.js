@@ -8,7 +8,6 @@ import UpdateSelectorCategory from './UpdateSelectorCategory';
 import FormInput from './FormComponents/FormInput';
 import FormMessage from './FormComponents/FormMessage';
 import CategoryRadioButtons from './FormComponents/CategoryRadioButtons';
-
 import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
@@ -21,9 +20,9 @@ const Category = ({
   updateData,
 }) => {
   const initialFormState = {
-    itemId: '',
-    itemType: 'general',
-    itemCategory: '',
+    id: '',
+    type: 'general',
+    category: '',
     categoryType: 'general',
   };
   const reducer = (state, newState) => ({ ...state, ...newState });
@@ -37,19 +36,20 @@ const Category = ({
   // }, [updateData]);
 
   const clearForm = () => {
-    this.setState({ itemCategory: '' });
+    setFormState({
+      category: '',
+    });
   };
 
-
   const handleIconClick = (e) => {
-    const itemId = e.target.getAttribute('data-id');
-    const itemCategory = e.target.getAttribute('data-category');
-    this.setState({ itemId, itemCategory });
+    const id = e.target.getAttribute('data-id');
+    const category = e.target.getAttribute('data-category');
+    setFormState({ id, category });
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    setFormState({ [name]: value });
   };
 
   const handleRadio = (itemType) => {
@@ -59,16 +59,14 @@ const Category = ({
       temp = `general${itemType.charAt(0).toUpperCase()}${itemType.slice(1)}`;
     }
 
-    this.setState({
-      itemType,
+    setFormState({
+      type: itemType,
       categoryType: temp,
     });
   };
 
   const isValid = () => {
-    const { itemType, itemCategory } = this.state;
-
-    if (itemCategory === '' || itemType === '') {
+    if (formState.category === '' || formState.type === '') {
       return false;
     }
     return true;
@@ -78,65 +76,28 @@ const Category = ({
     setMessageValues({ message: '', status: '' });
   };
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
+    let fetchUrl = '';
 
-    if (!this.isValid()) {
-      this.setState({
-        response: 'Please fill in all feilds',
+    if (!isValid()) {
+      setMessageValues({
+        message: 'Please fill in all feilds',
         status: 'fail',
       });
       return;
     }
 
-    this.setState({
-      isDialogShown: true,
-      response: '',
-    });
-  };
-
-  const submitForm = () => {
-    const { modifyType } = this.props;
-    const { itemId, itemType, itemCategory } = this.state;
-    let fetchUrl;
-    const formData = new FormData();
-    // formData.append('pos', 'category');
-    formData.append('type', itemType);
-    formData.append('name', itemCategory.trim().toLowerCase());
+    setMessageValues({ message: '', status: '' });
 
     if (modifyType === 'add') {
       fetchUrl = 'https://phoenixjaymes.com/api/language/categories';
     } else {
-      fetchUrl = `https://phoenixjaymes.com/api/language/categories/${itemId}`;
+      fetchUrl = `https://phoenixjaymes.com/api/language/categories/${formState.id}`;
     }
 
-    fetch(fetchUrl, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
-      },
-      body: formData,
-    })
-      .then((reponse) => reponse.json())
-      .then((responseData) => {
-        if (responseData.status === 'success') {
-          this.clearForm();
-          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
-        } else if (responseData.status === 'fail') {
-          this.setState({ response: Object.values(responseData.data).join(', ') });
-        } else {
-          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
-        }
-        this.setState({ status: responseData.status });
-      })
-      .catch((error) => {
-        this.setState({
-          response: `Error fetching and parsing data, ${error}`,
-          status: 'error',
-        });
-      });
+    handleSubmit(modifyType, fetchUrl, formState);
   };
-
 
   const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
       ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
@@ -148,18 +109,18 @@ const Category = ({
     <div className={gridClass}>
       <form
         className={styles.form}
-        onSubmit={this.handleSubmit}
-        onFocus={this.handleFocus}
+        onSubmit={handleFormSubmit}
+        onFocus={handleFocus}
       >
         <h3 className={styles.header}>{heading}</h3>
 
-        <CategoryRadioButtons handleRadio={this.handleRadio} />
+        <CategoryRadioButtons handleRadio={handleRadio} />
 
         <FormInput
           label="Name"
           name="itemCategory"
-          value={itemCategory}
-          handleChange={this.handleChange}
+          value={formState.category}
+          handleChange={handleChange}
         />
 
         <button className="form__button" type="submit">{`${btnValue}`}</button>
@@ -169,8 +130,8 @@ const Category = ({
 
       {modifyType === 'update' && (
         <UpdateSelectorCategory
-          categoryType={categoryType}
-          handleIconClick={this.handleIconClick}
+          categoryType={formState.categoryType}
+          handleIconClick={handleIconClick}
         />
       )}
     </div>

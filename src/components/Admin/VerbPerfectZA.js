@@ -8,8 +8,6 @@ import { LearningContext } from '../Context';
 import UpdateSelector from './UpdateSelector';
 import FormInput from './FormComponents/FormInput';
 import FormMessage from './FormComponents/FormMessage';
-import Umlauts from './Umlauts';
-
 import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
@@ -22,13 +20,10 @@ const VerbPerfectZA = ({
   updateData,
 }) => {
   const initialFormState = {
-    itemId: '',
-    itemTranslation: '-',
-    itemPerfect: '',
-    itemExample: '',
-    itemType: '',
-    itemAuxiliary: 'het',
-    itemSeparable: '',
+    id: '',
+    auxiliary: 'het',
+    translation: '',
+    example: '',
   };
   const reducer = (state, newState) => ({ ...state, ...newState });
   const { categories, lang, labels } = useContext(LearningContext);
@@ -41,7 +36,12 @@ const VerbPerfectZA = ({
   }, [updateData]);
 
   const clearForm = () => {
-    console.log('clearing form');
+    setFormState({
+      id: '',
+      auxiliary: 'het',
+      translation: '',
+      example: '',
+    });
   };
 
   const handleIconClick = (e) => {
@@ -51,19 +51,15 @@ const VerbPerfectZA = ({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    setFormState({ [name]: value });
   };
 
   const isValid = () => {
-    const {
-      itemPerfect, itemExample, itemType, itemAuxiliary,
-    } = this.state;
-
     if (
-      itemPerfect === ''
-      || itemExample === ''
-      || itemType === ''
-      || itemAuxiliary === ''
+      formState.perfect === ''
+      || formState.example === ''
+      || formState.type === ''
+      || formState.auxiliary === ''
     ) {
       return false;
     }
@@ -74,68 +70,22 @@ const VerbPerfectZA = ({
     setMessageValues({ message: '', status: '' });
   };
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    if (!this.isValid()) {
-      this.setState({
-        response: 'Please fill in all feilds',
+    if (!isValid()) {
+      setMessageValues({
+        message: 'Please fill in all feilds',
         status: 'fail',
       });
       return;
     }
 
-    this.setState({
-      isDialogShown: true,
-      response: '',
-    });
-  };
+    setMessageValues({ message: '', status: '' });
 
-  const submitForm = () => {
-    const { lang } = this.context;
-    const {
-      itemId,
-      itemPerfect,
-      itemExample,
-      itemType,
-      itemAuxiliary,
-    } = this.state;
+    const fetchUrl = `https://phoenixjaymes.com/api/language/verbs/${formState.id}?lang=${lang}&tense=perfect`;
 
-    const fetchUrl = `https://phoenixjaymes.com/api/language/verbs/${itemId}?lang=${lang}&tense=perfect`;
-    const formData = new FormData();
-    formData.append('lang', lang);
-    formData.append('id', itemId);
-    formData.append('pos', 'perfect');
-    formData.append('translation', itemPerfect.trim());
-    formData.append('example', itemExample.trim());
-    formData.append('type', itemType);
-    formData.append('auxiliary', itemAuxiliary);
-
-    fetch(fetchUrl, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
-      },
-      body: formData,
-    })
-      .then((reponse) => reponse.json())
-      .then((responseData) => {
-        if (responseData.status === 'success') {
-          this.clearForm();
-          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
-        } else if (responseData.status === 'fail') {
-          this.setState({ response: Object.values(responseData.data).join(', ') });
-        } else {
-          this.setState({ response: `${responseData.status}: ${responseData.data.message}` });
-        }
-        this.setState({ status: responseData.status });
-      })
-      .catch((error) => {
-        this.setState({
-          response: `Error fetching and parsing data, ${error}`,
-          status: 'error',
-        });
-      });
+    handleSubmit(modifyType, fetchUrl, formState);
   };
 
   const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
@@ -147,80 +97,66 @@ const VerbPerfectZA = ({
       <form
         className={styles.form}
         autoComplete="off"
-        onSubmit={this.handleSubmit}
-        onFocus={this.handleFocus}
+        onSubmit={handleFormSubmit}
+        onFocus={handleFocus}
       >
         <h3 className={styles.header}>Update Afrikaans Perfect</h3>
 
-        <h3>{itemTranslation}</h3>
+        <h3>{formState.translation}</h3>
 
         <div>
           <label className="form__label--check" htmlFor="upVerbTypeMixed">
             <input
               id="upVerbTypeMixed"
-              name="itemType"
+              name="type"
               className="form__check"
               type="radio"
               value="mixed"
-              checked={itemType === 'mixed'}
-              onChange={this.handleChange}
+              checked={formState.type === 'mixed'}
+              onChange={handleChange}
             />
-                Mixed
-              </label>
+            Mixed
+          </label>
 
           <label className="form__label--check" htmlFor="upVerbTypeStrong">
             <input
               id="upVerbTypeStrong"
-              name="itemType"
+              name="type"
               className="form__check"
               type="radio"
               value="strong"
-              checked={itemType === 'strong'}
-              onChange={this.handleChange}
+              checked={formState.type === 'strong'}
+              onChange={handleChange}
             />
-                Strong
-              </label>
+            Strong
+          </label>
 
           <label className="form__label--check" htmlFor="upVerbTypeWeak">
             <input
               id="upVerbTypeWeak"
-              name="itemType"
+              name="type"
               className="form__check"
               type="radio"
               value="weak"
-              checked={itemType === 'weak'}
-              onChange={this.handleChange}
+              checked={formState.type === 'weak'}
+              onChange={handleChange}
             />
-                Weak
-              </label>
+            Weak
+          </label>
         </div>
-
-        <button
-          type="button"
-          className="form__conjugate__button"
-          onClick={this.handleConjugateClick}
-        >
-          Conjugate
-            </button>
 
         <FormInput
           label="Perfect"
-          name="itemPerfect"
-          value={itemPerfect}
-          handleChange={this.handleChange}
+          name="perfect"
+          value={formState.perfect}
+          handleChange={handleChange}
         />
 
         <FormInput
           label="Example"
-          name="itemExample"
-          value={itemExample}
-          handleChange={this.handleChange}
-        />
-
-        <Umlauts
-          className="form-umlauts"
-          input-type="verb"
-          input-field="translation"
+          name="example"
+          value={formState.example}
+          handleChange={handleChange}
         />
 
         <button className="form__button" type="submit">{`${btnValue}`}</button>
@@ -231,7 +167,7 @@ const VerbPerfectZA = ({
       {modifyType === 'update' && (
         <UpdateSelector
           categoryType="range"
-          handleIconClick={this.handleIconClick}
+          handleIconClick={handleIconClick}
           fetchUrl={fetchUrl}
           propNameDisplay="translation"
           propNameToolTip="english"
