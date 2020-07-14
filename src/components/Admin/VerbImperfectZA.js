@@ -98,44 +98,8 @@ const VerbImperfectZA = ({
         <h3>{formState.translation}</h3>
 
         <div>
-          <label className="form__label--check" htmlFor="upVerbTypeMixed">
-            <input
-              id="upVerbTypeMixed"
-              name="type"
-              className="form__check"
-              type="radio"
-              value="mixed"
-              checked={formState.type === 'mixed'}
-              onChange={handleChange}
-            />
-            Mixed
-          </label>
-
-          <label className="form__label--check" htmlFor="upVerbTypeStrong">
-            <input
-              id="upVerbTypeStrong"
-              name="type"
-              className="form__check"
-              type="radio"
-              value="strong"
-              checked={formState.type === 'strong'}
-              onChange={handleChange}
-            />
-            Strong
-          </label>
-
-          <label className="form__label--check" htmlFor="upVerbTypeWeak">
-            <input
-              id="upVerbTypeWeak"
-              name="type"
-              className="form__check"
-              type="radio"
-              value="weak"
-              checked={formState.type === 'weak'}
-              onChange={handleChange}
-            />
-            Weak
-          </label>
+          <p>Infinitive - </p>
+          <p>Type - </p>
         </div>
 
         <FormInput
