@@ -102,8 +102,6 @@ const VerbPerfectZA = ({
       >
         <h3 className={styles.header}>Update Afrikaans Perfect</h3>
 
-        <h3>{formState.translation}</h3>
-
         <div>
           <p>Infinitive - </p>
           <p>Type - </p>
@@ -111,8 +109,8 @@ const VerbPerfectZA = ({
 
         <FormInput
           label="Perfect"
-          name="perfect"
-          value={formState.perfect}
+          name="translation"
+          value={formState.translation}
           handleChange={handleChange}
         />
 
