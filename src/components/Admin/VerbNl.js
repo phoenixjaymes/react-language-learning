@@ -14,7 +14,7 @@ import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
 
-const VerbNl = ({
+const VerbNL = ({
   handleSubmit,
   categoryName,
   modifyType,
@@ -27,7 +27,7 @@ const VerbNl = ({
     infinitive: '',
     translation: '',
     example: '',
-    type: '',
+    type: 'weak',
     separable: 'no',
     reflexive: 'no',
     dative: 'no',
@@ -352,7 +352,7 @@ const VerbNl = ({
   );
 };
 
-VerbNl.propTypes = {
+VerbNL.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
@@ -360,4 +360,4 @@ VerbNl.propTypes = {
   fetchUpdatedData: PropTypes.func,
 };
 
-export default withFormWrap(VerbNl);
+export default withFormWrap(VerbNL);
