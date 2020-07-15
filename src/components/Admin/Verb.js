@@ -39,8 +39,7 @@ const Verb = ({
     sie: '',
   };
   const reducer = (state, newState) => ({ ...state, ...newState });
-  const { categories, lang, labels } = useContext(LearningContext);
-  const { us } = labels;
+  const { lang } = useContext(LearningContext);
   const [formState, setFormState] = useReducer(reducer, initialFormState);
   const [messageValues, setMessageValues] = useState({ message: '', status: '' });
 
