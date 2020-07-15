@@ -93,7 +93,7 @@ const Sentence = ({
   const handleType = (e) => {
     const { value } = e.target;
     setLabels(value);
-    setFormState({ itemType: value });
+    setFormState({ type: value });
   };
 
   const isValid = () => {
