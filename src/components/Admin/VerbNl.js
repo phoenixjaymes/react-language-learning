@@ -46,7 +46,10 @@ const VerbNL = ({
   const [messageValues, setMessageValues] = useState({ message: '', status: '' });
 
   useEffect(() => {
-    setFormState(updateData);
+    if (updateData.id !== undefined) {
+      const { present } = updateData;
+      setFormState({ ...updateData, ...present });
+    }
   }, [updateData]);
 
   const clearForm = () => {
@@ -356,7 +359,10 @@ VerbNL.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
-  updateData: PropTypes.objectOf(PropTypes.string),
+  updateData: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
   fetchUpdatedData: PropTypes.func,
 };
 

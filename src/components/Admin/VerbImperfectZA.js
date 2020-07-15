@@ -31,7 +31,18 @@ const VerbImperfectAF = ({
   const [messageValues, setMessageValues] = useState({ message: '', status: '' });
 
   useEffect(() => {
-    setFormState(updateData);
+    if (updateData.id !== undefined) {
+      const {
+        id,
+        imperfectExample,
+        imperfect,
+      } = updateData;
+      setFormState({
+        id,
+        example: imperfectExample,
+        translation: imperfect,
+      });
+    }
   }, [updateData]);
 
   const clearForm = () => {

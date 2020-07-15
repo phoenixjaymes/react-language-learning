@@ -34,16 +34,24 @@ const VerbPerfect = ({
   const [messageValues, setMessageValues] = useState({ message: '', status: '' });
 
   useEffect(() => {
-    setFormState(updateData);
+    if (updateData.id !== undefined) {
+      const {
+        id,
+        perfect,
+        auxiliary,
+        perfectExample,
+      } = updateData;
+      setFormState({
+        id,
+        auxiliary,
+        translation: perfect,
+        example: perfectExample,
+      });
+    }
   }, [updateData]);
 
   const clearForm = () => {
-    setFormState({
-      id: '',
-      auxiliary: 'haben',
-      translation: '',
-      example: '',
-    });
+    setFormState(initialFormState);
   };
 
   const handleIconClick = (e) => {
@@ -111,8 +119,6 @@ const VerbPerfect = ({
       >
         <h3 className={styles.header}>Update German Perfect</h3>
 
-        <h3>{formState.translation}</h3>
-
         <div>
           <p>Infinitive - </p>
           <p>Type - </p>
@@ -160,8 +166,8 @@ const VerbPerfect = ({
 
         <FormInput
           label="Perfect"
-          name="perfect"
-          value={formState.perfect}
+          name="translation"
+          value={formState.translation}
           handleChange={handleChange}
         />
 
@@ -194,7 +200,10 @@ VerbPerfect.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
-  updateData: PropTypes.objectOf(PropTypes.string),
+  updateData: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
   fetchUpdatedData: PropTypes.func,
 };
 

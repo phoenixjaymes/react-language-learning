@@ -32,7 +32,20 @@ const VerbPerfectZA = ({
   const [messageValues, setMessageValues] = useState({ message: '', status: '' });
 
   useEffect(() => {
-    setFormState(updateData);
+    if (updateData.id !== undefined) {
+      const {
+        id,
+        perfect,
+        auxiliary,
+        perfectExample,
+      } = updateData;
+      setFormState({
+        id,
+        auxiliary,
+        translation: perfect,
+        example: perfectExample,
+      });
+    }
   }, [updateData]);
 
   const clearForm = () => {

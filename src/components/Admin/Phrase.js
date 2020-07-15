@@ -33,7 +33,9 @@ const Phrase = ({
   const [messageValues, setMessageValues] = useState({ message: '', status: '' });
 
   useEffect(() => {
-    setFormState(updateData);
+    if (updateData.id !== undefined) {
+      setFormState(updateData);
+    }
   }, [updateData]);
 
   const clearForm = () => {
