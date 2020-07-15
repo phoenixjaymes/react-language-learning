@@ -14,7 +14,7 @@ import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
 
-const VerbImperfect = ({
+const VerbImperfectNL = ({
   handleSubmit,
   categoryName,
   modifyType,
@@ -230,7 +230,7 @@ const VerbImperfect = ({
   );
 };
 
-VerbImperfect.propTypes = {
+VerbImperfectNL.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
@@ -238,4 +238,4 @@ VerbImperfect.propTypes = {
   fetchUpdatedData: PropTypes.func,
 };
 
-export default withFormWrap(VerbImperfect);
+export default withFormWrap(VerbImperfectNL);
