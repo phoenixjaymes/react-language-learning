@@ -12,7 +12,7 @@ import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
 
-const VerbZA = ({
+const VerbAF = ({
   handleSubmit,
   categoryName,
   modifyType,
@@ -255,7 +255,7 @@ const VerbZA = ({
   );
 };
 
-VerbZA.propTypes = {
+VerbAF.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
@@ -263,4 +263,4 @@ VerbZA.propTypes = {
   fetchUpdatedData: PropTypes.func,
 };
 
-export default withFormWrap(VerbZA);
+export default withFormWrap(VerbAF);
