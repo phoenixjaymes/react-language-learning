@@ -4,14 +4,14 @@ import { LearningContext } from '../Context';
 
 import Verb from './Verb';
 import VerbNl from './VerbNl';
-import VerbZA from './VerbZA';
+import VerbAF from './VerbAF';
 import VerbDelete from './VerbDelete';
 import VerbPerfect from './VerbPerfect';
 import VerbPerfectNl from './VerbPerfectNl';
-import VerbPerfectZA from './VerbPerfectZA';
+import VerbPerfectAF from './VerbPerfectAF';
 import VerbImperfect from './VerbImperfect';
 import VerbImperfectNl from './VerbImperfectNl';
-import VerbImperfectZA from './VerbImperfectZA';
+import VerbImperfectAF from './VerbImperfectAF';
 
 const VerbContent = ({ cat, modifyType }) => {
   const { lang } = useContext(LearningContext);
@@ -26,7 +26,7 @@ const VerbContent = ({ cat, modifyType }) => {
     }
 
     if (lang === 'af') {
-      return <VerbZA categoryName={cat} modifyType={modifyType} />;
+      return <VerbAF categoryName={cat} modifyType={modifyType} />;
     }
 
     return <Verb categoryName={cat} modifyType={modifyType} />;
@@ -38,7 +38,7 @@ const VerbContent = ({ cat, modifyType }) => {
     }
 
     if (lang === 'af') {
-      return <VerbPerfectZA categoryName={cat} modifyType={modifyType} />;
+      return <VerbPerfectAF categoryName={cat} modifyType={modifyType} />;
     }
 
     return <VerbPerfect categoryName={cat} modifyType={modifyType} />;
@@ -50,7 +50,7 @@ const VerbContent = ({ cat, modifyType }) => {
     }
 
     if (lang === 'af') {
-      return <VerbImperfectZA categoryName={cat} modifyType={modifyType} />;
+      return <VerbImperfectAF categoryName={cat} modifyType={modifyType} />;
     }
 
     return <VerbImperfect categoryName={cat} modifyType={modifyType} />;
