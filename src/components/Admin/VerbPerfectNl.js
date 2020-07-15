@@ -14,7 +14,7 @@ import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
 
-const VerbPerfect = ({
+const VerbPerfectNL = ({
   handleSubmit,
   categoryName,
   modifyType,
@@ -109,7 +109,6 @@ const VerbPerfect = ({
         onFocus={handleFocus}
       >
         <h3 className={styles.header}>Update Dutch Perfect</h3>
-        <h3>{formState.translation}</h3>
 
         <div>
           <p>Infinitive - </p>
@@ -158,8 +157,8 @@ const VerbPerfect = ({
 
         <FormInput
           label="Perfect"
-          name="perfect"
-          value={formState.perfect}
+          name="translation"
+          value={formState.translation}
           handleChange={handleChange}
         />
 
@@ -188,7 +187,7 @@ const VerbPerfect = ({
   );
 };
 
-VerbPerfect.propTypes = {
+VerbPerfectNL.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
@@ -196,4 +195,4 @@ VerbPerfect.propTypes = {
   fetchUpdatedData: PropTypes.func,
 };
 
-export default withFormWrap(VerbPerfect);
+export default withFormWrap(VerbPerfectNL);
