@@ -118,7 +118,7 @@ const Category = ({
 
         <FormInput
           label="Name"
-          name="itemCategory"
+          name="category"
           value={formState.category}
           handleChange={handleChange}
         />
