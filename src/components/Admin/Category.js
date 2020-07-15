@@ -1,8 +1,5 @@
-import React, {
-  useState, useContext, useReducer, useEffect,
-} from 'react';
+import React, { useState, useReducer } from 'react';
 import PropTypes from 'prop-types';
-import { LearningContext } from '../Context';
 
 import UpdateSelectorCategory from './UpdateSelectorCategory';
 import FormInput from './FormComponents/FormInput';
@@ -16,8 +13,6 @@ const Category = ({
   handleSubmit,
   categoryName,
   modifyType,
-  fetchUpdatedData,
-  updateData,
 }) => {
   const initialFormState = {
     id: '',
@@ -26,14 +21,8 @@ const Category = ({
     categoryType: 'general',
   };
   const reducer = (state, newState) => ({ ...state, ...newState });
-  const { categories, lang, labels } = useContext(LearningContext);
-  const { us } = labels;
   const [formState, setFormState] = useReducer(reducer, initialFormState);
   const [messageValues, setMessageValues] = useState({ message: '', status: '' });
-
-  // useEffect(() => {
-  //   setFormState(updateData);
-  // }, [updateData]);
 
   const clearForm = () => {
     setFormState({
@@ -142,8 +131,6 @@ Category.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
-  updateData: PropTypes.objectOf(PropTypes.string),
-  fetchUpdatedData: PropTypes.func,
 };
 
 export default withFormWrap(Category);
