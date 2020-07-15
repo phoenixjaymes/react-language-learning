@@ -12,7 +12,7 @@ import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
 
-const VerbImperfectZA = ({
+const VerbImperfectAF = ({
   handleSubmit,
   categoryName,
   modifyType,
@@ -95,8 +95,6 @@ const VerbImperfectZA = ({
       >
         <h3 className={styles.header}>Update Afrikaans Imperfect</h3>
 
-        <h3>{formState.translation}</h3>
-
         <div>
           <p>Infinitive - </p>
           <p>Type - </p>
@@ -134,7 +132,7 @@ const VerbImperfectZA = ({
   );
 };
 
-VerbImperfectZA.propTypes = {
+VerbImperfectAF.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
@@ -142,4 +140,4 @@ VerbImperfectZA.propTypes = {
   fetchUpdatedData: PropTypes.func,
 };
 
-export default withFormWrap(VerbImperfectZA);
+export default withFormWrap(VerbImperfectAF);
