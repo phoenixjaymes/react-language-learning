@@ -10,7 +10,7 @@ const withFormWrap = (WrappedComponent) => function WithFormWrap({ ...props }) {
   const [apiModifyType, setApiModifyType] = useState('');
   const [fetchUrl, setFetchUrl] = useState('');
   const [updateData, setUpdateData] = useState({});
-  const [actionSuccess, setActionSuccess] = useState({ completed: false, type: '' });
+  const [actionSuccess, setActionSuccess] = useState(false);
   const dialogMessages = {
     add: 'Are you sure you want to ADD this item?',
     update: 'Are you sure you want to UPDATE this item?',
@@ -27,7 +27,7 @@ const withFormWrap = (WrappedComponent) => function WithFormWrap({ ...props }) {
         status: responseData.status,
         message: responseData.data.message,
       });
-      setActionSuccess({ completed: true, type: apiModifyType });
+      setActionSuccess(true);
     } else if (responseData.status === 'fail') {
       setActionReponse({
         status: responseData.status,
@@ -166,7 +166,7 @@ const withFormWrap = (WrappedComponent) => function WithFormWrap({ ...props }) {
     setApiModifyType(modifyTypeToUse);
     setFetchUrl(apiFetchUrl);
     setIsDialogShown(true);
-    setActionSuccess({ completed: false, type: modifyTypeToUse });
+    setActionSuccess(false);
   };
 
   return (
