@@ -20,6 +20,7 @@ const Sentence = ({
   modifyType,
   fetchUpdatedData,
   updateData,
+  actionSuccess,
 }) => {
   const initialFormState = {
     id: '',
@@ -62,6 +63,14 @@ const Sentence = ({
       });
     }
   };
+
+  const memoizedClearForm = useCallback(clearForm, []);
+
+  useEffect(() => {
+    if (actionSuccess.completed === true) {
+      memoizedClearForm();
+    }
+  }, [actionSuccess, memoizedClearForm]);
 
   const setLabels = (id) => {
     if (id === '1') {
@@ -220,6 +229,10 @@ Sentence.propTypes = {
   modifyType: PropTypes.string,
   updateData: PropTypes.objectOf(PropTypes.string),
   fetchUpdatedData: PropTypes.func,
+  actionSuccess: PropTypes.shape({
+    completed: PropTypes.bool,
+    type: PropTypes.string,
+  }),
 };
 
 export default withFormWrap(Sentence);

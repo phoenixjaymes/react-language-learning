@@ -20,6 +20,7 @@ const Blank = ({
   modifyType,
   fetchUpdatedData,
   updateData,
+  actionSuccess,
 }) => {
   const initialFormState = {
     id: '',
@@ -47,6 +48,14 @@ const Blank = ({
       sentence: '',
     });
   };
+
+  const memoizedClearForm = useCallback(clearForm, []);
+
+  useEffect(() => {
+    if (actionSuccess.completed === true) {
+      memoizedClearForm();
+    }
+  }, [actionSuccess, memoizedClearForm]);
 
   const handleIconClick = (e) => {
     const itemId = e.target.getAttribute('data-id');
@@ -169,6 +178,10 @@ Blank.propTypes = {
   modifyType: PropTypes.string,
   updateData: PropTypes.objectOf(PropTypes.string),
   fetchUpdatedData: PropTypes.func,
+  actionSuccess: PropTypes.shape({
+    completed: PropTypes.bool,
+    type: PropTypes.string,
+  }),
 };
 
 export default withFormWrap(Blank);

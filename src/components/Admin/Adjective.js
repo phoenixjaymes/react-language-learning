@@ -1,5 +1,5 @@
 import React, {
-  useState, useContext, useReducer, useEffect,
+  useState, useContext, useReducer, useEffect, useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
 import { LearningContext } from '../Context';
@@ -19,6 +19,7 @@ const Adjective = ({
   modifyType,
   fetchUpdatedData,
   updateData,
+  actionSuccess,
 }) => {
   const initialFormState = {
     id: '',
@@ -62,6 +63,14 @@ const Adjective = ({
       });
     }
   };
+
+  const memoizedClearForm = useCallback(clearForm, []);
+
+  useEffect(() => {
+    if (actionSuccess.completed === true) {
+      memoizedClearForm();
+    }
+  }, [actionSuccess, memoizedClearForm]);
 
   const handleIconClick = (e) => {
     const itemId = e.target.getAttribute('data-id');
@@ -126,7 +135,6 @@ const Adjective = ({
   const fetchUrl = `https://phoenixjaymes.com/api/language/adjectives?lang=${lang}&cat=`;
 
   return (
-
     <div className={gridClass}>
       <form
         className={styles.form}
@@ -204,6 +212,10 @@ Adjective.propTypes = {
   modifyType: PropTypes.string,
   updateData: PropTypes.objectOf(PropTypes.string),
   fetchUpdatedData: PropTypes.func,
+  actionSuccess: PropTypes.shape({
+    completed: PropTypes.bool,
+    type: PropTypes.string,
+  }),
 };
 
 export default withFormWrap(Adjective);

@@ -13,6 +13,7 @@ const Category = ({
   handleSubmit,
   categoryName,
   modifyType,
+  actionSuccess,
 }) => {
   const initialFormState = {
     id: '',
@@ -29,6 +30,14 @@ const Category = ({
       category: '',
     });
   };
+
+  const memoizedClearForm = useCallback(clearForm, []);
+
+  useEffect(() => {
+    if (actionSuccess.completed === true) {
+      memoizedClearForm();
+    }
+  }, [actionSuccess, memoizedClearForm]);
 
   const handleIconClick = (e) => {
     const id = e.target.getAttribute('data-id');
@@ -131,6 +140,10 @@ Category.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
+  actionSuccess: PropTypes.shape({
+    completed: PropTypes.bool,
+    type: PropTypes.string,
+  }),
 };
 
 export default withFormWrap(Category);
