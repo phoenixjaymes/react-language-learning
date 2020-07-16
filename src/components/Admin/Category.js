@@ -34,7 +34,7 @@ const Category = ({
   const memoizedClearForm = useCallback(clearForm, []);
 
   useEffect(() => {
-    if (actionSuccess.completed === true) {
+    if (actionSuccess === true) {
       memoizedClearForm();
     }
   }, [actionSuccess, memoizedClearForm]);
@@ -140,10 +140,7 @@ Category.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
-  actionSuccess: PropTypes.shape({
-    completed: PropTypes.bool,
-    type: PropTypes.string,
-  }),
+  actionSuccess: PropTypes.bool,
 };
 
 export default withFormWrap(Category);

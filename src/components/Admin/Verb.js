@@ -74,7 +74,7 @@ const Verb = ({
   const memoizedClearForm = useCallback(clearForm, []);
 
   useEffect(() => {
-    if (actionSuccess.completed === true) {
+    if (actionSuccess === true) {
       memoizedClearForm();
     }
   }, [actionSuccess, memoizedClearForm]);
@@ -381,10 +381,7 @@ Verb.propTypes = {
     PropTypes.object,
   ]),
   fetchUpdatedData: PropTypes.func,
-  actionSuccess: PropTypes.shape({
-    completed: PropTypes.bool,
-    type: PropTypes.string,
-  }),
+  actionSuccess: PropTypes.bool,
 };
 
 export default withFormWrap(Verb);

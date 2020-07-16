@@ -59,7 +59,7 @@ const VerbAF = ({
   const memoizedClearForm = useCallback(clearForm, []);
 
   useEffect(() => {
-    if (actionSuccess.completed === true) {
+    if (actionSuccess === true) {
       memoizedClearForm();
     }
   }, [actionSuccess, memoizedClearForm]);
@@ -271,10 +271,7 @@ VerbAF.propTypes = {
   modifyType: PropTypes.string,
   updateData: PropTypes.objectOf(PropTypes.string),
   fetchUpdatedData: PropTypes.func,
-  actionSuccess: PropTypes.shape({
-    completed: PropTypes.bool,
-    type: PropTypes.string,
-  }),
+  actionSuccess: PropTypes.bool,
 };
 
 export default withFormWrap(VerbAF);
