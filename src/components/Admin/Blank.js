@@ -46,6 +46,7 @@ const Blank = ({
       id: '',
       category: '',
       sentence: '',
+      answer: '',
     });
   };
 
@@ -100,7 +101,7 @@ const Blank = ({
     if (modifyType === 'add') {
       fetchUrl = `https://phoenixjaymes.com/api/language/blanks?lang=${lang}`;
     } else {
-      fetchUrl = `https://phoenixjaymes.com/api/language/blanks/${formState.Id}?lang=${lang}`;
+      fetchUrl = `https://phoenixjaymes.com/api/language/blanks/${formState.id}?lang=${lang}`;
     }
 
     handleSubmit(modifyType, fetchUrl, formState);
