@@ -146,9 +146,8 @@ const Sentence = ({
     handleSubmit(modifyType, fetchUrl, formState);
   };
 
-  const btnValue = `${modifyType
-    .charAt(0)
-    .toUpperCase()}${modifyType.substring(1)} ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
+  const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
+  ${categoryName.charAt(0).toUpperCase()}${categoryName.substring(1)}`;
 
   const langName = us.languages[lang];
   const heading = modifyType === 'update'
@@ -227,7 +226,10 @@ Sentence.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
-  updateData: PropTypes.objectOf(PropTypes.string),
+  updateData: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array,
+  ]),
   fetchUpdatedData: PropTypes.func,
   actionSuccess: PropTypes.bool,
 };
