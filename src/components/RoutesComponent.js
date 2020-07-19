@@ -9,7 +9,7 @@ import { LearningContext } from './Context';
 // Components
 import Home from './Main/Home';
 import Cards from './Main/Cards';
-import CardsActivity from './Main/Cards/CardsActivity';
+import CardActivity from './Main/Cards/CardActivity';
 import Sentences from './Main/Sentences';
 import SentencesActivity from './Main/Sentences/SentencesActivity';
 import Words from './Main/Words';
@@ -31,7 +31,7 @@ const Main = () => {
           <Home />
         </Route>
 
-        <Route path="/cards/:category/:id?" render={({ match }) => <CardsActivity match={match} />} />
+        <Route path="/cards/:category/:id?" render={({ match }) => <CardActivity match={match} />} />
         <Route path="/cards" render={({ match }) => <Cards match={match} />} />
 
         <Route path="/words/:category/:id?" render={({ match }) => <WordsActivity match={match} />} />
