@@ -18,7 +18,7 @@ const Category = ({
   const initialFormState = {
     id: '',
     type: 'general',
-    category: '',
+    name: '',
     categoryType: 'general',
   };
   const reducer = (state, newState) => ({ ...state, ...newState });
@@ -27,7 +27,7 @@ const Category = ({
 
   const clearForm = () => {
     setFormState({
-      category: '',
+      name: '',
     });
   };
 
@@ -41,8 +41,8 @@ const Category = ({
 
   const handleIconClick = (e) => {
     const id = e.target.getAttribute('data-id');
-    const category = e.target.getAttribute('data-category');
-    setFormState({ id, category });
+    const name = e.target.getAttribute('data-category');
+    setFormState({ id, name });
   };
 
   const handleChange = (e) => {
@@ -116,8 +116,8 @@ const Category = ({
 
         <FormInput
           label="Name"
-          name="category"
-          value={formState.category}
+          name="name"
+          value={formState.name}
           handleChange={handleChange}
         />
 
