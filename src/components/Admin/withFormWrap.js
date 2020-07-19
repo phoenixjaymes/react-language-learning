@@ -31,7 +31,7 @@ const withFormWrap = (WrappedComponent) => function WithFormWrap({ ...props }) {
     } else if (responseData.status === 'fail') {
       setActionReponse({
         status: responseData.status,
-        message: responseData.data.message,
+        message: responseData.data.name,
       });
     } else {
       setActionReponse({
@@ -67,10 +67,15 @@ const withFormWrap = (WrappedComponent) => function WithFormWrap({ ...props }) {
       });
   };
 
-  const makeFormData = (formState) => {
+  const makeFormData = (formState, initialFormState) => {
+    const tempFormObj = {};
     const formData = new FormData();
 
-    Object.entries(formState).forEach((item) => {
+    Object.keys(initialFormState).forEach((prop) => {
+      tempFormObj[prop] = formState[prop];
+    });
+
+    Object.entries(tempFormObj).forEach((item) => {
       const [prop, value] = item;
       formData.append(prop, value.trim());
     });
@@ -161,8 +166,8 @@ const withFormWrap = (WrappedComponent) => function WithFormWrap({ ...props }) {
     setIsDialogShown(false);
   };
 
-  const handleSubmit = (modifyTypeToUse, apiFetchUrl, formState) => {
-    makeFormData(formState);
+  const handleSubmit = (modifyTypeToUse, apiFetchUrl, formState, initialFormState) => {
+    makeFormData(formState, initialFormState);
     setApiModifyType(modifyTypeToUse);
     setFetchUrl(apiFetchUrl);
     setIsDialogShown(true);
