@@ -1,0 +1,83 @@
+.header {
+  background: #3131d2;
+  display: grid;
+  grid-template-columns: 40px auto;
+  gap: 10px;
+  align-items: center;
+  height: 40px;
+  margin: 0 auto 20px;
+  padding: 0 10px;
+}
+
+@media (min-width: 720px) {
+  .header {
+    border-radius: 4px;
+    max-width: 720px;
+  }
+}
+
+.closeLink {
+  border-radius: 4px;
+  display: inline-block;
+  height: 35px;
+  padding: 5px;
+  width: 35px;
+}
+
+.closeSvg {
+  fill: #ffc519;
+}
+
+.closeLink:hover .closeSvg {
+  fill: #b4b4e0;
+}
+
+.heading {
+  color: #ffc519;
+  display: inline-block;
+  height: 35px;
+  line-height: 35px;
+  margin: 0;
+  text-align: center;
+}
+
+.progressBar {
+  background-color: lightgrey;
+  border-radius: 4px;
+  height: 10px;
+  line-height: 10px;
+  position: relative;
+  width: 100%;
+}
+
+.progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  background-color: #ffc519;
+  border-radius: 4px;
+  display: inline-block;
+  height: 10px;
+  line-height: 10px;
+}
+
+.progress:after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background-image: linear-gradient(
+    -45deg, 
+    rgba(255, 255, 255, .2) 25%, 
+    transparent 25%, 
+    transparent 50%, 
+    rgba(255, 255, 255, .2) 50%, 
+    rgba(255, 255, 255, .2) 75%, 
+    transparent 75%, 
+    transparent
+  );
+  z-index: 1;
+  background-size: 50px 50px;
+  border-radius: 4px;
+  /* overflow: hidden; */
+}

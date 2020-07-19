@@ -1,0 +1,17 @@
+.wrap {
+  background: #3131d2;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 35px;
+  padding: 5px;
+  width: 35px;
+}
+
+.arrow {
+  fill: #ffc519;
+}
+
+.wrap:hover .arrow {
+  fill: #b4b4e0;
+}

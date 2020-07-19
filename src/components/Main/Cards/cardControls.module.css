@@ -1,0 +1,14 @@
+.cardsControls {
+  text-align: center;
+  height: 35px;
+  margin: 0 auto;
+  width: 300px;
+}
+
+.cardsCount {
+  display: inline-block;
+  height: 35px;
+  line-height: 35px;
+  width: 140px;
+  vertical-align: top;
+}
