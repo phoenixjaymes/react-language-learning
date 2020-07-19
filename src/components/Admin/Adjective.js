@@ -120,7 +120,7 @@ const Adjective = ({
       fetchUrl = `https://phoenixjaymes.com/api/language/adjectives/${formState.id}?lang=${lang}`;
     }
 
-    handleSubmit(modifyType, fetchUrl, formState);
+    handleSubmit(modifyType, fetchUrl, formState, initialFormState);
   };
 
   const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 

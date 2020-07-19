@@ -94,7 +94,7 @@ const Category = ({
       fetchUrl = `https://phoenixjaymes.com/api/language/categories/${formState.id}`;
     }
 
-    handleSubmit(modifyType, fetchUrl, formState);
+    handleSubmit(modifyType, fetchUrl, formState, initialFormState);
   };
 
   const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 

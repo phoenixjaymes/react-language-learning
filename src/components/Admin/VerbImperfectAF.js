@@ -97,7 +97,7 @@ const VerbImperfectAF = ({
 
     const fetchUrl = `https://phoenixjaymes.com/api/language/verbs/${formState.id}?lang=${lang}&tense=imperfect`;
 
-    handleSubmit(modifyType, fetchUrl, formState);
+    handleSubmit(modifyType, fetchUrl, formState, initialFormState);
   };
 
   const btnValue = `${modifyType.charAt(0).toUpperCase()}${modifyType.substring(1)} 
