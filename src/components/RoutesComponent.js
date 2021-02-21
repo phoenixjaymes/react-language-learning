@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import {
   Route,
   Redirect,
@@ -21,7 +22,7 @@ import Admin from './Admin';
 import NotFound from './NotFound';
 import LoginForm from './Admin/LoginForm';
 
-const Main = () => {
+const RoutesComponent = ({ isGrammarMenuShown }) => {
   const { isLoggedIn } = useContext(LearningContext);
 
   return (
@@ -55,6 +56,7 @@ const Main = () => {
             <Grammar
               match={match}
               location={location}
+              isGrammarMenuShown={isGrammarMenuShown}
             />
           )}
         />
@@ -76,4 +78,8 @@ const Main = () => {
   );
 };
 
-export default Main;
+RoutesComponent.propTypes = {
+  isGrammarMenuShown: PropTypes.bool,
+};
+
+export default RoutesComponent;
