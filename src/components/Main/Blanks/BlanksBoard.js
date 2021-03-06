@@ -33,7 +33,7 @@ class BlanksBoard extends Component {
     const { lang, category } = this.props;
 
     fetch(
-      `https://phoenixjaymes.com/api/language/blanks?lang=${lang}&cat=${category}`
+      `https://phoenixjaymes.com/api/language/blanks?lang=${lang}&cat=${category}&limit=yes`,
     )
       .then((reponse) => reponse.json())
       .then((responseData) => {
