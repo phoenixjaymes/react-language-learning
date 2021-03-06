@@ -18,6 +18,8 @@ import WordsActivity from './Main/Words/WordsActivity';
 import Blanks from './Main/Blanks';
 import BlanksActivity from './Main/Blanks/BlanksActivity';
 import Grammar from './Main/Grammar';
+import GrammarActivity from './Main/Grammar/GrammarActivity';
+import GrammarOld from './Main/GrammarOld';
 import Admin from './Admin';
 import NotFound from './NotFound';
 import LoginForm from './Admin/LoginForm';
@@ -50,10 +52,13 @@ const RoutesComponent = ({ isGrammarMenuShown }) => {
           <Blanks />
         </Route>
 
+        <Route path="/grammar/:id" render={({ match }) => <GrammarActivity match={match} />} />
+        <Route path="/grammar" render={({ match }) => <Grammar match={match} />} />
+
         <Route
-          path="/grammar"
+          path="/grammar-old"
           render={({ match, location }) => (
-            <Grammar
+            <GrammarOld
               match={match}
               location={location}
               isGrammarMenuShown={isGrammarMenuShown}
