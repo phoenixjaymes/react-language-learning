@@ -1,0 +1,211 @@
+.wrap {
+  /* background-color: orangered; */
+  border-radius: 4px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  list-style: none;
+  margin: 0 auto 0px auto;
+  max-width: 600px;
+  padding-bottom: 5px;
+  text-align: center;
+  width: 100%;
+}
+
+
+.sentences {
+  /* background-color: orangered; */
+  /* border-radius: 4px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  list-style: none;
+  margin: 0 auto 0px auto;
+  max-width: 600px;
+  padding-bottom: 5px;
+  text-align: center;
+  width: 100%; */
+}
+
+  @media (min-width: 720px) {
+    .sentences {
+      padding-top: 0; } }
+
+.heading {
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+
+.sentence {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+
+
+.wordsWrap {
+  /* background: #b4b4e0; */
+  border-radius: 4px;
+  margin: 0 auto 10px auto;
+  min-height: 105px;
+  padding: 0px;
+  text-align: left;
+}
+
+
+
+/* 
+    File     : _sentences.scss
+    Date     : 08 Feb 2017
+    Author   : Jaymes Young <jaymes@phoenixjaymes.com>
+*/
+
+
+/* .sentences__sentence {
+  margin-bottom: 10px;
+  padding-left: 10px;
+  text-align: left;
+} */
+
+  .sentences__words {
+    position: relative;
+  }
+
+    @media (min-width: 720px) {
+      .sentences__words {
+        margin-bottom: 5px; } }
+
+.sentences__wrap {
+  /* background: #b4b4e0;
+  border-radius: 4px;
+  margin: 0 auto 5px auto;
+  min-height: 80px;
+  padding: 2px;
+  text-align: left;
+  width: 97%; */
+}
+
+.sentences__wrap.blanks {
+  background: transparent;
+  line-height: 1.4;
+  padding: 10px 5px;
+}
+
+.sentences__word {
+  font-size: 0.9em;
+  font-weight: 600;
+  line-height: inherit;
+}
+
+.sentences__word.blank {
+  border-bottom: 2px solid #000;
+  display: inline-block;
+  width: 50px;
+}
+
+.sentences__word.underline {
+  border-bottom: 2px solid #000;
+}
+
+.sentences__item {
+  font-size: 0.9em;
+  display: inline-block;
+  font-weight: 600;
+  margin: 3px 2px;
+  /* min-width: 40px; */
+  text-align: center;
+}
+
+.sentences__item button {
+  /* background: #ffedb9;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 6px 5px; */
+}
+
+.sentences__item.on button {
+  background: lightblue;
+}
+
+@media (min-width: 720px) {
+  .sentences__item,
+  .sentences__word {
+    font-size: 1.1em; } }
+@media (min-width: 940px) {
+  .sentences__item {
+    font-size: 1.3em;
+    margin: 4px 4px;
+  }
+
+  .sentences__word {
+    font-size: 1.3em;
+  }
+  
+  .sentences__item button {
+    /* padding: 7px 4px; */
+  }
+}
+
+  .sentences__message-text {
+    margin-bottom: 20px; }
+
+/* .sentences__solution {
+  background: #b4b4e0;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 80px;
+  padding: 5px;
+}
+
+.sentences__solution--empty {
+  min-height: 80px;
+}
+
+@media (min-width: 720px) {
+  .sentences__solution {
+    flex: 1;
+    margin-bottom: 0px; }
+} */
+
+.sentences__check {
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+/* .sentences__check-btns {
+  background: #3131d2;
+  border-radius: 4px;
+  display: block;
+  height: 35px;
+  line-height: 35px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  text-decoration: none;
+  width: 97%; }
+  .sentences__check-btns:link, .sentences__check-btns:visited {
+    color: #ffc519;
+    font-weight: bold; }
+  .sentences__check-btns:active, .sentences__check-btns:hover {
+    color: #fff; } */
+
+
+
+.sentences__message.start-ani {
+  opacity: 0;
+  animation: show-final-msg 2s linear forwards; }
+
+/* @keyframes show-final-msg {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } } */

@@ -1,0 +1,17 @@
+.wrap {
+  background-color: rgba(255, 255, 255, .3);
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 10px;
+  text-align: center;
+}
+
+.donateImg {
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.donateImg img {
+  border-radius: 4px;
+  max-width: 100%;
+}

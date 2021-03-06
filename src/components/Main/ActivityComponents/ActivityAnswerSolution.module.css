@@ -1,0 +1,11 @@
+.wrap {
+  /* background-color: lightblue; */
+  /* font-size: 1.2rem; */
+  padding-top: 10px;
+}
+
+@media (min-width: 720px) {
+  .wrap {
+    padding-top: 0;
+  }
+}

@@ -1,0 +1,23 @@
+.button {
+  background: #ffedb9;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  height: 44px;
+  margin: 0 1px;
+  /* padding: 10px 10px; */
+  width: 100%;
+}
+
+@media (min-width: 720px) {
+  .button {
+    /* padding: 14px 10px; */
+  }
+}
+
+@media (min-width: 940px) {  
+  .button {
+    /* padding: 14px 10px; */
+  }
+}

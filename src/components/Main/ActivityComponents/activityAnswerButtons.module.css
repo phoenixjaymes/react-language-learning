@@ -1,0 +1,28 @@
+.button {
+  background: #3131d2;
+  border-radius: 4px;
+  color: #ffc519;
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+}
+
+.button:link, .button:visited {
+  color: #ffc519;
+  font-weight: bold;
+}
+
+.button:active, .button:hover {
+  color: #fff;
+}
+
+@media (min-width: 720px) {
+  .button {
+    width: 180px;
+  }
+}

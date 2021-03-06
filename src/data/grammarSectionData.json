@@ -1,0 +1,120 @@
+{
+  "id": "1",
+  "title": "JSON Data Title",
+  "content": [
+    {
+      "id": "1",
+      "type": "h2",
+      "val": "Heading of Section"
+    },
+    {
+      "id": "2",
+      "type": "p",
+      "val": "People assume that time is a strict progression of cause-and-effect... but actually, from a non-linear, non-subjective viewpoint, it's more like a big ball of wibbly-wobbly... timey-wimey... stuff."
+    },
+    {
+      "id": "3",
+      "type": "ul",
+      "val": [
+        {
+          "id": "1",
+          "val": "Der Mann ist groß."
+        },
+        {
+          "id": "2",
+          "val": "Die Frau ist klein."
+        },
+        {
+          "id": "3",
+          "val": "Das Kind ist traurig"
+        },
+        {
+          "id": "4",
+          "val": "Die Autos sind blau."
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "type": "h3",
+      "val": "Sub Heading of Section"
+    },
+    {
+      "id": "5",
+      "type": "p",
+      "val": "People assume that time is a strict progression of cause-and-effect... but actually, from a non-linear, non-subjective viewpoint, it's more like a big ball of wibbly-wobbly... timey-wimey... stuff."
+    },
+    {
+      "id": "6",
+      "type": "ul",
+      "val": [
+        {
+          "id": "1",
+          "val": "Der Mann ist groß."
+        },
+        {
+          "id": "2",
+          "val": "Die Frau ist klein."
+        },
+        {
+          "id": "3",
+          "val": "Das Kind ist traurig"
+        },
+        {
+          "id": "4",
+          "val": "Die Autos sind blau."
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "type": "table",
+      "val": [
+        [
+          {
+            "id": "1",
+            "val": ""
+          },
+          {
+            "id": "2",
+            "val": "Masculine"
+          },
+          {
+            "id": "3",
+            "val": "Feminine"
+          },
+          {
+            "id": "4",
+            "val": "Neuter"
+          },
+          {
+            "id": "5",
+            "val": "Plural"
+          }
+        ],
+        [
+          {
+            "id": "1",
+            "val": "Nom"
+          },
+          {
+            "id": "2",
+            "val": "Der"
+          },
+          {
+            "id": "3",
+            "val": "Die"
+          },
+          {
+            "id": "4",
+            "val": "Das"
+          },
+          {
+            "id": "5",
+            "val": "Die"
+          }
+        ]
+      ]
+    }
+  ]
+}
