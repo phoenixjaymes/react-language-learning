@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { LearningContext } from '../../Context';
 
-import CardCategoriesGeneric from './CardCategoriesGeneric';
-import CardCategoriesVerb from './CardCategoriesVerb';
+import ActvityCategories from '../ActivityComponents/ActivityCategories';
 
 // Cards Component
 class Cards extends Component {
@@ -23,30 +22,36 @@ class Cards extends Component {
 
         <div className="activity-buttons activity-categories">
           <h2>Adjectives</h2>
-          <CardCategoriesGeneric
+          <ActvityCategories
+            activity="cards"
             category="adjective"
             categoryList={categories[lang].adjective}
           />
 
           <h2>Nouns</h2>
           {lang !== 'af' && (
-            <CardCategoriesGeneric
-              lang={lang}
+            <ActvityCategories
+              activity="cards"
               category="gender"
               categoryList={categories[lang].gender}
             />
           )}
 
-          <CardCategoriesGeneric
+          <ActvityCategories
+            activity="cards"
             category="noun"
             categoryList={categories[lang].noun}
           />
 
           <h2>Verbs</h2>
-          <CardCategoriesVerb lang={lang} />
+          <ActvityCategories
+            activity="cards"
+            category="verb"
+          />
 
           <h2>Phrases</h2>
-          <CardCategoriesGeneric
+          <ActvityCategories
+            activity="cards"
             category="phrase"
             categoryList={categories[lang].phrase}
           />

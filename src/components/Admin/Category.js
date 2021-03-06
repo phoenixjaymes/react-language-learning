@@ -13,6 +13,7 @@ const Category = ({
   handleSubmit,
   categoryName,
   modifyType,
+  updateId,
   actionSuccess,
 }) => {
   const initialFormState = {
@@ -24,6 +25,12 @@ const Category = ({
   const reducer = (state, newState) => ({ ...state, ...newState });
   const [formState, setFormState] = useReducer(reducer, initialFormState);
   const [messageValues, setMessageValues] = useState({ message: '', status: '' });
+
+  // useEffect(() => {
+  //   if (updateId !== undefined) {
+  //     fetchUpdatedData(`https://phoenixjaymes.com/api/language/adjectives/${updateId}?lang=${lang}`);
+  //   }
+  // }, [fetchUpdatedData, updateId, lang]);
 
   const clearForm = () => {
     setFormState({
@@ -140,6 +147,7 @@ Category.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
+  updateId: PropTypes.string,
   actionSuccess: PropTypes.bool,
 };
 

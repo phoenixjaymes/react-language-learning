@@ -24,6 +24,7 @@ class Search extends Component {
     const eValue = e.target.value;
     const catNames = {
       adjectives: 'adjective',
+      blanks: 'blank',
       categories: 'category',
       nouns: 'noun',
       phrases: 'phrase',
@@ -130,6 +131,7 @@ class Search extends Component {
             >
               <option value="">Select Type</option>
               <option value="adjectives">Adjective</option>
+              <option value="blanks">Blank</option>
               <option value="categories">Category</option>
               <option value="nouns">Noun</option>
               <option value="phrases">Phrase</option>

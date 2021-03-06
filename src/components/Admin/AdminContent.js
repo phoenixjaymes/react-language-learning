@@ -11,6 +11,9 @@ import BlankDelete from './BlankDelete';
 import Category from './Category';
 import CategoryDelete from './CategoryDelete';
 
+import Grammar from './Grammar';
+import GrammarDelete from './GrammarDelete';
+
 import Noun from './Noun';
 import NounDelete from './NounDelete';
 
@@ -25,7 +28,7 @@ import NotFound from './NotFound';
 
 
 const AdminContent = ({ match }) => {
-  const { category, modifyType } = match.params;
+  const { category, modifyType, updateId } = match.params;
   const cat = category;
 
   // Adjectives componets
@@ -35,7 +38,7 @@ const AdminContent = ({ match }) => {
 
   if (cat === 'adjective') {
     return (
-      <Adjective categoryName={cat} modifyType={modifyType} />
+      <Adjective categoryName={cat} modifyType={modifyType} updateId={updateId} />
     );
   }
 
@@ -46,7 +49,7 @@ const AdminContent = ({ match }) => {
 
   if (cat === 'blank') {
     return (
-      <Blank categoryName={cat} modifyType={modifyType} />
+      <Blank categoryName={cat} modifyType={modifyType} updateId={updateId} />
     );
   }
 
@@ -56,7 +59,18 @@ const AdminContent = ({ match }) => {
   }
 
   if (cat === 'category') {
-    return <Category categoryName={cat} modifyType={modifyType} />;
+    return <Category categoryName={cat} modifyType={modifyType} updateId={updateId} />;
+  }
+
+  // Grammar componets
+  if (cat === 'grammar' && modifyType === 'delete') {
+    return <GrammarDelete />;
+  }
+
+  if (cat === 'grammar') {
+    return (
+      <Grammar categoryName={cat} modifyType={modifyType} updateId={updateId} />
+    );
   }
 
   // Noun componets
@@ -66,7 +80,7 @@ const AdminContent = ({ match }) => {
 
   if (cat === 'noun') {
     return (
-      <Noun categoryName={cat} modifyType={modifyType} />
+      <Noun categoryName={cat} modifyType={modifyType} updateId={updateId} />
     );
   }
 
@@ -77,7 +91,7 @@ const AdminContent = ({ match }) => {
 
   if (cat === 'phrase') {
     return (
-      <Phrase categoryName={cat} modifyType={modifyType} />
+      <Phrase categoryName={cat} modifyType={modifyType} updateId={updateId} />
     );
   }
 
@@ -91,13 +105,14 @@ const AdminContent = ({ match }) => {
       <Sentence
         categoryName={cat}
         modifyType={modifyType}
+        updateId={updateId}
       />
     );
   }
 
   // Verb components
   if (cat === 'verb' || cat === 'perfect' || cat === 'imperfect') {
-    return <VerbContent cat={cat} modifyType={modifyType} />;
+    return <VerbContent cat={cat} modifyType={modifyType} updateId={updateId} />;
   }
 
   return <NotFound />;

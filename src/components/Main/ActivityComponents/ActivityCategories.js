@@ -7,6 +7,10 @@ const ActvityCategories = ({
   activity, category, categoryList,
 }) => {
   const wrap = {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
     textAlign: 'center',
     marginBottom: '15px',
   };
@@ -45,10 +49,6 @@ const ActvityCategories = ({
       {buttons}
     </div>
   );
-};
-
-ActvityCategories.defaultProps = {
-  categoryList: '',
 };
 
 ActvityCategories.propTypes = {

@@ -11,7 +11,7 @@ const HomePhrase = () => {
   return (
     <div className={styles.phrase}>
       <h2>Daily Phrase</h2>
-      <h3 className={styles.phraseTranslation}>{phrase.translation}</h3>
+      <p className={styles.phraseTranslation}>{phrase.translation}</p>
     </div>
   );
 };

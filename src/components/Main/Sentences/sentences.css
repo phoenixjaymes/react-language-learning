@@ -4,14 +4,23 @@
     Author   : Jaymes Young <jaymes@phoenixjaymes.com>
 */
 .sentences {
+  /* background-color: orangered; */
   border-radius: 4px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   list-style: none;
   margin: 0 auto 0px auto;
+  max-width: 600px;
   padding-bottom: 5px;
-  text-align: center; }
+  text-align: center;
+  width: 100%;
+}
   @media (min-width: 720px) {
     .sentences {
-      display: block; } }
+     } }
   @media (min-width: 720px) {
     .sentences {
       padding-top: 0; } }
@@ -114,14 +123,13 @@
   .sentences__message-text {
     margin-bottom: 20px; }
 
-.sentences__solution {
+/* .sentences__solution {
   background: #b4b4e0;
   border-radius: 5px;
   margin-left: auto;
   margin-right: auto;
   min-height: 80px;
   padding: 5px;
-  width: 97%;
 }
 
 .sentences__solution--empty {
@@ -132,14 +140,14 @@
   .sentences__solution {
     flex: 1;
     margin-bottom: 0px; }
-}
+} */
 
 .sentences__check {
   margin-bottom: 5px;
   margin-top: 10px;
 }
 
-.sentences__check-btns {
+/* .sentences__check-btns {
   background: #3131d2;
   border-radius: 4px;
   display: block;
@@ -154,7 +162,7 @@
     color: #ffc519;
     font-weight: bold; }
   .sentences__check-btns:active, .sentences__check-btns:hover {
-    color: #fff; }
+    color: #fff; } */
 
 
 
@@ -162,8 +170,8 @@
   opacity: 0;
   animation: show-final-msg 2s linear forwards; }
 
-@keyframes show-final-msg {
+/* @keyframes show-final-msg {
   0% {
     opacity: 0; }
   100% {
-    opacity: 1; } }
+    opacity: 1; } } */

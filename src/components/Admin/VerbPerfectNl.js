@@ -18,6 +18,7 @@ const VerbPerfectNL = ({
   handleSubmit,
   categoryName,
   modifyType,
+  updateId,
   fetchUpdatedData,
   updateData,
   actionSuccess,
@@ -32,6 +33,12 @@ const VerbPerfectNL = ({
   const { lang } = useContext(LearningContext);
   const [formState, setFormState] = useReducer(reducer, initialFormState);
   const [messageValues, setMessageValues] = useState({ message: '', status: '' });
+
+  useEffect(() => {
+    if (updateId !== undefined) {
+      fetchUpdatedData(`https://phoenixjaymes.com/api/language/verbs/${updateId}?lang=${lang}`);
+    }
+  }, [fetchUpdatedData, updateId, lang]);
 
   useEffect(() => {
     if (updateData.id !== undefined) {
@@ -212,6 +219,7 @@ VerbPerfectNL.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
+  updateId: PropTypes.string,
   updateData: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,

@@ -671,8 +671,9 @@ update-verb, update-perfect, update-imperfect {
     margin-right: 20px; }
 
   .activity__content {
-    flex-grow: 1;
-    width: 100%; }
+    /* flex-grow: 1;
+    width: 100%;  */
+  }
   .activity__content--cards { position: relative;
     background: #f1f1fa;
     border-radius: 0 0 4px 4px;
@@ -686,7 +687,7 @@ update-verb, update-perfect, update-imperfect {
   margin-left: auto;
   margin-right: auto;
   max-width: 450px;
-  width: 95%; }
+  width: 100%; }
 
 .activity__loader {
   position: absolute;
@@ -715,7 +716,7 @@ and open the template in the editor.
     Date     : May 19, 2017
     Author   : Jaymes Young <jaymes@phoenixjaymes.com>
 */
-.final-message {
+/* .final-message {
   position: absolute;
   left: 0;
   top: 0;
@@ -729,7 +730,7 @@ and open the template in the editor.
 
 .final-message.start-ani {
   opacity: 0;
-  animation: show-final-msg 2s linear forwards; }
+  animation: show-final-msg 2s linear forwards; } */
 
 
 /* 

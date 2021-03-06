@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import ConfirmDialog from './ConfirmDialog';
 import FormWrapResponse from './FormWrapResponse';
 
 const withFormWrap = (WrappedComponent) => function WithFormWrap({ ...props }) {
-  const { modifyType, categoryName } = props;
+  const { modifyType, categoryName, updateId } = props;
   const [isDialogShown, setIsDialogShown] = useState(false);
   const [stateFormData, setStateFormData] = useState();
   const [apiModifyType, setApiModifyType] = useState('');
@@ -41,7 +41,7 @@ const withFormWrap = (WrappedComponent) => function WithFormWrap({ ...props }) {
     }
   };
 
-  const fetchUpdatedData = (urlToFetch) => {
+  const memoizedFetchUpdatedData = useCallback((urlToFetch) => {
     fetch(urlToFetch)
       .then((reponse) => reponse.json())
       .then((responseData) => {
@@ -65,7 +65,7 @@ const withFormWrap = (WrappedComponent) => function WithFormWrap({ ...props }) {
           message: `Error fetching and parsing data, ${error}`,
         });
       });
-  };
+  }, []);
 
   const makeFormData = (formState, initialFormState) => {
     const tempFormObj = {};
@@ -180,7 +180,8 @@ const withFormWrap = (WrappedComponent) => function WithFormWrap({ ...props }) {
         handleSubmit={handleSubmit}
         modifyType={modifyType}
         categoryName={categoryName}
-        fetchUpdatedData={fetchUpdatedData}
+        updateId={updateId}
+        fetchUpdatedData={memoizedFetchUpdatedData}
         updateData={updateData}
         actionSuccess={actionSuccess}
       />

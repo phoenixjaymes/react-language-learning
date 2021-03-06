@@ -54,6 +54,17 @@
   width: 40px;
 }
 
+.grammar__nav-div {
+  position: relative;
+  left: -40px;
+  transition: left .1s ease-out;
+}
+
+.grammar__nav.show .grammar__nav-div {
+  position: relative;
+  left: 0;
+}
+
 .grammar__nav a {
   color: #ffc519;
   display: block;

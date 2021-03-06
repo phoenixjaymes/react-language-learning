@@ -70,6 +70,7 @@ const Admin = () => {
           {getListItem('adjective', 'Adjectives')}
           {getListItem('blank', 'Blanks')}
           {getListItem('category', 'Categories')}
+          {getListItem('grammar', 'Grammar')}
           {getListItem('noun', 'Nouns')}
           {getListItem('phrase', 'Phrases')}
           {getListItem('sentence', 'Sentences')}
@@ -113,7 +114,8 @@ const Admin = () => {
           )}
         />
         <Route
-          path="/admin/:category/:modifyType"
+          path="/admin/:category/:modifyType/:updateId?"
+          exact
           render={({ match }) => (
             !isLoggedIn ? (
               <Redirect to="/" />

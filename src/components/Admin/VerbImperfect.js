@@ -4,12 +4,11 @@ import React, {
 import PropTypes from 'prop-types';
 import { LearningContext } from '../Context';
 
-import { conjugateImperfect } from './conjugateVerbs';
-
 // Components
 import UpdateSelector from './UpdateSelector';
 import FormInput from './FormComponents/FormInput';
 import FormMessage from './FormComponents/FormMessage';
+import Conjugate from './Conjugate';
 import withFormWrap from './withFormWrap';
 
 import styles from './forms.module.css';
@@ -18,6 +17,7 @@ const VerbImperfect = ({
   handleSubmit,
   categoryName,
   modifyType,
+  updateId,
   fetchUpdatedData,
   updateData,
   actionSuccess,
@@ -38,14 +38,24 @@ const VerbImperfect = ({
   const [messageValues, setMessageValues] = useState({ message: '', status: '' });
 
   useEffect(() => {
+    if (updateId !== undefined) {
+      fetchUpdatedData(`https://phoenixjaymes.com/api/language/verbs/${updateId}?lang=${lang}`);
+    }
+  }, [fetchUpdatedData, updateId, lang]);
+
+  useEffect(() => {
     if (updateData.id !== undefined) {
       const {
         id,
+        infinitive,
+        type,
         imperfectExample,
         imperfect,
       } = updateData;
       setFormState({
         id,
+        infinitive,
+        type,
         example: imperfectExample,
         ...imperfect,
       });
@@ -78,19 +88,8 @@ const VerbImperfect = ({
     fetchUpdatedData(`https://phoenixjaymes.com/api/language/verbs/${itemId}?lang=${lang}`);
   };
 
-  const handleConjugateClick = () => {
-    const [ich, du, er, wir, ihr, sie] = conjugateImperfect(
-      formState.Translation,
-      formState.Type,
-    );
-    setFormState({
-      ich,
-      du,
-      er,
-      wir,
-      ihr,
-      sie,
-    });
+  const handleConjugateClick = (conjugation) => {
+    setFormState(conjugation);
   };
 
   const handleChange = (e) => {
@@ -152,8 +151,8 @@ const VerbImperfect = ({
         <h3>{formState.translation}</h3>
 
         <div>
-          <p>Infinitive - </p>
-          <p>Type - </p>
+          <p>Infinitive - {formState.infinitive}</p>
+          <p>Type - {formState.type}</p>
         </div>
 
         <FormInput
@@ -163,13 +162,12 @@ const VerbImperfect = ({
           handleChange={handleChange}
         />
 
-        <button
-          type="button"
-          className="form__conjugate__button"
-          onClick={handleConjugateClick}
-        >
-          Conjugate
-        </button>
+        <Conjugate
+          infinitive={formState.infinitive}
+          lang={lang}
+          tense="imperfect"
+          handleConjugateClick={handleConjugateClick}
+        />
 
         <FormInput
           label="ich"
@@ -257,6 +255,7 @@ VerbImperfect.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
+  updateId: PropTypes.string,
   updateData: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,

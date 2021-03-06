@@ -1,30 +1,43 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { LearningContext } from '../../Context';
 
 import ActivityLink from '../ActivityComponents/ActivityLink';
-import ActivityCategoriesGeneric from '../ActivityComponents/ActivityCategoriesGeneric';
+import ActvityCategories from '../ActivityComponents/ActivityCategories';
 
 const Sentences = () => {
-  const { categories, lang, labels } = useContext(LearningContext);
+  const { categories, lang, labels, actions } = useContext(LearningContext);
   const headingLabel = labels.us.languages[lang];
+
+  useEffect(() => {
+    const { setDocumentTitle } = actions;
+    setDocumentTitle('Sentences');
+  }, [actions]);
+
+  const wrap = {
+    textAlign: 'center',
+    marginBottom: '15px',
+  };
+
   return (
     <section className="activity-section">
       <h1>{`${headingLabel} Sentences`}</h1>
 
       <div className="activity-buttons activity-categories">
-        <ActivityLink
-          toPath="/sentences/type/random"
-          text="Random"
-        />
-        <br />
 
-        <ActivityCategoriesGeneric
+        <div style={wrap}>
+          <ActivityLink
+            toPath="/sentences/type/random"
+            text="Random"
+          />
+        </div>
+
+        <ActvityCategories
           activity="sentences"
           category="type"
           categoryList={categories[lang].sentence_type}
         />
 
-        <ActivityCategoriesGeneric
+        <ActvityCategories
           activity="sentences"
           category="categpry"
           categoryList={categories[lang].sentence}

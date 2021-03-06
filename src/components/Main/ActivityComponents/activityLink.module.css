@@ -1,14 +1,29 @@
 .button {
-  background: #3131d2;
+  background-color: #3131d2;
   border: none;
   border-radius: 4px;
   color: #ededed;
+  cursor: pointer;
   display: inline-block;
-  height: 30px;
-  line-height: 30px;
-  margin: 3px 2px;
-  padding: 0 7px;
+
+  flex: 0 0 130px;
+
+  height: 55px;
+  margin: 5px;
   text-align: center;
   text-decoration: none;
-  min-width: 75px;
+  width: 130px;
+}
+
+.button:hover {
+  background-color: #5a5adb;
+}
+
+.spanWrap {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  height: 100%;
 }

@@ -13,7 +13,7 @@ import VerbImperfect from './VerbImperfect';
 import VerbImperfectNl from './VerbImperfectNl';
 import VerbImperfectAF from './VerbImperfectAF';
 
-const VerbContent = ({ cat, modifyType }) => {
+const VerbContent = ({ cat, modifyType, updateId }) => {
   const { lang } = useContext(LearningContext);
 
   if (cat === 'verb' && modifyType === 'delete') {
@@ -22,38 +22,38 @@ const VerbContent = ({ cat, modifyType }) => {
 
   if (cat === 'verb') {
     if (lang === 'nl') {
-      return <VerbNl categoryName={cat} modifyType={modifyType} />;
+      return <VerbNl categoryName={cat} modifyType={modifyType} updateId={updateId} />;
     }
 
     if (lang === 'af') {
-      return <VerbAF categoryName={cat} modifyType={modifyType} />;
+      return <VerbAF categoryName={cat} modifyType={modifyType} updateId={updateId} />;
     }
 
-    return <Verb categoryName={cat} modifyType={modifyType} />;
+    return <Verb categoryName={cat} modifyType={modifyType} updateId={updateId} />;
   }
 
   if (cat === 'perfect') {
     if (lang === 'nl') {
-      return <VerbPerfectNl categoryName={cat} modifyType={modifyType} />;
+      return <VerbPerfectNl categoryName={cat} modifyType={modifyType} updateId={updateId} />;
     }
 
     if (lang === 'af') {
-      return <VerbPerfectAF categoryName={cat} modifyType={modifyType} />;
+      return <VerbPerfectAF categoryName={cat} modifyType={modifyType} updateId={updateId} />;
     }
 
-    return <VerbPerfect categoryName={cat} modifyType={modifyType} />;
+    return <VerbPerfect categoryName={cat} modifyType={modifyType} updateId={updateId} />;
   }
 
   if (cat === 'imperfect') {
     if (lang === 'nl') {
-      return <VerbImperfectNl categoryName={cat} modifyType={modifyType} />;
+      return <VerbImperfectNl categoryName={cat} modifyType={modifyType} updateId={updateId} />;
     }
 
     if (lang === 'af') {
-      return <VerbImperfectAF categoryName={cat} modifyType={modifyType} />;
+      return <VerbImperfectAF categoryName={cat} modifyType={modifyType} updateId={updateId} />;
     }
 
-    return <VerbImperfect categoryName={cat} modifyType={modifyType} />;
+    return <VerbImperfect categoryName={cat} modifyType={modifyType} updateId={updateId} />;
   }
   return null;
 };
@@ -61,6 +61,7 @@ const VerbContent = ({ cat, modifyType }) => {
 VerbContent.propTypes = {
   cat: PropTypes.string,
   modifyType: PropTypes.string,
+  updateId: PropTypes.string,
 };
 
 export default VerbContent;

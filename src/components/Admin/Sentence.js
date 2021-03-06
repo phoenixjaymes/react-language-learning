@@ -18,6 +18,7 @@ const Sentence = ({
   handleSubmit,
   categoryName,
   modifyType,
+  updateId,
   fetchUpdatedData,
   updateData,
   actionSuccess,
@@ -39,6 +40,12 @@ const Sentence = ({
     statement: 'Statement (english)',
     translation: 'Translation',
   });
+
+  useEffect(() => {
+    if (updateId !== undefined) {
+      fetchUpdatedData(`https://phoenixjaymes.com/api/language/sentences/${updateId}?lang=${lang}`);
+    }
+  }, [fetchUpdatedData, updateId, lang]);
 
   useEffect(() => {
     if (updateData.id !== undefined) {
@@ -226,6 +233,7 @@ Sentence.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
+  updateId: PropTypes.string,
   updateData: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.array,

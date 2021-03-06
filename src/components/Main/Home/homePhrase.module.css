@@ -1,0 +1,13 @@
+.phrase {
+  margin-bottom: 20px;
+}
+
+.phrase h2 {
+  margin-bottom: 10px;
+}
+
+.phraseTranslation {
+  cursor: pointer;
+  font-size: 1.1rem;
+  text-align: center;
+}

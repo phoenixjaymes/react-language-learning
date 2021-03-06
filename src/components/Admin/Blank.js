@@ -18,6 +18,7 @@ const Blank = ({
   handleSubmit,
   categoryName,
   modifyType,
+  updateId,
   fetchUpdatedData,
   updateData,
   actionSuccess,
@@ -34,6 +35,12 @@ const Blank = ({
   const { us } = labels;
   const [formState, setFormState] = useReducer(reducer, initialFormState);
   const [messageValues, setMessageValues] = useState({ message: '', status: '' });
+
+  useEffect(() => {
+    if (updateId !== undefined) {
+      fetchUpdatedData(`https://phoenixjaymes.com/api/language/blanks/${updateId}?lang=${lang}`);
+    }
+  }, [fetchUpdatedData, updateId, lang]);
 
   useEffect(() => {
     if (updateData.id !== undefined) {
@@ -177,6 +184,7 @@ Blank.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
+  updateId: PropTypes.string,
   updateData: PropTypes.objectOf(PropTypes.string),
   fetchUpdatedData: PropTypes.func,
   actionSuccess: PropTypes.bool,

@@ -6,7 +6,7 @@ import SearchConjugation from './SearchConjugation';
 
 import styles from './searchResults.module.css';
 
-const SearchResults = ({ data, itemType, lang }) => {
+const SearchResults = ({ data, itemSearchType, lang }) => {
   const [searchHeader, setSearchHeader] = useState();
   const [searchRows, setSearchRows] = useState();
   const [sortColumn, setSortColumn] = useState('');
@@ -102,13 +102,20 @@ const SearchResults = ({ data, itemType, lang }) => {
 
   const rowsMemoizedCallback = useCallback(() => {
     const keys = Object.keys(data[0]);
+    let newItemSearchType;
+
+    if (itemSearchType === 'categories') {
+      newItemSearchType = 'category';
+    } else {
+      newItemSearchType = itemSearchType.slice(0, itemSearchType.length - 1);
+    }
 
     const rows = data.map((row) => {
       const cells = keys.map((cell) => {
         if (cell === 'id') {
           return (
             <td key="id" className={styles.searchId}>
-              <Link to={`/${lang}/admin/${itemType}/update/${row[cell]}`}>{row[cell]}</Link>
+              <Link to={`/admin/${newItemSearchType}/update/${row[cell]}`}>{row[cell]}</Link>
             </td>
           );
         }
@@ -135,7 +142,7 @@ const SearchResults = ({ data, itemType, lang }) => {
     });
 
     setSearchRows(rows);
-  }, [data, itemType, lang]);
+  }, [data, itemSearchType]);
 
   useEffect(() => {
     if (data[0] !== undefined) {
@@ -156,7 +163,7 @@ const SearchResults = ({ data, itemType, lang }) => {
 
 SearchResults.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
-  itemType: PropTypes.string,
+  itemSearchType: PropTypes.string,
   lang: PropTypes.string,
 };
 

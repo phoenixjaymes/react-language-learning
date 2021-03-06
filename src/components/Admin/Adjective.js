@@ -17,6 +17,7 @@ const Adjective = ({
   handleSubmit,
   categoryName,
   modifyType,
+  updateId,
   fetchUpdatedData,
   updateData,
   actionSuccess,
@@ -35,6 +36,12 @@ const Adjective = ({
   const { us } = labels;
   const [formState, setFormState] = useReducer(reducer, initialFormState);
   const [messageValues, setMessageValues] = useState({ message: '', status: '' });
+
+  useEffect(() => {
+    if (updateId !== undefined) {
+      fetchUpdatedData(`https://phoenixjaymes.com/api/language/adjectives/${updateId}?lang=${lang}`);
+    }
+  }, [fetchUpdatedData, updateId, lang]);
 
   useEffect(() => {
     if (updateData.id !== undefined) {
@@ -210,6 +217,7 @@ Adjective.propTypes = {
   handleSubmit: PropTypes.func,
   categoryName: PropTypes.string,
   modifyType: PropTypes.string,
+  updateId: PropTypes.string,
   updateData: PropTypes.objectOf(PropTypes.string),
   fetchUpdatedData: PropTypes.func,
   actionSuccess: PropTypes.bool,

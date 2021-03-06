@@ -26,6 +26,7 @@ const Header = ({ isLangMenuVisible, isActivityMenuVisible }) => {
   const wordsLabel = labels[lang].activities.words;
   const sentencesLabel = labels[lang].activities.sentences;
   const blanksLabel = labels[lang].activities.blanks;
+  const grammarLabel = labels[lang].activities.grammar;
 
   const toPathAdmin = (isLoggedIn) ? '/admin' : '/login';
   const img = lang === 'de' ? imgDe : imgNl;
@@ -84,10 +85,11 @@ const Header = ({ isLangMenuVisible, isActivityMenuVisible }) => {
                 <li className={styles.subMenuItem}><NavLink to="/words">{wordsLabel}</NavLink></li>
                 <li className={styles.subMenuItem}><NavLink to="/sentences">{sentencesLabel}</NavLink></li>
                 <li className={styles.subMenuItem}><NavLink to="/blanks">{blanksLabel}</NavLink></li>
+                <li className={styles.subMenuItem}><NavLink to="/grammar">{grammarLabel}</NavLink></li>
               </ul>
             </li>
 
-            <li className={styles.mainMenuItem}><NavLink to="/grammar">Grammar</NavLink></li>
+            <li className={styles.mainMenuItem}><NavLink to="/grammar-old">Grammar</NavLink></li>
           </ul>
         </nav>
 

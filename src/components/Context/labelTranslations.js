@@ -10,6 +10,7 @@ const labelTranslations = {
       words: 'Words',
       sentences: 'Sentences',
       blanks: 'Blanks',
+      grammar: 'Grammar',
     },
   },
   de: {
@@ -23,6 +24,7 @@ const labelTranslations = {
       words: 'Wörter',
       sentences: 'Sätze',
       blanks: 'Lücken',
+      grammar: 'Grammar',
     },
   },
   nl: {
@@ -36,6 +38,7 @@ const labelTranslations = {
       words: 'Woorden',
       sentences: 'Zinnen',
       blanks: 'Blanken',
+      grammar: 'Grammar',
     },
   },
   af: {
@@ -49,6 +52,7 @@ const labelTranslations = {
       words: 'Woorde',
       sentences: 'Sinne',
       blanks: 'Spasies',
+      grammar: 'Grammar',
     },
   },
 };

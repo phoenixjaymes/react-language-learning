@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-import ActivityHeaderProgress from '../ActivityComponents/ActivityHeaderProgress';
+import ActivityWrap from '../ActivityComponents/ActivityWrap';
+import ActivityHeader from '../ActivityComponents/ActivityHeader';
 import CardFaceWrap from './CardFaceWrap';
 import CardControls from './CardControls';
 import { LearningContext } from '../../Context';
@@ -69,7 +71,7 @@ const CardActivity = ({ match }) => {
   };
 
   const handleExamplesToggle = () => {
-    if (exampleClass === "") {
+    if (exampleClass === '') {
       setExampleClass('showExamples');
       setExampleText('Conjugation');
     } else {
@@ -104,39 +106,49 @@ const CardActivity = ({ match }) => {
 
   if (fetchError === true) {
     return (
-      <div>Sorry, we&apos;re unable to retrieve data</div>
+      <div>
+        <p>Sorry, we&apos;re unable to retrieve data</p>
+        <div>
+          <Link to="/cards" className="activity_buttons__btn">Back to Cards</Link>
+        </div>
+      </div>
     );
   }
 
   const newCurrentCard = currentCard + 1;
 
   return (
-    <div className="card-activity">
-      <ActivityHeaderProgress
-        currentCard={newCurrentCard}
-        totalCards={totalCards}
+    <ActivityWrap>
+      <ActivityHeader
+        currentItem={newCurrentCard}
+        totalItems={totalCards}
+        type="progress"
         heading="test"
         page="cards"
       />
 
-      <CardFaceWrap
-        cardData={cardData[currentCard]}
-        handleFlipClick={handleFlipClick}
-        handleExamplesToggle={handleExamplesToggle}
-        flipClass={flipClass}
-        exampleClass={exampleClass}
-        exampleText={exampleText}
-        category={category}
-        id={id}
-        lang={lang}
-      />
-      <CardControls
-        currentCard={newCurrentCard}
-        totalCards={totalCards}
-        cardBack={cardBack}
-        cardNext={cardNext}
-      />
-    </div>
+      <div className="cardsWrap">
+        <CardFaceWrap
+          cardData={cardData[currentCard]}
+          handleFlipClick={handleFlipClick}
+          handleExamplesToggle={handleExamplesToggle}
+          flipClass={flipClass}
+          exampleClass={exampleClass}
+          exampleText={exampleText}
+          category={category}
+          id={id}
+          lang={lang}
+        />
+        <CardControls
+          currentCard={newCurrentCard}
+          totalCards={totalCards}
+          cardBack={cardBack}
+          cardNext={cardNext}
+        />
+      </div>
+
+      <div style={{ backgroundColor: '#ffe' }}>&nbsp;</div>
+    </ActivityWrap>
   );
 };
 

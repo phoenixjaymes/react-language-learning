@@ -26,7 +26,7 @@ const FormInput = ({
 
 FormInput.defaultProps = {
   type: 'text',
-}
+};
 
 FormInput.propTypes = {
   label: PropTypes.oneOfType([

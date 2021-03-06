@@ -1,63 +1,47 @@
-import React, { useEffect, useContext } from 'react';
-import {
-  Route,
-  Link,
-} from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect } from 'react';
 import { LearningContext } from '../../Context';
 
-import HomeImage from '../Home/HomeImage';
-import Articles from './Articles';
-import Pronouns from './Pronouns';
-import Conjunctions from './Conjunctions';
-import Prepositions from './Prepositions';
+import ActvityCategoriesTitles from '../ActivityComponents/ActivityCategoriesTitles';
 
-import '../../../css/grammar.css';
+const Grammar = () => {
+  const {
+    categories, lang, labels, actions,
+  } = useContext(LearningContext);
+  const headingLabel = labels.us.languages[lang];
 
-const Grammar = ({
-  location, match, isGrammarMenuShown,
-}) => {
-  const { lang, labels, actions } = useContext(LearningContext);
-  const { setDocumentTitle } = actions;
-  const { pathname } = location;
-  const { url } = match;
-  const { languages } = labels.us;
-  const menuClass = isGrammarMenuShown === true ? 'show' : '';
-  const btnShowContent = isGrammarMenuShown === true ? '\u25C0' : '\u25B6';
+  useEffect(() => {
+    const { setDocumentTitle } = actions;
+    setDocumentTitle('Grammar');
+  }, [actions]);
 
-  useEffect(() => setDocumentTitle('Grammar'));
+  let grammarCategories;
+
+  if (categories[lang].grammar > 0) {
+    grammarCategories = (
+      <ActvityCategoriesTitles
+        activity="Grammar"
+        categoryList={categories[lang].grammar}
+      />
+    );
+  } else {
+    grammarCategories = (
+      <h2>
+        Sorry, there no categories for this section.
+        <br />
+        Categories coming soon.
+      </h2>
+    );
+  }
 
   return (
-    <div className="grammar">
-      <nav className={`grammar__nav ${menuClass}`}>
-        <h3 id="js-grammar" className="grammar__nav-btn"><span>{btnShowContent}</span></h3>
-        <Link to="/grammar/articles">Articles</Link>
-        <Link to="/grammar/pronouns">Pronouns</Link>
-        <Link to="/grammar/conjunctions">Conjunctions</Link>
-        <Link to="/grammar/prepositions">Prepositions</Link>
-      </nav>
+    <section className="activity-section">
+      <h1>{`${headingLabel} Grammar`}</h1>
 
-      <section className="grammar_section">
-        {pathname === url && (
-          <div>
-            <h1 className="home__title">{`${languages[lang]} Grammar`}</h1>
-            <HomeImage />
-          </div>
-        )}
-
-        <Route path="/grammar/articles" component={Articles} />
-        <Route path="/grammar/pronouns" component={Pronouns} />
-        <Route path="/grammar/conjunctions" component={Conjunctions} />
-        <Route path="/grammar/prepositions" component={Prepositions} />
-      </section>
-    </div>
+      <div className="activity-buttons activity-categories">
+        {grammarCategories}
+      </div>
+    </section>
   );
-};
-
-Grammar.propTypes = {
-  match: PropTypes.shape(),
-  location: PropTypes.shape(),
-  isGrammarMenuShown: PropTypes.bool,
 };
 
 export default Grammar;
