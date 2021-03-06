@@ -34,6 +34,8 @@ class SentenceBoard extends Component {
     const sentenceList = (list) => {
       let newHeading;
 
+      console.log(list);
+
       if (list[0].type === '1') {
         newHeading = 'Create the Sentence';
       } else if (list[0].type === '2') {
@@ -70,7 +72,7 @@ class SentenceBoard extends Component {
 
     fetch(fetchUrl)
       .then((reponse) => reponse.json())
-      .then((responseData) => sentenceList(responseData.data))
+      .then((responseData) => sentenceList(responseData.data.slice(0, 1)))
       .catch((error) => {
         console.log('Error fetching and parsing data', error);
       });
