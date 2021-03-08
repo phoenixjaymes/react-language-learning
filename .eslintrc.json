@@ -19,6 +19,7 @@
     "react-hooks"
   ],
   "rules": {
+    "react/no-danger": "off",
     "linebreak-style": "off",
     "react/jsx-filename-extension": [
       1,
