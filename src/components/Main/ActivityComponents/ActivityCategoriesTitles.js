@@ -27,8 +27,6 @@ const ActvityCategoriesTitles = ({
     width: '100%',
   };
 
-  console.log(categoryList);
-
   const sections = categoryList.map((item) => {
     const sectionTitles = item.titles.map((title) => (
       <ActivityLink key={title.tId} toPath={`/${activity}/${title.tId}`} text={title.name} />
