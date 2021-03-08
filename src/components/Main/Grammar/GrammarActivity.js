@@ -14,56 +14,50 @@ const GrammarActivity = ({ match }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState(false);
   const [heading, setHeading] = useState('');
-  const [grammarContent, setGrammarContent] = useState('');
+  const [grammarContent, setGrammarContent] = useState({ __html: '' });
 
   const makeContent = (content) => {
-    const pageContnent = content.map((item) => {
-      if (item.type === 'h2') {
-        return <h2 key={item.id} className={styles.h2Heading}>{item.val}</h2>;
-      }
+    // const pageContnent = content.map((item) => {
+    //   if (item.type === 'h2') {
+    //     return <h2 key={item.id} className={styles.h2Heading}>{item.val}</h2>;
+    //   }
 
-      if (item.type === 'h3') {
-        return <h3 key={item.id} className={styles.h3Heading}>{item.val}</h3>;
-      }
+    //   if (item.type === 'h3') {
+    //     return <h3 key={item.id} className={styles.h3Heading}>{item.val}</h3>;
+    //   }
 
-      if (item.type === 'ul') {
-        const ulList = item.val.map((li) => <li key={li.id}>{li.val}</li>);
-        return (
-          <ul key={item.id} className={styles.ulList}>
-            {ulList}
-          </ul>
-        );
-      }
+    //   if (item.type === 'ul') {
+    //     const ulList = item.val.map((li) => <li key={li.id}>{li.val}</li>);
+    //     return (
+    //       <ul key={item.id} className={styles.ulList}>
+    //         {ulList}
+    //       </ul>
+    //     );
+    //   }
 
-      if (item.type === 'table') {
-        const rows = item.val.map((rowItem) => {
-          const cells = rowItem.map((cellItem) => {
-            return <td key={cellItem.id}>{cellItem.val}</td>;
-          });
+    //   if (item.type === 'table') {
+    //     const rows = item.val.map((rowItem) => {
+    //       const cells = rowItem.map((cellItem) => {
+    //         return <td key={cellItem.id}>{cellItem.val}</td>;
+    //       });
 
-          return <tr key={rowItem.id}>{cells}</tr>;
-        });
+    //       return <tr key={rowItem.id}>{cells}</tr>;
+    //     });
 
-        return (
-          <table key={item.id}>
-            <tbody>{rows}</tbody>
-          </table>
-        );
-      }
+    //     return (
+    //       <table key={item.id}>
+    //         <tbody>{rows}</tbody>
+    //       </table>
+    //     );
+    //   }
 
-      return <p key={item.id} className={styles.normalText}>{item.val}</p>;
-    });
+    //   return <p key={item.id} className={styles.normalText}>{item.val}</p>;
+    // });
+
+    const pageContnent = '';
 
     setGrammarContent(pageContnent);
   };
-
-  // useEffect(() => {
-  //   setHeading(jsonData.title);
-
-  //   makeContent(jsonData.content);
-
-  //   setIsLoading(false);
-  // }, []);
 
   useEffect(() => {
     fetch(
@@ -76,7 +70,8 @@ const GrammarActivity = ({ match }) => {
 
           setHeading(data.title);
 
-          makeContent(JSON.parse(data.content));
+          // makeContent(JSON.parse(data.content));
+          setGrammarContent({ __html: data.content });
 
           setIsLoading(false);
         } else {
@@ -117,9 +112,7 @@ const GrammarActivity = ({ match }) => {
       />
 
       <div className={styles.wrap}>
-        <div>
-          {grammarContent}
-        </div>
+        <div dangerouslySetInnerHTML={grammarContent} />
       </div>
 
       <div>---</div>
