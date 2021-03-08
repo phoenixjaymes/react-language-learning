@@ -116,7 +116,7 @@ const Grammar = ({
     }
 
     // Stringify form content field
-    setFormState({ content: JSON.stringify(formState.content) });
+    // setFormState({ content: JSON.stringify(formState.content) });
 
     handleSubmit(modifyType, fetchUrl, formState, initialFormState);
   };
