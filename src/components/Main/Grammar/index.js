@@ -16,7 +16,7 @@ const Grammar = () => {
 
   let grammarCategories;
 
-  if (categories[lang].grammar > 0) {
+  if (categories[lang].grammar.length > 0) {
     grammarCategories = (
       <ActvityCategoriesTitles
         activity="Grammar"
